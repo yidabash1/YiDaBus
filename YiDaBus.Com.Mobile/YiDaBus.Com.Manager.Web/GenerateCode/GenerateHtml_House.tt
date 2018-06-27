@@ -1,0 +1,369 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ include file="$(ProjectDir)Entity/hp.ttinclude"#>
+<#@ include file="$(ProjectDir)Entity/ma.ttinclude"#> 
+<#
+    var manager = Manager.Create(Host, GenerationEnvironment);
+    var list = DbHelper.GetDbTables(config.ConnectionString_Houses, config.DbDatabase_Houses);
+    foreach (var table in list)
+    {
+        var cList = DbHelper.GetDbColumns(config.ConnectionString_Houses, config.DbDatabase_Houses, table);
+        table.ColumnList = cList;
+    }
+	foreach(var t in list){
+	manager.StartNewFile(t.ClassName+".html");
+#>	
+<!--=======================Index表单START====================================-->
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<script>
+    var modulelUrl = "";//区域的路径
+    $(function () {
+        gridList();
+    })
+    var $gridList;
+    function gridList() {
+        $gridList = $("#gridList");
+        $gridList.dataGrid({
+            url: modulelUrl + "GetGridJson",
+            height: $(window).height() - 128,
+            colModel: [
+		<#foreach(DbColumn column in t.ColumnList){
+			int index = t.ColumnList.IndexOf(column); //index 为索引值
+			if(index==0){ #>
+				{ label: "主键", name: "<#=column.Field#>", hidden: true, key: true },
+			<#}else{#>
+				{ label: '<#=column.Comment.ToString().Replace("\r\n",";")#>', name: '<#=column.Field#>', width: 150, align: 'left' },
+			<#}#>
+<#}#>
+],
+            pager: "#gridPager",
+            viewrecords: true
+        });
+        $("#btn_search").click(function () {
+            $gridList.jqGrid('setGridParam', {
+                postData: { keyword: $("#txt_keyword").val() },
+            }).trigger('reloadGrid');
+        });
+    }
+    function btn_add() {
+        $.modalOpen({
+            id: "Form",
+            title: "新增<#=t.Comment.TrimEnd('表')#>",
+            url: modulelUrl + "Form",
+            width: "800px",
+            height: "600px",
+            callBack: function (iframeId) {
+                top.frames[iframeId].submitForm();
+            }
+        });
+    }
+    function btn_edit() {
+        var keyValue = $("#gridList").jqGridRowValue().Id;
+        if (keyValue == undefined) {
+            $.modalAlert("请选择要操作的行！", 2);
+            return;
+        }
+        $.modalOpen({
+            id: "Form",
+            title: "修改<#=t.Comment.TrimEnd('表')#>",
+            url: modulelUrl + "Form?keyValue=" + keyValue,
+            width: "800px",
+            height: "600px",
+            callBack: function (iframeId) {
+                top.frames[iframeId].submitForm();
+            }
+        });
+    }
+    function btn_delete() {
+        var keyValue = $("#gridList").jqGridRowValue().Id;
+        if (keyValue == undefined) {
+            $.modalAlert("请选择要操作的行！", 2);
+            return;
+        }
+        $.deleteForm({
+            url: modulelUrl + "DeleteForm",
+            param: { keyValue: keyValue },
+            success: function () {
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
+            }
+        })
+    }
+    function btn_details() {
+        var keyValue = $("#gridList").jqGridRowValue().Id;
+        if (keyValue == undefined) {
+            $.modalAlert("请选择要操作的行！", 2);
+            return;
+        }
+        $.modalOpen({
+            id: "Details",
+            title: "查看<#=t.Comment.TrimEnd('表')#>",
+            url: modulelUrl + "Form?action=Details&keyValue=" + keyValue,
+            width: "800px",
+            height: "600px",
+            btn: null,
+        });
+    }
+</script>
+<style>
+    dl {
+        margin: 5px !important;
+    }
+
+    a:hover {
+        color: #ff6a00;
+    }
+
+    #SearchForm table tr {
+    }
+
+        #SearchForm table tr td {
+            padding-right: 10px;
+        }
+</style>
+<div class="topPanel" style="height: 100px;">
+  <div class="search" style="float: inherit;">
+	<form id="SearchForm">
+            <table>
+                <tr>
+				<#foreach(DbColumn column in t.ColumnList){#>
+				<!--<#=column.Comment.ToString().Replace("\r\n",";")#>-->
+					<td>
+                        <div class="input-group">
+                            <strong><#=column.Comment.ToString().Replace("\r\n",";")#>：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="<#=column.Field#>" name="<#=column.Field#>" type="text" class="form-control" placeholder="<#=column.Comment.ToString().Replace("\r\n",";")#>" >
+                        </div>
+                    </td>
+				<#}#>
+					<td>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button id="btn_search" type="button" class="btn  btn-primary" onclick="SearchHandler()"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </td>
+                   <td>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn  btn-primary" onclick="ShowMoreSearchHandler(this)" style="padding:0px 10px;"><i class="fa fa-expand"></i>更多</button>
+                            </span>
+                        </div>
+                    </td>
+					<td>
+						<div class="btn-group">
+							<a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+						</div>
+					</td>
+                </tr>
+            </table>
+			<table id="TbMoreSeach" style="display:none;">
+				<tr>
+				</tr>
+			</table>
+        </form>
+    </div>
+    <div id="toolbar" style="padding:0px 10px;">
+		<table>
+			<tr>
+				<td>
+					<a id="NF-edit" class="btn btn-default" authorize="yes" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>修改<#=t.Comment.TrimEnd('表')#></a>
+				</td>
+				<td>
+					<a id="NF-delete" class="btn btn-default" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除<#=t.Comment.TrimEnd('表')#></a>
+				</td>
+				<td>
+					<a id="NF-Details" class="btn btn-default" authorize="yes" onclick="btn_details()"><i class="fa fa-search-plus"></i>查看<#=t.Comment.TrimEnd('表')#></a>
+				</td>
+			</tr>
+		</table>
+		<script>$('#toolbar').authorizeButton()</script>
+	</div>
+</div>
+<div class="gridPanel">
+    <table id="gridList"></table>
+    <div id="gridPager"></div>
+</div>
+ <!--=======================Index表单END====================================-->
+  <!--=======================FORM表单START====================================-->
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<script>
+    var modulelUrl = "";//区域的路径
+    var keyValue = $.request("keyValue");
+    var action = $.request("action");
+    $(function () {
+        initControl();
+        if (!!keyValue) {
+            if (action == "Details") {
+                $.ajax({
+                    url: modulelUrl + "GetFormJson",
+                    data: { keyValue: keyValue },
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        $("#form1").formSerialize(data);
+                        $("#form1").find('.form-control,input').attr('readonly', 'readonly');
+                        $("#form1").find('select').attr('disabled', 'true');
+                        $("#form1").find('div.ckbox label').attr('for', '');
+                        $('.upload-path').each(function (index, obj) {
+                            $(obj).after("<img height='100px' width='100px' src='" + $(obj).val() + "'></img>").hide();
+                        });
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: modulelUrl + "GetFormJson",
+                    data: { keyValue: keyValue },
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        $("#form1").formSerialize(data);
+                        $(".upload-img").InitUploader({ swf: "~/Content/js/webuploader/uploader.swf" });
+                    }
+                });
+            }
+        }else {
+            $(".upload-img").InitUploader({ swf: "~/Content/js/webuploader/uploader.swf" });
+        }
+    });
+    function initControl() {
+       
+    }
+    function submitForm() {
+        if (!$('#form1').formValid()) {
+            return false;
+        }
+        $.submitForm({
+            url: modulelUrl + "SubmitForm?keyValue=" + keyValue,
+            param: $("#form1").formSerialize(),
+            success: function () {
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
+            }
+        })
+    }
+</script>
+<form id="form1">
+    <div style="padding-top: 20px; margin-right: 20px;">
+        <table class="form">
+<#
+            string Description = string.Empty;
+            string ColumnName  = string.Empty;
+			foreach(DbColumn column in t.ColumnList)
+            {
+                Description  =  column.Comment.ToString().Replace("\r\n",";");
+                ColumnName = column.Field;#>
+                  <tr>
+					<th class="formTitle"><#=Description#></th>
+					<td class="formValue">
+				   <# if(ColumnName.ToLower()!="id"&&ColumnName.ToLower()!="IsDel"&&ColumnName.ToLower()!="AddTime"){
+		#>
+					<input id="<#=                        ColumnName#>" name="<#=                        ColumnName#>" type="text" class="form-control required" placeholder="请输入<#=                        Description.Replace("\r\n",";")#>" />
+          <# }#>
+                 </td>
+    </tr>
+ <#}#>
+        </table>
+    </div>
+</form>
+ <!--=======================FORM表单END====================================-->
+ <!--=======================Detail表单START====================================-->
+ @{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<script>
+    var modulelUrl = "";//区域的路径
+    var houseId = $.request("houseId");
+    $(function () {
+		 $('.wrapper').height($(window).height() - 60);
+        $('.tab-content').height($(window).height() - 120);
+        initControl();
+        if (!!houseId) {
+            $.ajax({
+                url: modulelUrl + "GetFormJson",
+                data: { houseId: houseId },
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    $("#form1").formSerialize(data);
+                    $("#form1").find('.form-control,input').attr('readonly', 'readonly');
+                    $("#form1").find('select').attr('disabled', 'true');
+                    $("#form1").find('div.ckbox label').attr('for', '');
+                    $('.upload-path').each(function (index, obj) {
+                        $(obj).after("<img height='100px' width='100px' src='" + $(obj).val() + "'></img>").hide();
+                    });
+                }
+            });
+        }
+    });
+    function initControl() {
+       
+    }
+    
+</script>
+<style>
+    input, select {
+        width: 400px !important;
+        border-width: 0px !important;
+		appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+    }
+</style>
+<div>
+    <a class="btn btn-primary" href="javascript:void(0);" onclick="history.go(-1)"><i class="fa fa-backward" style="margin-right:5px;"></i>返回</a>
+</div>
+<form id="form1" >
+<div class="wrapper" style="overflow:hidden;">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#a" data-toggle="tab" aria-expanded="true">基本信息</a></li>
+    </ul>
+    <div class="tab-content" style="padding: 5px;overflow:auto;">
+        <div id="a" class="tab-pane active" style="padding: 15px;">
+            <ul class="pop-list">
+			<#
+			foreach(DbColumn column in t.ColumnList)
+            {
+                Description  =  column.Comment.ToString().Replace("\r\n",";");
+                ColumnName = column.Field;#>
+				  <#if(Description.Contains("软删除")){#>
+				   <li>
+                        <label>是否被删除</label>
+                        <select id="IsDel" name="IsDel" class="form-control">
+                            <option value="0">未删除</option>
+                            <option value="1">已删除</option>
+                        </select>
+                   </li>
+				  <#}else{#>
+                  <li>
+				   <label><#=Description#></label>
+				   <# if(ColumnName.ToLower()!="id"&&ColumnName.ToLower()!="IsDel"&&ColumnName.ToLower()!="AddTime"){
+		#>
+					<input id="<#=ColumnName#>" name="<#=ColumnName#>" type="text" class="form-control" placeholder="暂未填写" />
+          <# }#>
+				 </li>
+				 <#}#>
+ <#}#>
+ <li>
+ <div style="padding-left: 115px;">
+                            <a class="btn btn-primary" href="javascript:void(0);" onclick="history.go(-1)"><i class="fa fa-backward" style="margin-right:5px;"></i>返回</a>
+                        </div>
+						</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</form>
+ <!--=======================Detail表单END====================================-->
+<#
+	manager.EndBlock();  
+}
+    manager.Process(true);  
+#>

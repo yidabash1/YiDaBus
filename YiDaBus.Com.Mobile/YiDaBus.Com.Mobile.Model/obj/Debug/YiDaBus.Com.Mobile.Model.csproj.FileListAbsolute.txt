@@ -8,3 +8,13 @@ E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\Mobile\YiDaBus.Com.Mobile\YiDaBus.Com.Mo
 E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\Mobile\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Model\obj\Debug\YiDaBus.Com.Mobile.Model.dll
 E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\Mobile\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Model\obj\Debug\YiDaBus.Com.Mobile.Model.pdb
 E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\Mobile\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Model\obj\Debug\YiDaBus.Com.Mobile.Model.csprojResolveAssemblyReference.cache
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Model\bin\Debug\YiDaBus.Com.Mobile.Model.dll
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Model\bin\Debug\YiDaBus.Com.Mobile.Model.pdb
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Model\bin\Debug\Dos.ORM.dll
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Model\bin\Debug\Dos.ORM.MySql.dll
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Model\bin\Debug\MySql.Data.dll
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Model\bin\Debug\Dos.ORM.xml
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Model\bin\Debug\Dos.ORM.MySql.xml
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Model\obj\Debug\YiDaBus.Com.Mobile.Model.dll
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Model\obj\Debug\YiDaBus.Com.Mobile.Model.pdb
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Model\obj\Debug\YiDaBus.Com.Mobile.Model.csprojResolveAssemblyReference.cache

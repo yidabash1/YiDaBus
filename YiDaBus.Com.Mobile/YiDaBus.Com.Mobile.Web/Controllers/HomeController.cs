@@ -68,7 +68,11 @@ namespace YiDaBus.Com.Mobile.Web.Controllers
             string viewPath = "~/Views/html/hangzhou/success.cshtml";
             return View(viewPath);
         }
+
+
         #endregion
+
+        
         public ActionResult Login()
         {
 

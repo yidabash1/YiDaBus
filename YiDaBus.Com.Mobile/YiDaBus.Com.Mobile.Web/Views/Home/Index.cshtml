@@ -1,325 +1,86 @@
 ﻿@{
-    ViewBag.Title = "指房向-租房从未如此简单";
-    Layout = "~/views/shared/_layout.cshtml";
+    ViewBag.Title = "易达快乐巴士";
+    Layout = "~/Views/Shared/master.cshtml";
 }
 
-<div class="container">
-    <input id="indextab" value="0" type="hidden" />
-    <div class="box_main">
-        <div class="banner_box">
-            <div id="Cimgf0d5c2216b8cbscroller_imglist" class="roll_img_mb_01">
-                <div class="img_box" style="mix-height:97">
-                    <ul id="banners">
-                        
-                    </ul>
-                </div>
-                <div class="nav_box">
-                    <ul id="li_on_name">
-                        <li class="li_on"></li>
-                        <li></li>
-                    </ul>
-                </div>
-            </div>
-            @*<script type="text/javascript">
-                WapCircleImg_01("Cimgf0d5c2216b8cbscroller_imglist", 3, true);
-            </script>*@
-            <div class="isearch">
-                <a href="/house/search">
-                    <div class="isearch1">
-                        <i class="iconfont icon-llhomesearch"></i>
-                        搜索
-                    </div>
-                </a>
+<header class="demos-header">
+    <h1 class="demos-title">易达快乐巴士</h1>
+    @{
+        string curHost = Request.Url.Host;
+        string[] dnslist = {"www.js8zy.com","www.dtfjc.com"};
+        if (dnslist.Contains<string>(curHost))
+        {
+            Response.Redirect("http://www.dtfjc.com/ntfjc/");
+            Response.End();
+        }
+    }
+</header>
 
-            </div>
+<div class="weui-flex">
+    <div class="weui-flex__item">
+        <div class="weui-cells__title">上海订票</div>
+        <div class="weui-cells">
+            @{
+                string[] weekStrings = {"星期一", "星期二", "星期三", "星期四", "星期五"};
+                foreach (var item in weekStrings)
+                {
+                    string linkUrl = string.Format("/Home/ShangHai?week={0}", Url.Encode(item));
+                    <a class="weui-cell weui-cell_access" href="@linkUrl">
+                        <div class="weui-cell__bd">
+                            <p>@item</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                        </div>
+                    </a>
+                }
+            }
         </div>
-        <div class="index_menu">
-            <a href="/house/AdvanceSearch/">
-                <dl>
-                    <dt><img width="50" src="~/Content/img/index_1.png"></dt>
-                    <dd>区域找房</dd>
-                </dl>
-            </a>@*/house/mapsearch/*@
-            <a href="/house/AdvanceSearch?isSubway=1">
-                <dl>
-                    <dt><img width="50" src="~/Content/img/index_2.png"></dt>
-                    <dd>地铁找房</dd>
-                </dl>
-            </a>
-            <a href="/house/searchlist?rentmodel=整租" >
-                <dl>
-                    <dt><img width="50" src="~/Content/img/index_3.png"></dt>
-                    <dd>整租房源</dd>
-                </dl>
-            </a>
-            <a href="/house/searchlist?rentmodel=合租">
-                <dl>
-                    <dt><img width="50" src="~/Content/img/index_4.png"></dt>
-                    <dd>合租房源</dd>
-                </dl>
-            </a>
-            <a href="/house/searchlist?isappartment=1">
-                <dl>
-                    <dt><img width="50" src="~/Content/img/index_5.png"></dt>
-                    <dd>品牌公寓</dd>
-                </dl>
-            </a>
-            
-            <a href="/Home/Activities">
-                <dl>
-                    <dt><img width="50" src="~/Content/img/index_6.png"></dt>
-                    <dd>活动专题</dd>
-                </dl>
-            </a>
-            <a href="/house/fastfind/">
-                <dl>
-                    <dt><img width="50" src="~/Content/img/index_7.png"></dt>
-                    <dd>私人定制</dd>
-                </dl>
-            </a>
-            <a href="/house/LandlordIndex">
-                <dl>
-                    <dt><img width="50" src="~/Content/img/index_8.png"></dt>
-                    <dd>我是房东</dd>
-                </dl>
-            </a>
-
-        </div>
-        <div class="iprolist">
-            <div class="iprolist_tit">
-                <div class="iprolist_tit_left"><i class="iconfont icon-ditu2"></i> 当前位置：<a href="" id="locationdetails" data-x="" data-y="">杨浦区</a></div>
-                <div class="iprolist_tit_right"><a href="" onclick="getloaction()">重新定位</a></div>
-            </div>
-            <div class="iprolist_tab">
-                <ul>
-                    <li flag="1" class="cur">附近房源</li>
-                    <li flag="2">热门推荐</li>
-                </ul>
-            </div>
-            <div class="iprolistc" id="tab1"></div>
-            <!--无附近房源，显示热门推荐-->
-            <div class="iprolistc" id="tab3" style="display:none"></div>
-            <div class="iprolistc" id="tab2" style="display:none"></div>
-        </div>
-
-
     </div>
-    <div class="btmline"></div>
-    <div class="mask"></div>
-    <div class="ad_page">
-        @*<img src="~/Content/img/adver_top.jpg" alt="" />
-        <img src="~/Content/img/adver_bot.jpg" alt="" />
-        <div class="ad_btn"><a href="/house/fastfind/" style="color: #fff;">立即定制</a></div>
-        <span class="ad_close"></span>*@
-        <img src="~/Content/img/ad.png"/>
-        <div class="ad_btn"><a href="/home/TempActivity/" ><img src="~/Content/img/ad_btn.png" /></a></div>
-        <span class="ad_close"></span>
+   
+    <div class="weui-flex__item">
+        <div class="weui-cells__title">杭州订票</div>
+        <div class="weui-cells">
+            @{
+                string[] addressStrings = { "南通市区", "如东通州", "启东海门", "如皋海安" };
+                foreach (var item in addressStrings)
+                {
+                    string linkUrl = string.Format("/Home/HangZhou?address={0}",Url.Encode(item));
+                    <a class="weui-cell weui-cell_access" href="@linkUrl">
+                        <div class="weui-cell__bd">
+                            <p>@item</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                        </div>
+                    </a>
+                }
+            }
+        </div>
     </div>
-    @Html.Partial("~/views/shared/_bottom.cshtml")
+
+    <div class="weui-flex__item">
+        <div class="weui-cells__title">我的易达</div>
+        <div class="weui-cells">
+            @{
+                Dictionary<string, string> memberItems = new Dictionary<string, string>();
+                memberItems.Add("个人信息", "/MemberManager/Member/MemberInfo");
+                memberItems.Add("我的车票", "/MemberManager/Member/MemberTicket");
+                memberItems.Add("投诉热线", "/MemberManager/Member/MemberComplaint");
+                foreach (var item in memberItems)
+                {
+                    <a class="weui-cell weui-cell_access" href="@item.Value">
+                        <div class="weui-cell__bd">
+                            <p>@item.Key</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                        </div>
+                    </a>
+                }
+            }
+        </div>
+    </div>
 </div>
 
-<script type="text/html" id="bannertemplate">
-    {{#  layui.each(d, function(index, item){ }}
-    <li><a href="{{item.href}}"><img src="{{item.picUrl}}" title="{{item.title}}"></a><span></span></li>
-    {{# }) }}
-</script>
-<script type="text/html" id="nearbyhouse">
 
-    {{#  layui.each(d, function(index, item){ }}
-    <dl onclick="showdetails({{item.id}})">
-        <dt>
-            <a href="/house/details/{{item.id}}">
-                {{# if(item.videoCount>0){ }}
-                <div class="videoicon" style="position: absolute;left: 48%;top: 30%;z-index: 99;"><i class="icon iconfont icon-bofang1" style="font-size: 40px;color:#fff;opacity: 1;margin-left: -20px;"></i></div>
-                {{# } }}
-                <img src="{{item.houseCorver}}" onerror="this.onerror='';this.src='/Content/img/ad1.png'">
-            </a>
-        </dt>
-        <dd>
-            <h3><em>{{ getDistance(item.xCoordinate,item.yCoordinate)}}</em><a href="/house/details/{{item.id}}">{{item.houseTitle}}</a></h3>
-
-            <div class="iprolist_about">
-                <span> {{# if(item.rentalArea>0){ }}{{item.rentalArea}}㎡{{#  }else{}}  暂无数据 {{# } }} {{# if(item.hFloor>0){ }}  |{{item.hFloor}}/{{item.hFloorTotal}}层{{# } }}</span>
-                <div class="iprolist_price"><em>￥{{item.hRent}}</em>/月</div>
-            </div>
-            <div class="iprolist_tag">
-                {{# if(item.hTags!=""){ }}
-
-                {{# layui.each(item.hTags.split(','),function(index,itemdetails){}}
-                <em class="color{{index+1}}">{{itemdetails}}</em>
-                {{#  });}}
-                {{# } }}
-            </div>
-            {{# if(item.subwayDistance!=""){ }}
-            <div class="iprolist_adress"><i class="iconfont icon-ditu2"></i> {{item.subwayDistance}}</div>
-            {{# } }}
-        </dd>
-    </dl>
-    {{#  }); }}
-
-    {{#  if(!d){ }}
-    @*获取推荐房源*@
-    {{# handlenearbyhouse();}}
-    {{#  } }}
-</script>
-<script type="text/html" id="pushhouse">
-    {{#  layui.each(d, function(index, item){ }}
-    <dl onclick="showdetails({{item.id}})">
-        <dt>
-            <a href="/house/details/{{item.id}}">
-                {{# if(item.videoCount>0){ }}
-                <div class="videoicon" style="position: absolute;left:  48%;top: 30%;z-index: 99;"><i class="icon iconfont icon-bofang1" style="font-size: 40px;color: #fff;opacity: 1;margin-left: -20px;"></i></div>
-                {{# } }}<img src="{{item.houseCorver}}" onerror="this.onerror='';this.src='/Content/img/ad1.png'">
-            </a>
-        </dt>
-        <dd>
-            <h3><em>{{getDistance(item.xCoordinate,item.yCoordinate)}}</em><a href="/house/details/{{item.id}}">{{item.houseTitle}}</a></h3>
-
-            <div class="iprolist_about">
-                <span> {{# if(item.rentalArea>0){ }}{{item.rentalArea}}㎡{{#  }else{}}   暂无数据 {{# } }} {{# if(item.hFloor>0){ }}  |{{item.hFloor}}/{{item.hFloorTotal}}层{{# } }}</span>
-                <div class="iprolist_price"><em>￥{{item.hRent}}</em>/月</div>
-            </div>
-            <div class="iprolist_tag">
-                {{# if(item.hTags!=""){ }}
-                {{# layui.each(item.hTags.split(','),function(index,itemdetails){}}
-                <em class="color{{index+1}}">{{itemdetails}}</em>
-                {{#  });}}
-                {{# } }}
-            </div>
-            {{# if(item.subwayDistance!=""){ }}
-            <div class="iprolist_adress"><i class="iconfont icon-ditu2"></i> {{item.subwayDistance}}</div>
-            {{# } }}
-        </dd>
-    </dl>
-    {{#  }); }}
-    {{#  if(d.length === 0){ }}
-    @*什么都不做*@
-
-    {{#  } }}
-
-
-</script>
-
-
-
-<script>
-    function ontheway() {
-        $.modalAlert("正在紧急建设中…")
-    }
-    function loadbanner()
-    {
-        $.LayPage({
-            elem: '#banners'
-             , Template: '#bannertemplate'
-             , mb: 100
-             , url: globalKey.InterfaceDomain + 'api/banners/list'
-             , type: 'post'
-             , data: { pagesize: 5, category:1}//参数
-             , error: function () {
-                 $("#banners").html('<li><a href="/house/fastfind"><img src="/Content/img/22.jpg"></a><span></span></li>');
-             }
-            , success: function (laytpl, next, page, data)
-            {
-                var getTpl = $("#bannertemplate").html();
-                laytpl(getTpl).render(data.data.items, function (html) {
-                    //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
-                    //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
-
-                    next(html, page < data.data.totalPages);
-                    WapCircleImg_01("Cimgf0d5c2216b8cbscroller_imglist", data.length, true);
-                    $(".layui-flow-more:eq(0)").hide();
-                });
-
-            }
-             , isalert: false
-             , load: false
-        });
-    }
-    function nearbyhouse(district) {
-        getloaction();
-       
-         return loaddataHouse(district);
-       
-    }
-    function loaddataHouse(district)
-    {
-        if (!district) {
-            district = $("#locationdetails").html();
-        }
-        $.LayPage({
-            elem: '#tab1'
-              , Template: '#nearbyhouse'
-              , mb: 100
-              , url: globalKey.InterfaceDomain + 'api/House/GetList'
-              , type: 'post'
-              , data: { pagesize: 5, District: district.replace("区",""), HStatus: 0 }//参数
-              , error: function () {
-                  pushhouse('#tab3', '#nearbyhouse')
-              }
-              , isalert: false
-              , load: false
-        });
-    }
-    function pushhouse(tb2, pushhouse) {
-        tb2 = tb2 || "#tab2";
-        $('#tab1>.layui-flow-more').remove();
-        $(tb2).show();
-        pushhouse = pushhouse || "#pushhouse";
-        $.LayPage({
-            elem: tb2
-          , Template: pushhouse
-          , mb: 100
-          , url: globalKey.InterfaceDomain + 'api/House/GetList'
-          , type: 'post'
-          , data: { pagesize: 5, HStatus: 0 }//参数
-          , isalert: false
-          , load: false
-        });
-    }
-
-    function handlenearbyhouse() {
-        $(".iprolist_tab ul li").each(function () {
-            $(this).removeClass();
-            var flag = $(this).attr("flag");
-            if ($(this).attr("flag") == "2") {
-                $(this).addClass("cur");
-                $(".iprolistc").hide();
-                $("#tab" + flag).show();
-                //pushhouse('#tab1', '#nearbyhouse');
-            }
-        });
-
-    }
-
-    function showdetails(id) {
-        location.href = "/house/details/" + id;
-    }
-    $(function () {
-        $(".iprolist_tab ul li").mousedown(function () {
-            $(".iprolist_tab ul li").each(function () {
-                $(this).removeClass();
-            });
-            var flag = $(this).attr("flag");
-            $(this).addClass("cur");
-            $(".iprolistc").hide();
-            $("#tab" + flag).show();
-            if (flag == 1) {
-                nearbyhouse();
-            }
-            else {
-                pushhouse();
-            }
-        });
-        $(".mask").css({ width: $(window).width(), height: $(window).height() })
-        $(".ad_close").click(function () {
-            $(".mask").hide();
-            $(".ad_page").hide();
-        })
-        $(".mask").click(function () {
-            $(".mask").hide();
-            $(".ad_page").hide();
-        })
-        loadbanner();
-        nearbyhouse();
-    });
-</script>
+<div class="weui-footer weui-footer_fixed-bottom">
+    <p class="weui-footer__text">Copyright &copy; 2018 易达快乐巴士</p>
+</div>

@@ -56,6 +56,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Aspose.Words.17.1.0\lib\net40-client\Aspose.Words.dll</HintPath>
     </Reference>
+    <Reference Include="Dos.ORM, Version=1.10.6.2, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
@@ -147,9 +148,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\HandlerLoginAttribute.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\MemberManager\Controllers\MemberController.cs" />
+    <Compile Include="Areas\MemberManager\MemberManagerAreaRegistration.cs" />
+    <Compile Include="Base\BaseController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\DownLoadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OAuth2Controller.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -360,6 +363,12 @@
     <Content Include="Content\css\fonts\detailicon\fonts\icomoon.ttf" />
     <Content Include="Content\css\fonts\detailicon\fonts\icomoon.woff" />
     <Content Include="Content\css\fonts\detailicon\selection.json" />
+    <Content Include="Areas\MemberManager\Views\web.config" />
+    <Content Include="Areas\MemberManager\Views\Member\memberComplaint.cshtml" />
+    <Content Include="Areas\MemberManager\Views\Member\memberInfo.cshtml" />
+    <Content Include="Areas\MemberManager\Views\Member\memberTicket.cshtml" />
+    <Content Include="Areas\MemberManager\Views\Member\memberTicketDetail.cshtml" />
+    <Content Include="Areas\MemberManager\Views\Member\memberTicketDetail2.cshtml" />
     <None Include="Properties\PublishProfiles\YiDaBus.Mobile.pubxml" />
     <None Include="Properties\PublishProfiles\YiDaBus.Mobile_gx.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -426,7 +435,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Bottom.cshtml" />
     <Content Include="Views\OAuth2\Index.cshtml" />
     <Content Include="Views\OAuth2\UserInfoCallback.cshtml" />
@@ -440,7 +448,7 @@
     <Content Include="Template\房屋租赁合同模板.doc" />
     <Content Include="Views\Shared\_LinkToLandlordPartialPage.cshtml" />
     <Content Include="Views\Shared\_ContractPartialPage.cshtml" />
-    <Content Include="Views\Home\Index1.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\html\hangzhou\index.cshtml" />
     <Content Include="Views\html\hangzhou\orderInfo.cshtml" />
     <Content Include="Views\html\hangzhou\success.cshtml" />
@@ -456,6 +464,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\MemberManager\Models\" />
+    <Folder Include="Areas\MemberManager\Views\Shared\" />
     <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
@@ -465,10 +475,13 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\YiDaBus.Com.Manager.Dal\YiDaBus.Com.Manager.Dal.csproj">
+      <Project>{d35248a8-23b5-4751-bdb3-cb3bd311eef7}</Project>
+      <Name>YiDaBus.Com.Manager.Dal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\YiDaBus.Com.Mobile.BLL\YiDaBus.Com.Mobile.BLL.csproj">
       <Project>{1B1A447A-D655-48E2-BC22-4DF6FA054372}</Project>
       <Name>YiDaBus.Com.Mobile.BLL</Name>

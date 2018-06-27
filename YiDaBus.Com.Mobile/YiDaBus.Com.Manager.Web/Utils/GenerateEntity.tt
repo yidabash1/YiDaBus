@@ -1,0 +1,41 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ include file="$(ProjectDir)/Utils/Entity/hp.ttinclude"#>
+<#@ include file="$(ProjectDir)/Utils/Entity/ma.ttinclude"#> 
+<#
+    var manager = Manager.Create(Host, GenerationEnvironment);
+    var list = DbHelper.GetDbTables(config.ConnectionString, config.DbDatabase);
+    foreach (var table in list)
+    {
+        var cList = DbHelper.GetDbColumns(config.ConnectionString, config.DbDatabase, table);
+        table.ColumnList = cList;
+    }
+	foreach(var t in list){
+	manager.StartNewFile(t.ClassName+".cs"); 
+#>	
+using System;
+using Dos.ORM;
+
+namespace YiDaBus.Com.UtilsModel
+{
+
+
+    [Serializable]
+	public  class <#=t.ClassName#>
+    {
+
+	    #region Field
+<# foreach(DbColumn column in t.ColumnList){#>
+	    /// <summary>
+        /// <#= column.Comment#>
+        /// </summary>
+		 public <#= column.CSharpType#> <#=column.Field#> { get; set; }
+<#}#>
+		#endregion
+    }
+
+}
+<#
+	manager.EndBlock();  
+}
+    manager.Process(true);  
+#>

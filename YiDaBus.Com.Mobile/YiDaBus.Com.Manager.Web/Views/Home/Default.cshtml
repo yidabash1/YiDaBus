@@ -1,0 +1,226 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+@*<script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope) {
+            $.ajax({
+                url: "@YiDaBus.Com.Manager.Web.ControllerBase.getInterFaceDomain()" + "/api/common/Count",
+                data: { keyValue: $.request('LeaseCustomerId') },
+                dataType: "json",
+                type: "post",
+                async: false,
+                success: function (data) {
+                    //房源赋值
+                    var houseInfo = data.data.houseCount;
+                    $scope.addHouse = houseInfo.addHouse;
+                    $scope.deletedHouse = houseInfo.deletedHouse;
+                    $scope.lockedHoust = houseInfo.lockedHoust;
+                    $scope.onlineHouse = houseInfo.onlineHouse;
+                    $scope.saledHouse = houseInfo.saledHouse;
+                    $scope.todayAddHouse = houseInfo.todayAddHouse;
+                    $scope.todayDeletedHouse = houseInfo.todayDeletedHouse;
+                    $scope.todayLockedHoust = houseInfo.todayLockedHoust;
+                    $scope.todayOnlineHouse = houseInfo.todayOnlineHouse;
+                    $scope.todaySaledHouse = houseInfo.todaySaledHouse;
+                    //订单赋值
+                    var orderInfo = data.data.orderCount;
+                    $scope.contract = orderInfo.contract;
+                    $scope.deal = orderInfo.deal;
+                    $scope.noPay = orderInfo.noPay;
+                    $scope.order = orderInfo.order;
+                    $scope.payed = orderInfo.payed;
+                    $scope.todayContract = orderInfo.todayContract;
+                    $scope.todayDeal = orderInfo.todayDeal;
+                    $scope.todayNoPay = orderInfo.todayNoPay;
+                    $scope.todayOrder = orderInfo.todayOrder;
+                    $scope.todayPayed = orderInfo.todayPayed;
+                }
+            });
+
+        });
+    </script>*@
+
+<div id="areascontent" ng-app="myApp" ng-controller="myCtrl" style="padding:10px 50px;">
+    <div class="rows" style="margin-bottom: 1%; border: 1px solid #e6e6e6; overflow: hidden; padding-left: 1px;">
+        <div class="gridPanel">
+            <table border="0" cellspacing="0" cellpadding="0" class="border-table" width="100%">
+                <thead>
+                    <tr>
+                        <th style="text-align: center;" width="100px">房源数据统计</th>
+                        <th width="100px">发布房源数</th>
+                        <th style="text-align: center;" width="100px">删除房源数</th>
+                        <th width="100px">锁定房源数</th>
+                        <th width="100px">上架房源数</th>
+                        <th width="100px">出租房源数</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody1">
+                    <tr>
+                        <td style="text-align: center;">当天</td>
+                        <td style="text-align: center;">{{todayAddHouse}}</td>
+                        <td style="text-align: center;">{{todayDeletedHouse}}</td>
+                        <td style="text-align: center;">{{todayLockedHoust}}</td>
+                        <td style="text-align: center;">{{todayOnlineHouse}}</td>
+                        <td style="text-align: center;">{{todaySaledHouse}}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">总计</td>
+                        <td style="text-align: center;">{{addHouse}}</td>
+                        <td style="text-align: center;">{{deletedHouse}}</td>
+                        <td style="text-align: center;">{{lockedHoust}}</td>
+                        <td style="text-align: center;">{{onlineHouse}}</td>
+                        <td style="text-align: center;">{{saledHouse}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="rows" style="margin-bottom: 1%; overflow: hidden;">
+        <div class="gridPanel">
+            <table border="0" cellspacing="0" cellpadding="0" class="border-table" width="100%">
+                <thead>
+                    <tr >
+                        <th style="text-align: center;" width="100px">订单数据统计</th>
+                        <th style="text-align: center;" width="100px">已支付需求单</th>
+                        <th width="100px">未支付需求单</th>
+                        <th style="text-align: center;" width="100px">意向单数</th>
+                        <th width="100px">成交订单数</th>
+                        <th width="100px">合同数</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody2">
+                    <tr>
+                        <td style="text-align: center;">当天</td>
+                        <td style="text-align: center;">{{todayPayed}}</td>
+                        <td style="text-align: center;">{{todayNoPay}}</td>
+                        <td style="text-align: center;">{{todayOrder}}</td>
+                        <td style="text-align: center;">{{todayDeal}}</td>
+                        <td style="text-align: center;">{{todayContract}}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">总计</td>
+                        <td style="text-align: center;">{{payed}}</td>
+                        <td style="text-align: center;">{{noPay}}</td>
+                        <td style="text-align: center;">{{order}}</td>
+                        <td style="text-align: center;">{{deal}}</td>
+                        <td style="text-align: center;">{{contract}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<style>
+    #copyrightcontent {
+        height: 30px;
+        line-height: 29px;
+        overflow: hidden;
+        position: absolute;
+        top: 100%;
+        margin-top: -30px;
+        width: 100%;
+        background-color: #fff;
+        border: 1px solid #e6e6e6;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .dashboard-stats {
+        float: left;
+        width: 20%;
+    }
+
+    .dashboard-stats-item {
+        position: relative;
+        overflow: hidden;
+        color: #fff;
+        cursor: pointer;
+        height: 105px;
+        margin-right: 25px;
+        margin-bottom: 10px;
+        padding: 20px 20px;
+    }
+
+        .dashboard-stats-item .m-top-none {
+            margin-top: 2px;
+        }
+
+        .dashboard-stats-item h2 {
+            font-size: 35px;
+            font-family: inherit;
+            line-height: 1.1;
+            font-weight: 500;
+        }
+
+        .dashboard-stats-item h5 {
+            font-size: 14px;
+            font-family: inherit;
+            margin-top: 3px;
+            line-height: 1.1;
+        }
+
+
+        .dashboard-stats-item .stat-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 30px;
+            opacity: .3;
+        }
+
+    .dashboard-stats i.fa.stats-icon {
+        width: 50px;
+        padding: 20px;
+        font-size: 50px;
+        text-align: center;
+        color: #fff;
+        height: 50px;
+        border-radius: 10px;
+    }
+
+    .panel-default {
+        border: none;
+        border-radius: 0px;
+        margin-bottom: 0px;
+        box-shadow: none;
+        -webkit-box-shadow: none;
+    }
+
+        .panel-default > .panel-heading {
+            color: #777;
+            background-color: #fff;
+            border-color: #e6e6e6;
+            padding: 10px 10px;
+        }
+
+        .panel-default > .panel-body {
+            padding: 10px;
+            padding-bottom: 0px;
+        }
+
+            .panel-default > .panel-body ul {
+                overflow: hidden;
+                padding: 0;
+                margin:0px;margin-top: -5px;
+            }
+
+                .panel-default > .panel-body ul li {
+                    line-height: 27px;
+                    list-style-type: none;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+
+                    .panel-default > .panel-body ul li .time {
+                        color: #a1a1a1;
+                        float: right;
+                        padding-right: 5px;
+                    }
+</style>
+
+<script src="//cdn.bootcss.com/vue/2.2.6/vue.js"></script>
+

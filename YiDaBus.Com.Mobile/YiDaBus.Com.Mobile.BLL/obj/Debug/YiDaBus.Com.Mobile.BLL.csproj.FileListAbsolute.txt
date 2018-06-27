@@ -7,3 +7,7 @@ E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\Mobile\YiDaBus.Com.Mobile\YiDaBus.Com.Mo
 E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\Mobile\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.BLL\obj\Debug\YiDaBus.Com.Mobile.BLL.dll
 E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\Mobile\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.BLL\obj\Debug\YiDaBus.Com.Mobile.BLL.pdb
 E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\Mobile\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.BLL\obj\Debug\YiDaBus.Com.Mobile.BLL.csprojResolveAssemblyReference.cache
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.BLL\bin\Debug\YiDaBus.Com.Mobile.BLL.dll
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.BLL\bin\Debug\YiDaBus.Com.Mobile.BLL.pdb
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.BLL\obj\Debug\YiDaBus.Com.Mobile.BLL.dll
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.BLL\obj\Debug\YiDaBus.Com.Mobile.BLL.pdb

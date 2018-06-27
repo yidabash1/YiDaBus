@@ -11,7 +11,6 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using YiDaBus.Com.UtilsModel;
 using YiDaBus.Com.Manager.Common;
 using YiDaBus.Com.Mobile.Model;
 using YiDaBus.Com.Mobile.Web.App_Start;

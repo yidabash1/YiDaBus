@@ -36,7 +36,7 @@
     </div>
 </form>
 <div class='demos-content-padded'>
-    <a href="javascript:void(0);" class="weui-btn weui-btn_primary" id="btnSave">保存</a>
+    <a href="javascript:void(0);" class="weui-btn weui-btn_primary" id="btnSave" lay-submit="" lay-filter="Submit" >保存</a>
     <a href="/Home/" class="weui-btn weui-btn_primary">返回</a>
 </div>
 
@@ -49,10 +49,38 @@
             });
 
 
-            $("#btnSave").on("click", function () {
-                var data = $("form").serialize();
-                $.alert(data, "提交的数据");
-            });
+            //$("#btnSave").on("click", function () {
+            //    var data = $("form").serialize();
+            //    $.alert(data, "提交的数据");
+            //});
+
+            InitForm();
         });
+
+        //初始化表单
+        function InitForm() {
+            layui.use(['form'], function () {
+                var form = layui.form();
+                //监听提交
+                form.on('submit(Submit)', function (data) {
+                    $.ar({
+                        url: 'api/LeaseOffer/Create'
+                               , data: data.field
+                               , success: function (data) {
+
+                               }
+                               , error: function (data) {
+                                   $.modalMsg({
+                                       content: data.msg, success: function () {
+                                           
+                                       }
+                                   });
+                               }
+                    });
+                    return false;
+                });
+            });
+        }
     </script>
+
 }

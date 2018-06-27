@@ -23,7 +23,7 @@ namespace YiDaBus.Com.Manager.Common
         {
             get
             {
-                string connection = System.Configuration.ConfigurationManager.ConnectionStrings["NFineDbContext"].ConnectionString;
+                string connection = System.Configuration.ConfigurationManager.ConnectionStrings["YiDaBusDbContext"].ConnectionString;
                 if (Encrypt == true)
                 {
                     return DESEncrypt.Decrypt(connection);

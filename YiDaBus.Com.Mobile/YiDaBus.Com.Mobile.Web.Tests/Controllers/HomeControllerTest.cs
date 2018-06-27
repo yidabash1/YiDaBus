@@ -8,7 +8,6 @@ using YiDaBus.Com.Mobile.Web;
 using YiDaBus.Com.Mobile.Web.Controllers;
 using Newtonsoft.Json;
 using YiDaBus.Com.Manager.Common;
-using YiDaBus.Com.UtilsModel;
 
 namespace YiDaBus.Com.Mobile.Web.Tests.Controllers
 {

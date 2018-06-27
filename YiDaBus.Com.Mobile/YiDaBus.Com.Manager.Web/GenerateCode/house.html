@@ -1,0 +1,1435 @@
+	
+<!--=======================Index表单START====================================-->
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<script>
+    var modulelUrl = "";//区域的路径
+    $(function () {
+        gridList();
+    })
+    var $gridList;
+    function gridList() {
+        $gridList = $("#gridList");
+        $gridList.dataGrid({
+            url: modulelUrl + "GetGridJson",
+            height: $(window).height() - 128,
+            colModel: [
+						{ label: "主键", name: "Id", hidden: true, key: true },
+							{ label: '房源标题', name: 'HouseTitle', width: 150, align: 'left' },
+							{ label: '用户ID号', name: 'UserId', width: 150, align: 'left' },
+							{ label: '用户真实姓名', name: 'UserRealName', width: 150, align: 'left' },
+							{ label: '房源总状态状态：0代表待审核；1代表审核通过；2代表审核被驳回；-1 已删除， 10 上架，-10 下架 ，31已刷新，32刷新失败，33 等待刷新', name: 'AuditStatus', width: 150, align: 'left' },
+							{ label: '房源状态：0表示未出租；1表示已出租；', name: 'HStatus', width: 150, align: 'left' },
+							{ label: '房源标签（多个标签以逗号隔开）', name: 'HTags', width: 150, align: 'left' },
+							{ label: '出租方式', name: 'RentMode', width: 150, align: 'left' },
+							{ label: '房源小区ID', name: 'HouseVillageId', width: 150, align: 'left' },
+							{ label: '小区名称', name: 'AreasName', width: 150, align: 'left' },
+							{ label: '省', name: 'Province', width: 150, align: 'left' },
+							{ label: '市', name: 'City', width: 150, align: 'left' },
+							{ label: '区', name: 'District', width: 150, align: 'left' },
+							{ label: '商圈', name: 'TradingArea', width: 150, align: 'left' },
+							{ label: '户型（室）', name: 'HRoom', width: 150, align: 'left' },
+							{ label: '户型（厅）', name: 'HOffice', width: 150, align: 'left' },
+							{ label: '户型（卫）', name: 'HWashroom', width: 150, align: 'left' },
+							{ label: '楼层（层级）', name: 'HFloor', width: 150, align: 'left' },
+							{ label: '楼层（共计）', name: 'HFloorTotal', width: 150, align: 'left' },
+							{ label: '出租面积', name: 'RentalArea', width: 150, align: 'left' },
+							{ label: '卧室', name: 'Bedroom', width: 150, align: 'left' },
+							{ label: '房源朝向', name: 'HDirection', width: 150, align: 'left' },
+							{ label: '房屋装修情况', name: 'HDecoration', width: 150, align: 'left' },
+							{ label: '房源租金', name: 'HRent', width: 150, align: 'left' },
+							{ label: '房源坐标（经度）', name: 'XCoordinate', width: 150, align: 'left' },
+							{ label: '房源坐标（纬度）', name: 'YCoordinate', width: 150, align: 'left' },
+							{ label: '房源具体地址', name: 'DetailAddress', width: 150, align: 'left' },
+							{ label: '软删除：0表示未删除；1表示已删除', name: 'IsDel', width: 150, align: 'left' },
+							{ label: '房源创建时间', name: 'AddTime', width: 150, align: 'left' },
+							{ label: '房源更新时间', name: 'LastUpdateTime', width: 150, align: 'left' },
+							{ label: '房源封面', name: 'HouseCorver', width: 150, align: 'left' },
+							{ label: '点评', name: 'CommentsByAdmin', width: 150, align: 'left' },
+							{ label: '图片数', name: 'PicsCount', width: 150, align: 'left' },
+							{ label: '视频数', name: 'VideoCount', width: 150, align: 'left' },
+							{ label: '收藏数', name: 'CollectionNumber', width: 150, align: 'left' },
+							{ label: '备注', name: 'Remark', width: 150, align: 'left' },
+							{ label: '联系电话', name: 'LinkTel', width: 150, align: 'left' },
+							{ label: '意向房源数', name: 'InterestNumber', width: 150, align: 'left' },
+							{ label: '通话量', name: 'CallNumber', width: 150, align: 'left' },
+							{ label: '来源,0 默认 用户上传,1 后台上传,2其他', name: 'Source', width: 150, align: 'left' },
+							{ label: '审核人Id', name: 'AuditId', width: 150, align: 'left' },
+							{ label: '审核人名称', name: 'AuditName', width: 150, align: 'left' },
+							{ label: '最近地铁距离', name: 'SubwayDistance', width: 150, align: 'left' },
+							{ label: '地铁线路, 用逗号分隔', name: 'SubwayLines', width: 150, align: 'left' },
+							{ label: '地铁站，用逗号隔开', name: 'SubwayStations', width: 150, align: 'left' },
+							{ label: '栋号', name: 'BuildingNO', width: 150, align: 'left' },
+							{ label: '室号', name: 'RoomNO', width: 150, align: 'left' },
+							{ label: '上下架，0：未上架，1已上架', name: 'IsOn', width: 150, align: 'left' },
+							{ label: '刷新状态：-1 刷新失败，0已刷新，1 待刷新，', name: 'RefreshStatus', width: 150, align: 'left' },
+							{ label: '上架时间', name: 'IsOnTime', width: 150, align: 'left' },
+							{ label: '审核通过时间', name: 'AuditedTime', width: 150, align: 'left' },
+							{ label: '租金方式', name: 'RentMoneyWay', width: 150, align: 'left' },
+			],
+            pager: "#gridPager",
+            viewrecords: true
+        });
+        $("#btn_search").click(function () {
+            $gridList.jqGrid('setGridParam', {
+                postData: { keyword: $("#txt_keyword").val() },
+            }).trigger('reloadGrid');
+        });
+    }
+    function btn_add() {
+        $.modalOpen({
+            id: "Form",
+            title: "新增房源",
+            url: modulelUrl + "Form",
+            width: "800px",
+            height: "600px",
+            callBack: function (iframeId) {
+                top.frames[iframeId].submitForm();
+            }
+        });
+    }
+    function btn_edit() {
+        var keyValue = $("#gridList").jqGridRowValue().Id;
+        if (keyValue == undefined) {
+            $.modalAlert("请选择要操作的行！", 2);
+            return;
+        }
+        $.modalOpen({
+            id: "Form",
+            title: "修改房源",
+            url: modulelUrl + "Form?keyValue=" + keyValue,
+            width: "800px",
+            height: "600px",
+            callBack: function (iframeId) {
+                top.frames[iframeId].submitForm();
+            }
+        });
+    }
+    function btn_delete() {
+        var keyValue = $("#gridList").jqGridRowValue().Id;
+        if (keyValue == undefined) {
+            $.modalAlert("请选择要操作的行！", 2);
+            return;
+        }
+        $.deleteForm({
+            url: modulelUrl + "DeleteForm",
+            param: { keyValue: keyValue },
+            success: function () {
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
+            }
+        })
+    }
+    function btn_details() {
+        var keyValue = $("#gridList").jqGridRowValue().Id;
+        if (keyValue == undefined) {
+            $.modalAlert("请选择要操作的行！", 2);
+            return;
+        }
+        $.modalOpen({
+            id: "Details",
+            title: "查看房源",
+            url: modulelUrl + "Form?action=Details&keyValue=" + keyValue,
+            width: "800px",
+            height: "600px",
+            btn: null,
+        });
+    }
+</script>
+<style>
+    dl {
+        margin: 5px !important;
+    }
+
+    a:hover {
+        color: #ff6a00;
+    }
+
+    #SearchForm table tr {
+    }
+
+        #SearchForm table tr td {
+            padding-right: 10px;
+        }
+</style>
+<div class="topPanel" style="height: 100px;">
+  <div class="search" style="float: inherit;">
+	<form id="SearchForm">
+            <table>
+                <tr>
+								<!--主键自增ID号-->
+					<td>
+                        <div class="input-group">
+                            <strong>主键自增ID号：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="Id" name="Id" type="text" class="form-control" placeholder="主键自增ID号" >
+                        </div>
+                    </td>
+								<!--房源标题-->
+					<td>
+                        <div class="input-group">
+                            <strong>房源标题：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="HouseTitle" name="HouseTitle" type="text" class="form-control" placeholder="房源标题" >
+                        </div>
+                    </td>
+								<!--用户ID号-->
+					<td>
+                        <div class="input-group">
+                            <strong>用户ID号：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="UserId" name="UserId" type="text" class="form-control" placeholder="用户ID号" >
+                        </div>
+                    </td>
+								<!--用户真实姓名-->
+					<td>
+                        <div class="input-group">
+                            <strong>用户真实姓名：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="UserRealName" name="UserRealName" type="text" class="form-control" placeholder="用户真实姓名" >
+                        </div>
+                    </td>
+								<!--房源总状态状态：0代表待审核；1代表审核通过；2代表审核被驳回；-1 已删除， 10 上架，-10 下架 ，31已刷新，32刷新失败，33 等待刷新-->
+					<td>
+                        <div class="input-group">
+                            <strong>房源总状态状态：0代表待审核；1代表审核通过；2代表审核被驳回；-1 已删除， 10 上架，-10 下架 ，31已刷新，32刷新失败，33 等待刷新：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="AuditStatus" name="AuditStatus" type="text" class="form-control" placeholder="房源总状态状态：0代表待审核；1代表审核通过；2代表审核被驳回；-1 已删除， 10 上架，-10 下架 ，31已刷新，32刷新失败，33 等待刷新" >
+                        </div>
+                    </td>
+								<!--房源状态：0表示未出租；1表示已出租；-->
+					<td>
+                        <div class="input-group">
+                            <strong>房源状态：0表示未出租；1表示已出租；：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="HStatus" name="HStatus" type="text" class="form-control" placeholder="房源状态：0表示未出租；1表示已出租；" >
+                        </div>
+                    </td>
+								<!--房源标签（多个标签以逗号隔开）-->
+					<td>
+                        <div class="input-group">
+                            <strong>房源标签（多个标签以逗号隔开）：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="HTags" name="HTags" type="text" class="form-control" placeholder="房源标签（多个标签以逗号隔开）" >
+                        </div>
+                    </td>
+								<!--出租方式-->
+					<td>
+                        <div class="input-group">
+                            <strong>出租方式：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="RentMode" name="RentMode" type="text" class="form-control" placeholder="出租方式" >
+                        </div>
+                    </td>
+								<!--房源小区ID-->
+					<td>
+                        <div class="input-group">
+                            <strong>房源小区ID：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="HouseVillageId" name="HouseVillageId" type="text" class="form-control" placeholder="房源小区ID" >
+                        </div>
+                    </td>
+								<!--小区名称-->
+					<td>
+                        <div class="input-group">
+                            <strong>小区名称：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="AreasName" name="AreasName" type="text" class="form-control" placeholder="小区名称" >
+                        </div>
+                    </td>
+								<!--省-->
+					<td>
+                        <div class="input-group">
+                            <strong>省：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="Province" name="Province" type="text" class="form-control" placeholder="省" >
+                        </div>
+                    </td>
+								<!--市-->
+					<td>
+                        <div class="input-group">
+                            <strong>市：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="City" name="City" type="text" class="form-control" placeholder="市" >
+                        </div>
+                    </td>
+								<!--区-->
+					<td>
+                        <div class="input-group">
+                            <strong>区：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="District" name="District" type="text" class="form-control" placeholder="区" >
+                        </div>
+                    </td>
+								<!--商圈-->
+					<td>
+                        <div class="input-group">
+                            <strong>商圈：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="TradingArea" name="TradingArea" type="text" class="form-control" placeholder="商圈" >
+                        </div>
+                    </td>
+								<!--户型（室）-->
+					<td>
+                        <div class="input-group">
+                            <strong>户型（室）：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="HRoom" name="HRoom" type="text" class="form-control" placeholder="户型（室）" >
+                        </div>
+                    </td>
+								<!--户型（厅）-->
+					<td>
+                        <div class="input-group">
+                            <strong>户型（厅）：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="HOffice" name="HOffice" type="text" class="form-control" placeholder="户型（厅）" >
+                        </div>
+                    </td>
+								<!--户型（卫）-->
+					<td>
+                        <div class="input-group">
+                            <strong>户型（卫）：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="HWashroom" name="HWashroom" type="text" class="form-control" placeholder="户型（卫）" >
+                        </div>
+                    </td>
+								<!--楼层（层级）-->
+					<td>
+                        <div class="input-group">
+                            <strong>楼层（层级）：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="HFloor" name="HFloor" type="text" class="form-control" placeholder="楼层（层级）" >
+                        </div>
+                    </td>
+								<!--楼层（共计）-->
+					<td>
+                        <div class="input-group">
+                            <strong>楼层（共计）：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="HFloorTotal" name="HFloorTotal" type="text" class="form-control" placeholder="楼层（共计）" >
+                        </div>
+                    </td>
+								<!--出租面积-->
+					<td>
+                        <div class="input-group">
+                            <strong>出租面积：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="RentalArea" name="RentalArea" type="text" class="form-control" placeholder="出租面积" >
+                        </div>
+                    </td>
+								<!--卧室-->
+					<td>
+                        <div class="input-group">
+                            <strong>卧室：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="Bedroom" name="Bedroom" type="text" class="form-control" placeholder="卧室" >
+                        </div>
+                    </td>
+								<!--房源朝向-->
+					<td>
+                        <div class="input-group">
+                            <strong>房源朝向：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="HDirection" name="HDirection" type="text" class="form-control" placeholder="房源朝向" >
+                        </div>
+                    </td>
+								<!--房屋装修情况-->
+					<td>
+                        <div class="input-group">
+                            <strong>房屋装修情况：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="HDecoration" name="HDecoration" type="text" class="form-control" placeholder="房屋装修情况" >
+                        </div>
+                    </td>
+								<!--房源租金-->
+					<td>
+                        <div class="input-group">
+                            <strong>房源租金：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="HRent" name="HRent" type="text" class="form-control" placeholder="房源租金" >
+                        </div>
+                    </td>
+								<!--房源坐标（经度）-->
+					<td>
+                        <div class="input-group">
+                            <strong>房源坐标（经度）：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="XCoordinate" name="XCoordinate" type="text" class="form-control" placeholder="房源坐标（经度）" >
+                        </div>
+                    </td>
+								<!--房源坐标（纬度）-->
+					<td>
+                        <div class="input-group">
+                            <strong>房源坐标（纬度）：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="YCoordinate" name="YCoordinate" type="text" class="form-control" placeholder="房源坐标（纬度）" >
+                        </div>
+                    </td>
+								<!--房源具体地址-->
+					<td>
+                        <div class="input-group">
+                            <strong>房源具体地址：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="DetailAddress" name="DetailAddress" type="text" class="form-control" placeholder="房源具体地址" >
+                        </div>
+                    </td>
+								<!--软删除：0表示未删除；1表示已删除-->
+					<td>
+                        <div class="input-group">
+                            <strong>软删除：0表示未删除；1表示已删除：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="IsDel" name="IsDel" type="text" class="form-control" placeholder="软删除：0表示未删除；1表示已删除" >
+                        </div>
+                    </td>
+								<!--房源创建时间-->
+					<td>
+                        <div class="input-group">
+                            <strong>房源创建时间：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="AddTime" name="AddTime" type="text" class="form-control" placeholder="房源创建时间" >
+                        </div>
+                    </td>
+								<!--房源更新时间-->
+					<td>
+                        <div class="input-group">
+                            <strong>房源更新时间：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="LastUpdateTime" name="LastUpdateTime" type="text" class="form-control" placeholder="房源更新时间" >
+                        </div>
+                    </td>
+								<!--房源封面-->
+					<td>
+                        <div class="input-group">
+                            <strong>房源封面：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="HouseCorver" name="HouseCorver" type="text" class="form-control" placeholder="房源封面" >
+                        </div>
+                    </td>
+								<!--点评-->
+					<td>
+                        <div class="input-group">
+                            <strong>点评：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="CommentsByAdmin" name="CommentsByAdmin" type="text" class="form-control" placeholder="点评" >
+                        </div>
+                    </td>
+								<!--图片数-->
+					<td>
+                        <div class="input-group">
+                            <strong>图片数：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="PicsCount" name="PicsCount" type="text" class="form-control" placeholder="图片数" >
+                        </div>
+                    </td>
+								<!--视频数-->
+					<td>
+                        <div class="input-group">
+                            <strong>视频数：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="VideoCount" name="VideoCount" type="text" class="form-control" placeholder="视频数" >
+                        </div>
+                    </td>
+								<!--收藏数-->
+					<td>
+                        <div class="input-group">
+                            <strong>收藏数：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="CollectionNumber" name="CollectionNumber" type="text" class="form-control" placeholder="收藏数" >
+                        </div>
+                    </td>
+								<!--备注-->
+					<td>
+                        <div class="input-group">
+                            <strong>备注：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="Remark" name="Remark" type="text" class="form-control" placeholder="备注" >
+                        </div>
+                    </td>
+								<!--联系电话-->
+					<td>
+                        <div class="input-group">
+                            <strong>联系电话：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="LinkTel" name="LinkTel" type="text" class="form-control" placeholder="联系电话" >
+                        </div>
+                    </td>
+								<!--意向房源数-->
+					<td>
+                        <div class="input-group">
+                            <strong>意向房源数：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="InterestNumber" name="InterestNumber" type="text" class="form-control" placeholder="意向房源数" >
+                        </div>
+                    </td>
+								<!--通话量-->
+					<td>
+                        <div class="input-group">
+                            <strong>通话量：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="CallNumber" name="CallNumber" type="text" class="form-control" placeholder="通话量" >
+                        </div>
+                    </td>
+								<!--来源,0 默认 用户上传,1 后台上传,2其他-->
+					<td>
+                        <div class="input-group">
+                            <strong>来源,0 默认 用户上传,1 后台上传,2其他：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="Source" name="Source" type="text" class="form-control" placeholder="来源,0 默认 用户上传,1 后台上传,2其他" >
+                        </div>
+                    </td>
+								<!--审核人Id-->
+					<td>
+                        <div class="input-group">
+                            <strong>审核人Id：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="AuditId" name="AuditId" type="text" class="form-control" placeholder="审核人Id" >
+                        </div>
+                    </td>
+								<!--审核人名称-->
+					<td>
+                        <div class="input-group">
+                            <strong>审核人名称：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="AuditName" name="AuditName" type="text" class="form-control" placeholder="审核人名称" >
+                        </div>
+                    </td>
+								<!--最近地铁距离-->
+					<td>
+                        <div class="input-group">
+                            <strong>最近地铁距离：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="SubwayDistance" name="SubwayDistance" type="text" class="form-control" placeholder="最近地铁距离" >
+                        </div>
+                    </td>
+								<!--地铁线路, 用逗号分隔-->
+					<td>
+                        <div class="input-group">
+                            <strong>地铁线路, 用逗号分隔：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="SubwayLines" name="SubwayLines" type="text" class="form-control" placeholder="地铁线路, 用逗号分隔" >
+                        </div>
+                    </td>
+								<!--地铁站，用逗号隔开-->
+					<td>
+                        <div class="input-group">
+                            <strong>地铁站，用逗号隔开：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="SubwayStations" name="SubwayStations" type="text" class="form-control" placeholder="地铁站，用逗号隔开" >
+                        </div>
+                    </td>
+								<!--栋号-->
+					<td>
+                        <div class="input-group">
+                            <strong>栋号：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="BuildingNO" name="BuildingNO" type="text" class="form-control" placeholder="栋号" >
+                        </div>
+                    </td>
+								<!--室号-->
+					<td>
+                        <div class="input-group">
+                            <strong>室号：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="RoomNO" name="RoomNO" type="text" class="form-control" placeholder="室号" >
+                        </div>
+                    </td>
+								<!--上下架，0：未上架，1已上架-->
+					<td>
+                        <div class="input-group">
+                            <strong>上下架，0：未上架，1已上架：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="IsOn" name="IsOn" type="text" class="form-control" placeholder="上下架，0：未上架，1已上架" >
+                        </div>
+                    </td>
+								<!--刷新状态：-1 刷新失败，0已刷新，1 待刷新，-->
+					<td>
+                        <div class="input-group">
+                            <strong>刷新状态：-1 刷新失败，0已刷新，1 待刷新，：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="RefreshStatus" name="RefreshStatus" type="text" class="form-control" placeholder="刷新状态：-1 刷新失败，0已刷新，1 待刷新，" >
+                        </div>
+                    </td>
+								<!--上架时间-->
+					<td>
+                        <div class="input-group">
+                            <strong>上架时间：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="IsOnTime" name="IsOnTime" type="text" class="form-control" placeholder="上架时间" >
+                        </div>
+                    </td>
+								<!--审核通过时间-->
+					<td>
+                        <div class="input-group">
+                            <strong>审核通过时间：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="AuditedTime" name="AuditedTime" type="text" class="form-control" placeholder="审核通过时间" >
+                        </div>
+                    </td>
+								<!--租金方式-->
+					<td>
+                        <div class="input-group">
+                            <strong>租金方式：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="RentMoneyWay" name="RentMoneyWay" type="text" class="form-control" placeholder="租金方式" >
+                        </div>
+                    </td>
+									<td>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button id="btn_search" type="button" class="btn  btn-primary" onclick="SearchHandler()"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </td>
+                   <td>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn  btn-primary" onclick="ShowMoreSearchHandler(this)" style="padding:0px 10px;"><i class="fa fa-expand"></i>更多</button>
+                            </span>
+                        </div>
+                    </td>
+					<td>
+						<div class="btn-group">
+							<a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+						</div>
+					</td>
+                </tr>
+            </table>
+			<table id="TbMoreSeach" style="display:none;">
+				<tr>
+				</tr>
+			</table>
+        </form>
+    </div>
+    <div id="toolbar" style="padding:0px 10px;">
+		<table>
+			<tr>
+				<td>
+					<a id="NF-edit" class="btn btn-default" authorize="yes" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>修改房源</a>
+				</td>
+				<td>
+					<a id="NF-delete" class="btn btn-default" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除房源</a>
+				</td>
+				<td>
+					<a id="NF-Details" class="btn btn-default" authorize="yes" onclick="btn_details()"><i class="fa fa-search-plus"></i>查看房源</a>
+				</td>
+			</tr>
+		</table>
+		<script>$('#toolbar').authorizeButton()</script>
+	</div>
+</div>
+<div class="gridPanel">
+    <table id="gridList"></table>
+    <div id="gridPager"></div>
+</div>
+ <!--=======================Index表单END====================================-->
+  <!--=======================FORM表单START====================================-->
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<script>
+    var modulelUrl = "";//区域的路径
+    var keyValue = $.request("keyValue");
+    var action = $.request("action");
+    $(function () {
+        initControl();
+        if (!!keyValue) {
+            if (action == "Details") {
+                $.ajax({
+                    url: modulelUrl + "GetFormJson",
+                    data: { keyValue: keyValue },
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        $("#form1").formSerialize(data);
+                        $("#form1").find('.form-control,input').attr('readonly', 'readonly');
+                        $("#form1").find('select').attr('disabled', 'true');
+                        $("#form1").find('div.ckbox label').attr('for', '');
+                        $('.upload-path').each(function (index, obj) {
+                            $(obj).after("<img height='100px' width='100px' src='" + $(obj).val() + "'></img>").hide();
+                        });
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: modulelUrl + "GetFormJson",
+                    data: { keyValue: keyValue },
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        $("#form1").formSerialize(data);
+                        $(".upload-img").InitUploader({ swf: "~/Content/js/webuploader/uploader.swf" });
+                    }
+                });
+            }
+        }else {
+            $(".upload-img").InitUploader({ swf: "~/Content/js/webuploader/uploader.swf" });
+        }
+    });
+    function initControl() {
+       
+    }
+    function submitForm() {
+        if (!$('#form1').formValid()) {
+            return false;
+        }
+        $.submitForm({
+            url: modulelUrl + "SubmitForm?keyValue=" + keyValue,
+            param: $("#form1").formSerialize(),
+            success: function () {
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
+            }
+        })
+    }
+</script>
+<form id="form1">
+    <div style="padding-top: 20px; margin-right: 20px;">
+        <table class="form">
+                  <tr>
+					<th class="formTitle">主键自增ID号</th>
+					<td class="formValue">
+				                    </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">房源标题</th>
+					<td class="formValue">
+				   					<input id="HouseTitle" name="HouseTitle" type="text" class="form-control required" placeholder="请输入房源标题" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">用户ID号</th>
+					<td class="formValue">
+				   					<input id="UserId" name="UserId" type="text" class="form-control required" placeholder="请输入用户ID号" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">用户真实姓名</th>
+					<td class="formValue">
+				   					<input id="UserRealName" name="UserRealName" type="text" class="form-control required" placeholder="请输入用户真实姓名" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">房源总状态状态：0代表待审核；1代表审核通过；2代表审核被驳回；-1 已删除， 10 上架，-10 下架 ，31已刷新，32刷新失败，33 等待刷新</th>
+					<td class="formValue">
+				   					<input id="AuditStatus" name="AuditStatus" type="text" class="form-control required" placeholder="请输入房源总状态状态：0代表待审核；1代表审核通过；2代表审核被驳回；-1 已删除， 10 上架，-10 下架 ，31已刷新，32刷新失败，33 等待刷新" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">房源状态：0表示未出租；1表示已出租；</th>
+					<td class="formValue">
+				   					<input id="HStatus" name="HStatus" type="text" class="form-control required" placeholder="请输入房源状态：0表示未出租；1表示已出租；" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">房源标签（多个标签以逗号隔开）</th>
+					<td class="formValue">
+				   					<input id="HTags" name="HTags" type="text" class="form-control required" placeholder="请输入房源标签（多个标签以逗号隔开）" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">出租方式</th>
+					<td class="formValue">
+				   					<input id="RentMode" name="RentMode" type="text" class="form-control required" placeholder="请输入出租方式" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">房源小区ID</th>
+					<td class="formValue">
+				   					<input id="HouseVillageId" name="HouseVillageId" type="text" class="form-control required" placeholder="请输入房源小区ID" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">小区名称</th>
+					<td class="formValue">
+				   					<input id="AreasName" name="AreasName" type="text" class="form-control required" placeholder="请输入小区名称" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">省</th>
+					<td class="formValue">
+				   					<input id="Province" name="Province" type="text" class="form-control required" placeholder="请输入省" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">市</th>
+					<td class="formValue">
+				   					<input id="City" name="City" type="text" class="form-control required" placeholder="请输入市" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">区</th>
+					<td class="formValue">
+				   					<input id="District" name="District" type="text" class="form-control required" placeholder="请输入区" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">商圈</th>
+					<td class="formValue">
+				   					<input id="TradingArea" name="TradingArea" type="text" class="form-control required" placeholder="请输入商圈" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">户型（室）</th>
+					<td class="formValue">
+				   					<input id="HRoom" name="HRoom" type="text" class="form-control required" placeholder="请输入户型（室）" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">户型（厅）</th>
+					<td class="formValue">
+				   					<input id="HOffice" name="HOffice" type="text" class="form-control required" placeholder="请输入户型（厅）" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">户型（卫）</th>
+					<td class="formValue">
+				   					<input id="HWashroom" name="HWashroom" type="text" class="form-control required" placeholder="请输入户型（卫）" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">楼层（层级）</th>
+					<td class="formValue">
+				   					<input id="HFloor" name="HFloor" type="text" class="form-control required" placeholder="请输入楼层（层级）" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">楼层（共计）</th>
+					<td class="formValue">
+				   					<input id="HFloorTotal" name="HFloorTotal" type="text" class="form-control required" placeholder="请输入楼层（共计）" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">出租面积</th>
+					<td class="formValue">
+				   					<input id="RentalArea" name="RentalArea" type="text" class="form-control required" placeholder="请输入出租面积" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">卧室</th>
+					<td class="formValue">
+				   					<input id="Bedroom" name="Bedroom" type="text" class="form-control required" placeholder="请输入卧室" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">房源朝向</th>
+					<td class="formValue">
+				   					<input id="HDirection" name="HDirection" type="text" class="form-control required" placeholder="请输入房源朝向" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">房屋装修情况</th>
+					<td class="formValue">
+				   					<input id="HDecoration" name="HDecoration" type="text" class="form-control required" placeholder="请输入房屋装修情况" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">房源租金</th>
+					<td class="formValue">
+				   					<input id="HRent" name="HRent" type="text" class="form-control required" placeholder="请输入房源租金" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">房源坐标（经度）</th>
+					<td class="formValue">
+				   					<input id="XCoordinate" name="XCoordinate" type="text" class="form-control required" placeholder="请输入房源坐标（经度）" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">房源坐标（纬度）</th>
+					<td class="formValue">
+				   					<input id="YCoordinate" name="YCoordinate" type="text" class="form-control required" placeholder="请输入房源坐标（纬度）" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">房源具体地址</th>
+					<td class="formValue">
+				   					<input id="DetailAddress" name="DetailAddress" type="text" class="form-control required" placeholder="请输入房源具体地址" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">软删除：0表示未删除；1表示已删除</th>
+					<td class="formValue">
+				   					<input id="IsDel" name="IsDel" type="text" class="form-control required" placeholder="请输入软删除：0表示未删除；1表示已删除" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">房源创建时间</th>
+					<td class="formValue">
+				   					<input id="AddTime" name="AddTime" type="text" class="form-control required" placeholder="请输入房源创建时间" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">房源更新时间</th>
+					<td class="formValue">
+				   					<input id="LastUpdateTime" name="LastUpdateTime" type="text" class="form-control required" placeholder="请输入房源更新时间" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">房源封面</th>
+					<td class="formValue">
+				   					<input id="HouseCorver" name="HouseCorver" type="text" class="form-control required" placeholder="请输入房源封面" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">点评</th>
+					<td class="formValue">
+				   					<input id="CommentsByAdmin" name="CommentsByAdmin" type="text" class="form-control required" placeholder="请输入点评" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">图片数</th>
+					<td class="formValue">
+				   					<input id="PicsCount" name="PicsCount" type="text" class="form-control required" placeholder="请输入图片数" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">视频数</th>
+					<td class="formValue">
+				   					<input id="VideoCount" name="VideoCount" type="text" class="form-control required" placeholder="请输入视频数" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">收藏数</th>
+					<td class="formValue">
+				   					<input id="CollectionNumber" name="CollectionNumber" type="text" class="form-control required" placeholder="请输入收藏数" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">备注</th>
+					<td class="formValue">
+				   					<input id="Remark" name="Remark" type="text" class="form-control required" placeholder="请输入备注" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">联系电话</th>
+					<td class="formValue">
+				   					<input id="LinkTel" name="LinkTel" type="text" class="form-control required" placeholder="请输入联系电话" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">意向房源数</th>
+					<td class="formValue">
+				   					<input id="InterestNumber" name="InterestNumber" type="text" class="form-control required" placeholder="请输入意向房源数" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">通话量</th>
+					<td class="formValue">
+				   					<input id="CallNumber" name="CallNumber" type="text" class="form-control required" placeholder="请输入通话量" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">来源,0 默认 用户上传,1 后台上传,2其他</th>
+					<td class="formValue">
+				   					<input id="Source" name="Source" type="text" class="form-control required" placeholder="请输入来源,0 默认 用户上传,1 后台上传,2其他" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">审核人Id</th>
+					<td class="formValue">
+				   					<input id="AuditId" name="AuditId" type="text" class="form-control required" placeholder="请输入审核人Id" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">审核人名称</th>
+					<td class="formValue">
+				   					<input id="AuditName" name="AuditName" type="text" class="form-control required" placeholder="请输入审核人名称" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">最近地铁距离</th>
+					<td class="formValue">
+				   					<input id="SubwayDistance" name="SubwayDistance" type="text" class="form-control required" placeholder="请输入最近地铁距离" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">地铁线路, 用逗号分隔</th>
+					<td class="formValue">
+				   					<input id="SubwayLines" name="SubwayLines" type="text" class="form-control required" placeholder="请输入地铁线路, 用逗号分隔" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">地铁站，用逗号隔开</th>
+					<td class="formValue">
+				   					<input id="SubwayStations" name="SubwayStations" type="text" class="form-control required" placeholder="请输入地铁站，用逗号隔开" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">栋号</th>
+					<td class="formValue">
+				   					<input id="BuildingNO" name="BuildingNO" type="text" class="form-control required" placeholder="请输入栋号" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">室号</th>
+					<td class="formValue">
+				   					<input id="RoomNO" name="RoomNO" type="text" class="form-control required" placeholder="请输入室号" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">上下架，0：未上架，1已上架</th>
+					<td class="formValue">
+				   					<input id="IsOn" name="IsOn" type="text" class="form-control required" placeholder="请输入上下架，0：未上架，1已上架" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">刷新状态：-1 刷新失败，0已刷新，1 待刷新，</th>
+					<td class="formValue">
+				   					<input id="RefreshStatus" name="RefreshStatus" type="text" class="form-control required" placeholder="请输入刷新状态：-1 刷新失败，0已刷新，1 待刷新，" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">上架时间</th>
+					<td class="formValue">
+				   					<input id="IsOnTime" name="IsOnTime" type="text" class="form-control required" placeholder="请输入上架时间" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">审核通过时间</th>
+					<td class="formValue">
+				   					<input id="AuditedTime" name="AuditedTime" type="text" class="form-control required" placeholder="请输入审核通过时间" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">租金方式</th>
+					<td class="formValue">
+				   					<input id="RentMoneyWay" name="RentMoneyWay" type="text" class="form-control required" placeholder="请输入租金方式" />
+                           </td>
+    </tr>
+         </table>
+    </div>
+</form>
+ <!--=======================FORM表单END====================================-->
+ <!--=======================Detail表单START====================================-->
+ @{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<script>
+    var modulelUrl = "";//区域的路径
+    var houseId = $.request("houseId");
+    $(function () {
+		 $('.wrapper').height($(window).height() - 60);
+        $('.tab-content').height($(window).height() - 120);
+        initControl();
+        if (!!houseId) {
+            $.ajax({
+                url: modulelUrl + "GetFormJson",
+                data: { houseId: houseId },
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    $("#form1").formSerialize(data);
+                    $("#form1").find('.form-control,input').attr('readonly', 'readonly');
+                    $("#form1").find('select').attr('disabled', 'true');
+                    $("#form1").find('div.ckbox label').attr('for', '');
+                    $('.upload-path').each(function (index, obj) {
+                        $(obj).after("<img height='100px' width='100px' src='" + $(obj).val() + "'></img>").hide();
+                    });
+                }
+            });
+        }
+    });
+    function initControl() {
+       
+    }
+    
+</script>
+<style>
+    input, select {
+        width: 400px !important;
+        border-width: 0px !important;
+		appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+    }
+</style>
+<div>
+    <a class="btn btn-primary" href="javascript:void(0);" onclick="history.go(-1)"><i class="fa fa-backward" style="margin-right:5px;"></i>返回</a>
+</div>
+<form id="form1" >
+<div class="wrapper" style="overflow:hidden;">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#a" data-toggle="tab" aria-expanded="true">基本信息</a></li>
+    </ul>
+    <div class="tab-content" style="padding: 5px;overflow:auto;">
+        <div id="a" class="tab-pane active" style="padding: 15px;">
+            <ul class="pop-list">
+							                    <li>
+				   <label>主键自增ID号</label>
+				   				 </li>
+				  				                    <li>
+				   <label>房源标题</label>
+				   					<input id="HouseTitle" name="HouseTitle" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>用户ID号</label>
+				   					<input id="UserId" name="UserId" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>用户真实姓名</label>
+				   					<input id="UserRealName" name="UserRealName" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>房源总状态状态：0代表待审核；1代表审核通过；2代表审核被驳回；-1 已删除， 10 上架，-10 下架 ，31已刷新，32刷新失败，33 等待刷新</label>
+				   					<input id="AuditStatus" name="AuditStatus" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>房源状态：0表示未出租；1表示已出租；</label>
+				   					<input id="HStatus" name="HStatus" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>房源标签（多个标签以逗号隔开）</label>
+				   					<input id="HTags" name="HTags" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>出租方式</label>
+				   					<input id="RentMode" name="RentMode" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>房源小区ID</label>
+				   					<input id="HouseVillageId" name="HouseVillageId" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>小区名称</label>
+				   					<input id="AreasName" name="AreasName" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>省</label>
+				   					<input id="Province" name="Province" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>市</label>
+				   					<input id="City" name="City" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>区</label>
+				   					<input id="District" name="District" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>商圈</label>
+				   					<input id="TradingArea" name="TradingArea" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>户型（室）</label>
+				   					<input id="HRoom" name="HRoom" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>户型（厅）</label>
+				   					<input id="HOffice" name="HOffice" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>户型（卫）</label>
+				   					<input id="HWashroom" name="HWashroom" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>楼层（层级）</label>
+				   					<input id="HFloor" name="HFloor" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>楼层（共计）</label>
+				   					<input id="HFloorTotal" name="HFloorTotal" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>出租面积</label>
+				   					<input id="RentalArea" name="RentalArea" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>卧室</label>
+				   					<input id="Bedroom" name="Bedroom" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>房源朝向</label>
+				   					<input id="HDirection" name="HDirection" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>房屋装修情况</label>
+				   					<input id="HDecoration" name="HDecoration" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>房源租金</label>
+				   					<input id="HRent" name="HRent" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>房源坐标（经度）</label>
+				   					<input id="XCoordinate" name="XCoordinate" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>房源坐标（纬度）</label>
+				   					<input id="YCoordinate" name="YCoordinate" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>房源具体地址</label>
+				   					<input id="DetailAddress" name="DetailAddress" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				  				   <li>
+                        <label>是否被删除</label>
+                        <select id="IsDel" name="IsDel" class="form-control">
+                            <option value="0">未删除</option>
+                            <option value="1">已删除</option>
+                        </select>
+                   </li>
+				   				                    <li>
+				   <label>房源创建时间</label>
+				   					<input id="AddTime" name="AddTime" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>房源更新时间</label>
+				   					<input id="LastUpdateTime" name="LastUpdateTime" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>房源封面</label>
+				   					<input id="HouseCorver" name="HouseCorver" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>点评</label>
+				   					<input id="CommentsByAdmin" name="CommentsByAdmin" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>图片数</label>
+				   					<input id="PicsCount" name="PicsCount" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>视频数</label>
+				   					<input id="VideoCount" name="VideoCount" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>收藏数</label>
+				   					<input id="CollectionNumber" name="CollectionNumber" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>备注</label>
+				   					<input id="Remark" name="Remark" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>联系电话</label>
+				   					<input id="LinkTel" name="LinkTel" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>意向房源数</label>
+				   					<input id="InterestNumber" name="InterestNumber" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>通话量</label>
+				   					<input id="CallNumber" name="CallNumber" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>来源,0 默认 用户上传,1 后台上传,2其他</label>
+				   					<input id="Source" name="Source" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>审核人Id</label>
+				   					<input id="AuditId" name="AuditId" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>审核人名称</label>
+				   					<input id="AuditName" name="AuditName" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>最近地铁距离</label>
+				   					<input id="SubwayDistance" name="SubwayDistance" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>地铁线路, 用逗号分隔</label>
+				   					<input id="SubwayLines" name="SubwayLines" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>地铁站，用逗号隔开</label>
+				   					<input id="SubwayStations" name="SubwayStations" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>栋号</label>
+				   					<input id="BuildingNO" name="BuildingNO" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>室号</label>
+				   					<input id="RoomNO" name="RoomNO" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>上下架，0：未上架，1已上架</label>
+				   					<input id="IsOn" name="IsOn" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>刷新状态：-1 刷新失败，0已刷新，1 待刷新，</label>
+				   					<input id="RefreshStatus" name="RefreshStatus" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>上架时间</label>
+				   					<input id="IsOnTime" name="IsOnTime" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>审核通过时间</label>
+				   					<input id="AuditedTime" name="AuditedTime" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>租金方式</label>
+				   					<input id="RentMoneyWay" name="RentMoneyWay" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				   <li>
+ <div style="padding-left: 115px;">
+                            <a class="btn btn-primary" href="javascript:void(0);" onclick="history.go(-1)"><i class="fa fa-backward" style="margin-right:5px;"></i>返回</a>
+                        </div>
+						</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</form>
+ <!--=======================Detail表单END====================================-->
