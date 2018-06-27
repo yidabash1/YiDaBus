@@ -1,0 +1,103 @@
+﻿@model Senparc.Weixin.MP.Helpers.JsSdkUiPackage
+@{
+    ViewBag.Title = "合同列表";
+    Layout = "~/views/shared/_layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="box_main">
+        <div class="search_listheader" style="background:#fff;">
+            <div class="search_listheader_l" onclick="window.location.href = '/Account/Index'"><i class="iconfont icon-jiantou-copy1"></i></div>
+            <h2> 合同列表</h2>
+        </div>
+        <div class="iprolist yixiang" style="">
+            <div id="iprolistc" class="iprolistc">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--合同模板-->
+<script id="contractTemplate" type="text/html">
+    {{#  layui.each(d, function(index, item){}}
+    {{# if(item.toContractDueTime!=''){ }}
+    {{# if(parseInt(item.toContractDueTime)>0){ }}
+    <div class="hetong_tips">
+        <span><i class="icon iconfont icon-yuanxingdecircular223"></i>离合同到期:<em>{{item.toContractDueTime}}</em>天</span>
+        <a class="xvyue_btn" href="/order/OnGenarate?orderNo={{item.orderNo}}">立即续约</a>
+    </div>
+    {{# }else if(item.toContractDueTime=='0'){ }}
+    <div class="hetong_tips">
+        <span><i class="icon iconfont icon-yuanxingdecircular223"></i>已到期</span>
+        <a class="xvyue_btn" href="/order/OnGenarate?orderNo={{item.orderNo}}">立即续约</a>
+    </div>
+    {{# }else if(parseInt(item.toContractDueTime) < 0 ){ }}
+    <div class="hetong_tips">
+        <span><i class="icon iconfont icon-yuanxingdecircular223"></i>已过期</span>
+        <a class="xvyue_btn" href="/order/OnGenarate?orderNo={{item.orderNo}}">重新续约</a>
+    </div>
+    {{# } }}
+    {{# }else{ }}
+    <div class="hetong_tips">
+        <span>信息未完善</span>
+        <a class="xvyue_btn" href="/order/OnGenarate?orderNo={{item.orderNo}}">续约</a>
+    </div>
+    {{# } }}
+    <div class="yixiang_box" style="margin-top:0px;margin-bottom: 10px;">
+        <div class="yixiang_box_tit">
+            <span style="font-size:14px;">
+                合同期限：<b>
+                    {{$.formatDate(item.contractSignTime,"yyyy.MM.dd ") }}至
+                    {{# if(item.contractDueTime==''){ }}
+                    未填写
+                    {{# }else { }}
+                    {{ $.formatDate(item.contractDueTime,"yyyy.MM.dd ") }}
+                    {{# } }}
+                </b>
+            </span><em><a class="telphone" href="tel:{{item.houseDetail.linkTel}}"><i class="icon iconfont icon-phone-alt"></i></a></em>
+        </div>
+        <dl>
+            <dt><a href="/house/details/{{item.houseID}}"><img src="{{item.houseDetail.houseCorver==""?"/Content/img/ad1.png":item.houseDetail.houseCorver}}" onerror="this.onerror='';this.src='/Content/img/ad1.png'"></a></dt>
+            <dd>
+                <h3> <a href="/order/ContractDetail?orderNo={{item.orderNo}}">合同编号：{{item.orderNo}}</a></h3>
+
+                <div class="iprolist_about">
+                    <span>生成时间：{{item.addTime}}</span>
+
+                </div>
+
+                <div class="iprolist_adress"><div class="iprolist_price">【指房向签约】{{item.houseDetail.houseTitle.substring(0,14)}}</div></div>
+            </dd>
+        </dl>
+        <div class="yixiang_box_set">
+            <ul>
+                <li style="width:50%;"><a href="/Order/ExprotContractWord?orderNo={{item.orderNo}}"><i class="iconfont icon-xiazai1"></i> 下载</a></li>
+                <li style="width:49%;"><a href="/order/ContractDetail?orderNo={{item.orderNo}}&action=view"><i class="iconfont icon-youxiang1"></i> 查看合同</a></li>
+            </ul>
+        </div>
+    </div>
+
+    {{#  }); }}
+
+    {{#  if(d.length === 0){ }}
+    无数据
+    {{#  } }}
+</script>
+<script>
+    $(document).ready(function () {
+        contract();
+    });
+    //我的合同加载
+    function contract() {
+        $.LayPage({
+            elem: '#iprolistc'
+      , Template: '#contractTemplate'
+      , mb: 100
+      , url: globalKey.InterfaceDomain + 'api/OrderLeaseContract/GetList'
+      , type: 'post'
+      , data: { pagesize: 5, userId: $('#Uid').val(), userType: 0 }//参数
+        });
+    }
+</script>
+

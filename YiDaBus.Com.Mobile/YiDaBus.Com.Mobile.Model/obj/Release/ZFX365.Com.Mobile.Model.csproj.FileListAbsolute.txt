@@ -1,0 +1,10 @@
+G:\_7产品-知房网\Zfx365.Com.Mobile\Mobile\ZFX365.Com.Mobile\ZFX365.Com.Mobile.Model\bin\Release\ZFX365.Com.Mobile.Model.dll
+G:\_7产品-知房网\Zfx365.Com.Mobile\Mobile\ZFX365.Com.Mobile\ZFX365.Com.Mobile.Model\bin\Release\ZFX365.Com.Mobile.Model.pdb
+G:\_7产品-知房网\Zfx365.Com.Mobile\Mobile\ZFX365.Com.Mobile\ZFX365.Com.Mobile.Model\bin\Release\Dos.ORM.dll
+G:\_7产品-知房网\Zfx365.Com.Mobile\Mobile\ZFX365.Com.Mobile\ZFX365.Com.Mobile.Model\bin\Release\Dos.ORM.MySql.dll
+G:\_7产品-知房网\Zfx365.Com.Mobile\Mobile\ZFX365.Com.Mobile\ZFX365.Com.Mobile.Model\bin\Release\MySql.Data.dll
+G:\_7产品-知房网\Zfx365.Com.Mobile\Mobile\ZFX365.Com.Mobile\ZFX365.Com.Mobile.Model\bin\Release\Dos.ORM.xml
+G:\_7产品-知房网\Zfx365.Com.Mobile\Mobile\ZFX365.Com.Mobile\ZFX365.Com.Mobile.Model\bin\Release\Dos.ORM.MySql.xml
+G:\_7产品-知房网\Zfx365.Com.Mobile\Mobile\ZFX365.Com.Mobile\ZFX365.Com.Mobile.Model\obj\Release\ZFX365.Com.Mobile.Model.csprojResolveAssemblyReference.cache
+G:\_7产品-知房网\Zfx365.Com.Mobile\Mobile\ZFX365.Com.Mobile\ZFX365.Com.Mobile.Model\obj\Release\ZFX365.Com.Mobile.Model.dll
+G:\_7产品-知房网\Zfx365.Com.Mobile\Mobile\ZFX365.Com.Mobile\ZFX365.Com.Mobile.Model\obj\Release\ZFX365.Com.Mobile.Model.pdb

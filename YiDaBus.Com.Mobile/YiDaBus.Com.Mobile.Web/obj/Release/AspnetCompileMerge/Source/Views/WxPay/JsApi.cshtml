@@ -1,0 +1,334 @@
+﻿@{
+    ViewBag.Title = "交易保障金支付";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style type="text/css">
+    html, body {
+        position: relative;
+        height: 100%;
+    }
+
+    #div_show {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        -webkit-animation-duration: .5s;
+        animation-duration: .5s;
+        z-index: -100;
+    }
+
+    .div_show_title {
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#12a3f4', endColorstr='#0e86c9', GradientType=0);
+        clear: both;
+        display: block;
+        background: #F5F5F5;
+        color: #333333;
+        font-weight: 700;
+        position: relative;
+        height: 30px;
+        width: 100%;
+    }
+
+    .div_show_font {
+        color: #333333;
+        float: left;
+        font-weight: 700;
+        margin: 0.4em 0 0.4em 10px;
+    }
+
+    .div_show_btn {
+        float: right;
+        margin: 0.4em 10px 0.4em 0;
+    }
+
+    #mapdetails {
+        height: 100%;
+        width: 100%;
+        border: 5px solid white;
+    }
+</style>
+<div id="div_show"> </div>
+<div class="container">
+    @*<div class="search_listheader" style="background:#fff;position:relative;">
+            <div class="search_listheader_l" onclick="GoHistoryHandler('@ViewData[" payReturnUrl"]');"><i class="iconfont icon-jiantou-copy1"></i></div>
+            <h2> 支付交易保障金</h2>
+            <div class="search_listheader_r" style="width:80px"><a href="javascript:void(0);" onclick="ShowDepositDesHandler();">交易保障金说明</a></div>
+        </div>
+        <div class="yajin_all">
+            <span>押   金</span>
+            <em>￥@ViewData["PayAmount"]</em>
+        </div>
+        <div class="yajin_list">
+            <ul>
+                <li>
+                    @if (ViewData["CouponName"].ToString() == "无可用")
+                    {
+                    <a href="javascript:void(0);">
+                        <span>优惠券</span>
+                        <em>@ViewData["CouponName"] <i class="icon iconfont icon-jiantou5"></i></em>
+                    </a>
+                    }
+                    else
+                    {
+                    <a href="/WxPay/SelCoupon?CouponId=@ViewData[" CouponId"]">
+                        <span>优惠券</span>
+                        <em>@ViewData["CouponName"] <i class="icon iconfont icon-jiantou5"></i></em>
+                    </a>
+                    }
+                </li>
+                <li>
+                    <a id="getBrandWCPayRequest" href="javascript:void(0);" style="display:inline-block;width:100%;">
+                        <span>
+                            <i style="color:#42D542;font-size:24px;" class="icon iconfont icon-weixin"></i>
+                            &nbsp;&nbsp;微信
+                        </span>
+                        <em><i class="icon iconfont icon-jiantou5"></i></em>
+                        <em><input type="radio"></em>
+                    </a>
+                </li>
+            </ul>
+        </div>*@
+    <div class="container">
+        <div class="search_listheader" style="background:#fff;position:relative;">
+            <div class="search_listheader_l" onclick="GoHistoryHandler('@ViewData[" payReturnUrl"]');"><i class="iconfont icon-jiantou-copy1"></i></div>
+            <h2> 支付交易保障金</h2>
+            <div style="font-size:12px;position:absolute;top:16px;right:0;"><a href="javascript:void(0);" onclick="ShowDepositDesHandler();">交易保障金？</a></div>
+        </div>
+
+        <div class="yajin_all">
+            <span>交易保障金</span>
+            <em style="font-size: 14px;font-weight: normal;">￥@ViewData["TotalAmount"]</em>
+        </div>
+        <div class="yajin_list">
+            <ul>
+                @if (ViewData["CouponName"].ToString() == "无可用")
+                {
+                    <li class="yajin_list_tit">选择优惠券</li>
+                    <li onclick="window.location.href = '/WxPay/SelCoupon';">
+                        <a href="javascript:void(0);">
+                            <span>优惠券</span>
+                            <em>@ViewData["CouponName"] <i class="icon iconfont icon-jiantou5"></i></em>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="yajin_list_tit">选择优惠券</li>
+                    <li onclick="window.location.href = '/WxPay/SelCoupon?CouponId=@ViewData["UserCouponId"]';">
+                        <a href="javascript:void(0);">
+                            <span>优惠券</span>
+                            <em>@ViewData["CouponName"] <i class="icon iconfont icon-jiantou5"></i></em>
+                        </a>
+                    </li>
+                }
+                @*
+                    <li class="yajin_list_tit">选择优惠券</li>
+                    <li>
+                        @if (ViewData["CouponName"].ToString() == "无可用")
+                        {
+                        <a href="/WxPay/SelCoupon">
+                            <span>优惠券</span>
+                            <em>@ViewData["CouponName"] <i class="icon iconfont icon-jiantou5"></i></em>
+                        </a>
+                        }
+                        else
+                        {
+                        <a href="/WxPay/SelCoupon?CouponId=@ViewData[" CouponId"]">
+                            <span>优惠券</span>
+                            <em>@ViewData["CouponName"] <i class="icon iconfont icon-jiantou5"></i></em>
+                        </a>
+                        }
+                    </li>*@
+            </ul>
+        </div>
+        <div class="yajin_all" style="margin-top:10px;">
+            <span>合计</span>
+            <span style="float:right;font-size:14px;line-height: 22px;">需支付<em>¥@ViewData["PayAmount"] 元</em></span> 
+            
+        </div>
+        <div class="yajin_paybtm">
+            <a id="getBrandWCPayRequest" href="javascript:void(0);" class="yajin_paybtn bggreen"><i class="icon iconfont icon-weixin"></i>微信支付</a>
+        </div>
+    </div>
+</div>
+<script id="desDetails" type="text/html">
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">指房向作为“去中介”的第三方互联网房屋租赁平台，对租客和房东都不收取“佣金”。但为确保交易安全，提高交易过程中对诚信的约束力，租客端需向平台支付 “500元”的交易保障金。同时，一旦租赁双方确认交易完成，交易保障金会自动转为信息服务费；如不成功，可随时申请退还交易保障金。</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">&nbsp;</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">支付交易保障金，将获得的特权</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">1</span><span style="font-size:10px;font-family:宋体">）浏览房源</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">成功支付交易保障金，将获得所有房源详细信息的浏览。</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">2</span><span style="font-size:10px;font-family:宋体">）&nbsp;直联房东</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">成功支付交易保障金后，可以直联任何意向房源的房东。</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">3</span><span style="font-size:10px;font-family:宋体">）在线下单</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">平台对支付交易保障金的用户开通“意向房源”后台留存功能，并可对意向房源以“出价”和“当面签约”的形式在线下单，提前预定房源。</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">4</span><span style="font-size:10px;font-family:宋体">）违约赔偿</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">若在房屋租赁过程中发生房源、房东信息不真实，房东违约等情况，指房向承诺双倍赔偿交易保障金。</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">注意：同一名真实用户仅可获得一次双倍赔偿</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">5</span><span style="font-size:10px;font-family:宋体">）免费咨询</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">在交易过程中， 可随时进行免费咨询，我们将会安排</span><span style="font-size: 10px;font-family: 宋体;background: white">专业人员全程提供交易咨询服务，</span><span style="font-size:10px;font-family:宋体">确保用户租到满意、合适的房源。</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">6</span><span style="font-size:10px;font-family:宋体">）法律帮助</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">在房屋租赁过程中有任何法律方面的疑问，如合同签订的法律条文是否合理，均可随时随地进行在线咨询，我们将会由专业人员提供法律咨询服务。</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">7</span><span style="font-size:10px;font-family:宋体">）全程文本</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">我们会在线提供合同范本，以供参考和在线签约；同时，在线签约时，租赁双方共享合同信息，任一方对合同的修改，均会被告知，确保交易过程和价格透明高效。</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">8</span><span style="font-size:10px;font-family:宋体">）尊贵图标</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">成功支付交易保障金，将会获得专属身份标识。</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">9</span><span style="font-size:10px;font-family:宋体">）专属活动</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">我们会针对支付交易保障金的用户，定期举行不同形式的活动，如线下聚会、线上特价房优先推荐。</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">&nbsp;</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">注意事项：</span>
+    </p>
+    <p style="line-height:21px">
+        <span style="font-size:10px;font-family:宋体">一旦租赁双方确认交易完成，交易保障金会自动转为信息服务费并扣除，此时，用户将无法直联房东；若还需直联房东，必须重新支付交易保障金。</span>
+    </p>
+    <p>
+        <br />
+    </p>
+</script>
+<script language="javascript" type="text/javascript">
+    $(function () {
+        //$.modalMsg({ content: '通告：测试时只需要支付一分钱！' });
+    })
+    //跳转回原来的页面
+    function GoHistoryHandler(payReturnUrl) {
+        if (payReturnUrl != '') {
+            window.location.href = payReturnUrl.replace("?action=call", "");
+        } else {
+            window.location.href = '/Home/Index';
+        }
+    }
+    //显示交易保障金说明
+    function ShowDepositDesHandler() {
+        mlayer.open({
+            content: "<div class=\"div_show_title\"> <span class=\"div_show_font\">交易保障金说明 </span> <a onclick=\"close_show();\" class=\"div_show_btn\" ><i class=\"icon iconfont icon-guanbi\"></i></a> </div><div style='padding:10px;height:" + ($(window).height()-50) + "px;overflow: auto;width: 100%;'>" + $("#desDetails").html() + "</div>"
+            , type: 1
+            , style: 'position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;'
+        });
+    }
+    //关闭交易保障金说明
+    function close_show() {
+        var div_show = document.getElementById("div_show");
+        div_show.style.zIndex = "-100";
+        div_show.innerHTML = "";
+        $.modalCloseALL();
+    }
+    function auto_remove(img) {
+        div = img.parentNode.parentNode; div.parentNode.removeChild(div);
+        img.onerror = "";
+        return true;
+    }
+
+    function changefont(fontsize) {
+        if (fontsize < 1 || fontsize > 4) return;
+        $('#content').removeClass().addClass('fontSize' + fontsize);
+    }
+
+    // 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        //公众号支付
+        jQuery('a#getBrandWCPayRequest').click(function (e) {
+            WeixinJSBridge.invoke('getBrandWCPayRequest', {
+                "appId": "@ViewData["appId"]", //公众号名称，由商户传入
+                "timeStamp": "@ViewData["timeStamp"]", //时间戳
+                "nonceStr": "@ViewData["nonceStr"]", //随机串
+                "package": "@Html.Raw(ViewData["package"])",//扩展包
+                "signType": "MD5", //微信签名方式:MD5
+                "paySign": "@ViewData["paySign"]" //微信签名
+            }, function (res) {
+                if (res.err_msg == "get_brand_wcpay_request:ok") {
+                    // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+                    //因此微信团队建议，当收到ok返回时，向商户后台询问是否收到交易成功的通知，若收到通知，前端展示交易成功的界面；若此时未收到通知，商户后台主动调用查询订单接口，查询订单的当前状态，并反馈给前端展示相应的界面。
+                    window.location.href = "/WxPay/PaySuc?payReturnUrl=@ViewData["payReturnUrl"]&deposit=@ViewData["PayAmount"]";
+                    return false;
+                }
+                if (res.err_msg == "get_brand_wcpay_request:cancel") {
+                    $.modalAlert("支付过程中用户取消！");
+                }
+                if (res.err_msg == "get_brand_wcpay_request:fail") {
+                    window.location.href = "/WxPay/PayFail?payReturnUrl=@ViewData["payReturnUrl"]";
+                    return false;
+                }
+            });
+        });
+
+        WeixinJSBridge.log('yo~ ready.');
+
+    }, false);
+    if (jQuery) {
+        jQuery(function () {
+
+            var width = jQuery('body').width() * 0.87;
+            jQuery('img').error(function () {
+                var self = jQuery(this);
+                var org = self.attr('data-original1');
+                self.attr("src", org);
+                self.error(function () {
+                    auto_remove(this);
+                });
+            });
+            jQuery('img').each(function () {
+                var self = jQuery(this);
+                var w = self.css('width');
+                var h = self.css('height');
+                w = w.replace('px', '');
+                h = h.replace('px', '');
+                if (w <= width) {
+                    return;
+                }
+                var new_w = width;
+                var new_h = Math.round(h * width / w);
+                self.css({ 'width': new_w + 'px', 'height': new_h + 'px' });
+                self.parents('div.pic').css({ 'width': new_w + 'px', 'height': new_h + 'px' });
+            });
+        });
+    }
+</script>

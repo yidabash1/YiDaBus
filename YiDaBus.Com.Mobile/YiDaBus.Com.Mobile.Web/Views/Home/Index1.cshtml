@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "易达快乐巴士";
+    Layout = "~/Views/Shared/master.cshtml";
+}
+
+<header class="demos-header">
+    <h1 class="demos-title">易达快乐巴士</h1>
+    @{
+        string curHost = Request.Url.Host;
+        string[] dnslist = {"www.js8zy.com","www.dtfjc.com"};
+        if (dnslist.Contains<string>(curHost))
+        {
+            Response.Redirect("http://www.dtfjc.com/ntfjc/");
+            Response.End();
+        }
+    }
+</header>
+
+<div class="weui-flex">
+    <div class="weui-flex__item">
+        <div class="weui-cells__title">上海订票</div>
+        <div class="weui-cells">
+            @{
+                string[] weekStrings = {"星期一", "星期二", "星期三", "星期四", "星期五"};
+                foreach (var item in weekStrings)
+                {
+                    string linkUrl = string.Format("/Home/ShangHai?week={0}", Url.Encode(item));
+                    <a class="weui-cell weui-cell_access" href="@linkUrl">
+                        <div class="weui-cell__bd">
+                            <p>@item</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                        </div>
+                    </a>
+                }
+            }
+        </div>
+    </div>
+   
+    <div class="weui-flex__item">
+        <div class="weui-cells__title">杭州订票</div>
+        <div class="weui-cells">
+            @{
+                string[] addressStrings = { "南通市区", "如东通州", "启东海门", "如皋海安" };
+                foreach (var item in addressStrings)
+                {
+                    string linkUrl = string.Format("/Home/HangZhou?address={0}",Url.Encode(item));
+                    <a class="weui-cell weui-cell_access" href="@linkUrl">
+                        <div class="weui-cell__bd">
+                            <p>@item</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                        </div>
+                    </a>
+                }
+            }
+        </div>
+    </div>
+
+    <div class="weui-flex__item">
+        <div class="weui-cells__title">我的易达</div>
+        <div class="weui-cells">
+            @{
+                Dictionary<string, string> memberItems = new Dictionary<string, string>();
+                memberItems.Add("个人信息", "/Home/MemberInfo");
+                memberItems.Add("我的车票", "/Home/MemberTicket");
+                memberItems.Add("投诉热线", "/Home/MemberComplaint");
+                foreach (var item in memberItems)
+                {
+                    <a class="weui-cell weui-cell_access" href="@item.Value">
+                        <div class="weui-cell__bd">
+                            <p>@item.Key</p>
+                        </div>
+                        <div class="weui-cell__ft">
+                        </div>
+                    </a>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+
+<div class="weui-footer weui-footer_fixed-bottom">
+    <p class="weui-footer__text">Copyright &copy; 2018 易达快乐巴士</p>
+</div>

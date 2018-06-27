@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "更新用户的openId";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<input id="openid" value="@ViewData["openid"]"  hidden/>
+<input id="userId" value="@ViewData["userId"]" hidden />
+<script>
+    $(function () {
+        $.ar({
+            url: globalKey.InterfaceDomain + 'api/Manager/UpdateSysUserOpenId'
+           , data: { openid: $('#openid').val(), userId: $('#userId').val() }
+           , success: function (data) {
+               //alert(data.msg);
+               $.modalMsg({
+                   content: data.msg, yes: function () {
+                       window.close();
+                   }
+               });
+           }
+        });
+    });
+</script>

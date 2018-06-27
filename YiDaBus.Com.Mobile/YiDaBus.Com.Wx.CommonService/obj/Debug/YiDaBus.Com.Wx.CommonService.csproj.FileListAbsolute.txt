@@ -1,0 +1,5 @@
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\Mobile\YiDaBus.Com.Mobile\YiDaBus.Com.Wx.CommonService\bin\Debug\YiDaBus.Com.Wx.CommonService.dll
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\Mobile\YiDaBus.Com.Mobile\YiDaBus.Com.Wx.CommonService\bin\Debug\YiDaBus.Com.Wx.CommonService.pdb
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\Mobile\YiDaBus.Com.Mobile\YiDaBus.Com.Wx.CommonService\obj\Debug\YiDaBus.Com.Wx.CommonService.dll
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\Mobile\YiDaBus.Com.Mobile\YiDaBus.Com.Wx.CommonService\obj\Debug\YiDaBus.Com.Wx.CommonService.pdb
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\Mobile\YiDaBus.Com.Mobile\YiDaBus.Com.Wx.CommonService\obj\Debug\YiDaBus.Com.Wx.CommonService.csprojResolveAssemblyReference.cache

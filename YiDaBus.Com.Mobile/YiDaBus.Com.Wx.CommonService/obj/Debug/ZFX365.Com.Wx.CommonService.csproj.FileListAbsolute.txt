@@ -1,0 +1,8 @@
+G:\_7产品-知房网\Zfx365.Com.Mobile\Mobile\ZFX365.Com.Mobile\ZFX365.Com.Wx.CommonService\bin\Debug\ZFX365.Com.Wx.CommonService.dll
+G:\_7产品-知房网\Zfx365.Com.Mobile\Mobile\ZFX365.Com.Mobile\ZFX365.Com.Wx.CommonService\bin\Debug\ZFX365.Com.Wx.CommonService.pdb
+G:\_7产品-知房网\Zfx365.Com.Mobile\Mobile\ZFX365.Com.Mobile\ZFX365.Com.Wx.CommonService\obj\Debug\ZFX365.Com.Wx.CommonService.dll
+G:\_7产品-知房网\Zfx365.Com.Mobile\Mobile\ZFX365.Com.Mobile\ZFX365.Com.Wx.CommonService\obj\Debug\ZFX365.Com.Wx.CommonService.pdb
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\Mobile\YiDaBus.Com.Mobile\ZFX365.Com.Wx.CommonService\bin\Debug\ZFX365.Com.Wx.CommonService.dll
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\Mobile\YiDaBus.Com.Mobile\ZFX365.Com.Wx.CommonService\bin\Debug\ZFX365.Com.Wx.CommonService.pdb
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\Mobile\YiDaBus.Com.Mobile\ZFX365.Com.Wx.CommonService\obj\Debug\ZFX365.Com.Wx.CommonService.dll
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\Mobile\YiDaBus.Com.Mobile\ZFX365.Com.Wx.CommonService\obj\Debug\ZFX365.Com.Wx.CommonService.pdb

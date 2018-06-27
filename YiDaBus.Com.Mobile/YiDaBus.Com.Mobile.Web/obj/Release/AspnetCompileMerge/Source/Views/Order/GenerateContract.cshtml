@@ -1,0 +1,144 @@
+﻿@{
+    ViewBag.Title = "确认价格生成合同";
+    Layout = "~/views/shared/_layout.cshtml";
+}
+<div class="container">
+    <form class="layui-form">
+        <div class="box_main">
+            <div class="search_listheader" style="background:#fff">
+                <div class="search_listheader_l" onclick="window.history.go(-1);"><i class="iconfont icon-jiantou-copy1"></i></div>
+                <h2> 确认价格生成合同</h2>
+            </div>
+            <div id="iprolist" class="iprolist" style="margin-top:0">
+
+                @*<div class="iprolistc" id="tab1">
+                        <dl>
+                            <dt><a href=""><img src="ad/ad2.png"></a></dt>
+                            <dd>
+                                <h3> <a href="">罗山家园3居室-南卧</a>&nbsp;<span>合租</span></h3>
+
+                                <div class="iprolist_about">
+                                    <span>16㎡ | 08/14层</span>
+                                    <div class="iprolist_price"><em>￥2190</em>/月</div>
+                                </div>
+                                <div class="iprolist_tag">
+                                    <em class="color1">精装修</em>
+                                    <em class="color2">地铁房</em>
+                                    <em class="color3">随时看</em>
+                                </div>
+                                <div class="iprolist_adress"><i class="iconfont icon-ditu2"></i> 距离6号线金桥路站500米</div>
+                            </dd>
+                        </dl>
+                    </div>*@
+            </div>
+            <div class="chujia_part1">
+                <div class="login_con" style="padding-top:0px">
+                    <ul>
+                        <li>
+                            <span>月租金 </span>
+                            <input id="ContractAmount" name="ContractAmount" lay-verify="number" type="text" placeholder="请输入你理想中的月租价位" lay-reqmsg="请输入你理想中的月租价位">
+                        </li>
+                    </ul>
+                    <div class="chujia_yips"> ▍确认后，系统会默认此单已成交，自动把交易保障金转化为平台信息费扣除！</div>
+                </div>
+            </div>
+
+            <div class="login_btm" style="padding-top:55px;">
+                <a class="login_btn bgred" href="javascript:void(0);" lay-submit="" lay-filter="contractSubmit" style="border-radius:2px; margin-left:15px; margin-right:15px; width:auto">确认提交并生成合同</a>
+            </div>
+        </div>
+    </form>
+</div>
+<!--房屋模板-->
+<script id="housedetailsTemplate" type="text/html">
+    {{# if(d!=null){ }}
+    <div class="iprolistc" id="tab1">
+        <dl>
+            <dt>
+                <a href="/house/details/{{d.id}}">
+                    <img src="{{d.houseCorver==""?"/Content/img/ad1.png":d.houseCorver}}" onerror="this.onerror='';this.src='/Content/img/ad1.png'">
+                </a>
+            </dt>
+            <dd>
+                <h3> <a href="/house/details/{{d.id}}">{{d.houseTitle.substring(0,14)}}</a>&nbsp;<span>{{d.rentMode}}</span></h3>
+                <div class="iprolist_about">
+                    <span>{{d.rentalArea}}㎡ | {{d.hFloor}}/{{d.hFloorTotal}}层</span>
+                    <div class="iprolist_price"><em>￥{{d.hRent}}</em>/月</div>
+                </div>
+                <div class="iprolist_tag">
+                    {{# if(d.hTags!=""){ }}
+                    {{# layui.each(d.hTags.split(','),function(index,itemdetails){}}
+                    <em class="color{{index+1}}">{{itemdetails}}</em>
+                    {{#  });}}
+                    {{# } }}
+                </div>
+                <div class="iprolist_adress">
+                    {{# if(d.subwayDistance==""||d.subwayDistance==null){ }}
+                    {{# }else{ }}
+                    <i class="iconfont icon-ditu2"></i> {{d.subwayDistance}}
+                    {{# } }}
+                </div>
+            </dd>
+        </dl>
+    </div>
+    {{#  } }}
+
+    {{#  if(d==null||d.length === 0){ }}
+    <div class="search_null">
+        <dl>
+            <dt><img width="70" src="/content/img/null.png"></dt>
+            <dd>房屋不存在或已被删除！</dd>
+        </dl>
+    </div>
+    {{#  } }}
+</script>
+<script>
+    var houseId = $.request('houseId');
+    $(function () {
+        getDetails();
+        InitForm();
+    });
+    //加载房源详细
+    function getDetails() {
+        $.LayDetails({
+            elem: '#iprolist'
+          , Template: '#housedetailsTemplate'
+          , mb: 100
+          , url: globalKey.InterfaceDomain + 'api/house/details'
+          , type: 'post'
+          , data: { id: houseId }//参数
+          , success: function (html) {
+              $('#iprolist').html(html);
+          }
+        });
+    }
+    //初始化表单
+    function InitForm() {
+        layui.use(['form'], function () {
+            var form = layui.form();
+            //监听提交
+            form.on('submit(contractSubmit)', function (data) {
+                $.modalConfirm({
+                    content: '确认后，系统会默认此单<span style="color:red;">已成交</span>，自动把交易保障金转化为平台信息费<span style="color:red;">扣除</span>！'
+                    , callBack: function () {
+                        data.field["userId"] = $('#Uid').val();
+                        data.field["houseId"] = houseId;
+                        data.field["orderNo"] = $.request('orderNo');
+                        $.ar({
+                            url: globalKey.InterfaceDomain + 'api/OrderLeaseContract/Create'
+                           , data: data.field
+                           , success: function (data) {
+                               $.modalMsg({
+                                   content: data.msg, success: function () {
+                                       window.location.href = "/order/index";
+                                   }
+                               });
+                           }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+    }
+</script>

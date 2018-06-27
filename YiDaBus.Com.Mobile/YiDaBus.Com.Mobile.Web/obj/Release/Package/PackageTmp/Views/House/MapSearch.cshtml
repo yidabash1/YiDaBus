@@ -1,0 +1,375 @@
+﻿
+@{
+    ViewBag.Title = "地图找房";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    
+	html,body,.map {width: 100%;height: 100%;overflow: hidden;margin:0;}
+	.anchorBL{display:none;}
+</style>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=XBPX8dmIuAzluWeOtTAzsCECpkxkLudV"></script>
+
+<style>
+    .map {
+        width: 100%;
+        display: inline-block;
+    }
+
+    .map-bannal {
+        width: 100%;
+        height: 98px;
+        display: inline-block;
+        background-image: url(/image/mapbg.png);
+    }
+
+    .map-bannal-box {
+        width: 1190px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    .map-bannal-nva {
+        display: inline-block;
+        margin-top: 29px;
+        color: #fff;
+        height: 42px;
+        line-height: 42px;
+    }
+
+        .map-bannal-nva dt {
+            float: left;
+        }
+
+        .map-bannal-nva dd {
+            float: left;
+            font-size: 15px;
+            margin-left: 12px;
+        }
+
+    .map-bannal-city {
+        float: right;
+        margin-top: 40px;
+    }
+
+        .map-bannal-city dd {
+            float: left;
+            color: #fff;
+            font-size: 15px;
+            margin-left: 12px;
+        }
+
+            .map-bannal-city dd span {
+                display: inline-block;
+                position: relative;
+            }
+
+                .map-bannal-city dd span a {
+                    display: inline-block;
+                    position: relative;
+                    color: #30ace9;
+                }
+            /*.map-bannal-city dd span:after {width:0;height:0;content:"";border-left:5px solid transparent;border-right:5px solid transparent;border-top:5px solid #888;position:absolute;right:6px;top:12px; }*/
+            .map-bannal-city dd input {
+                height: 28px;
+                width: 120px;
+            }
+
+        .map-bannal-city dt {
+            float: left;
+            color: #fff;
+            font-size: 15px;
+            margin-left: 36px;
+        }
+
+    .map0 {
+        width: 1188px;
+        margin: 0 auto;
+        display: block;
+        height: 550px;
+        margin-bottom: 15px;
+        border: 1px solid #eee;
+        border-top: 0;
+    }
+
+    .mapbox {
+        width: 800px;
+        height: 550px;
+        float: left;
+    }
+
+    .maplist {
+        width: 388px;
+        display: inline-block;
+        height: 550px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .map-bix {
+        display: block;
+        background-color: #ff9004;
+        color: #fff;
+        border-radius: 4px;
+        padding: 4px 10px;
+        position: relative;
+        cursor: pointer;
+    }
+
+        .map-bix span {
+            display: block;
+            white-space: nowrap;
+            position: relative;
+        }
+
+            .map-bix span:after {
+                width: 0;
+                height: 0;
+                content: "";
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 5px solid #fff;
+                display: inline-block;
+                margin-left: 5px;
+            }
+
+            .map-bix span:before {
+                content: url(/image/ico_1.png);
+                display: inline-block;
+                margin-right: 5px;
+                vertical-align: middle;
+                margin-bottom: -1px;
+            }
+
+        .map-bix div {
+            min-width: 200px;
+            display: none;
+            padding-top: 5px;
+        }
+
+        .map-bix:before {
+            width: 0;
+            height: 0;
+            content: "";
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 5px solid #ff9004;
+            position: absolute;
+            left: 6px;
+            top: -5px;
+        }
+
+    .maplist ul {
+        display: inline-block;
+        width: 100%;
+    }
+
+        .maplist ul li {
+            float: left;
+            width: 100%;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+        }
+
+            .maplist ul li a {
+                display: inline-block;
+                font-size: 15px;
+                width: 100%;
+                background-color: #eee;
+                line-height: 30px;
+                color: #888;
+                margin-bottom: 10px;
+                text-align: left;
+            }
+
+                .maplist ul li a:hover {
+                    text-decoration: none;
+                }
+
+                .maplist ul li a input {
+                    margin-left: 10px;
+                    margin-right: 10px;
+                    padding: 3px;
+                }
+
+            .maplist ul li p {
+                width: 100%;
+                display: inline-block;
+            }
+
+                .maplist ul li p span {
+                    width: 80px;
+                    float: left;
+                    text-align: right;
+                }
+
+                .maplist ul li p em {
+                    width: 270px;
+                    float: left;
+                    text-align: left;
+                }
+
+            .maplist ul li i {
+                height: 29px;
+                width: 139px;
+                text-align: center;
+                display: inline-block;
+                border: 1px solid #ff6a00;
+                border-radius: 3px;
+                line-height: 29px;
+                cursor: pointer;
+                font-size: 14px;
+                color: #777;
+                margin: 5px 0 0 5px;
+            }
+
+                .maplist ul li i:hover {
+                    background-color: #ffe2e2;
+                    color: #ff7979;
+                }
+
+    .maplist-select {
+        border: 1px solid #ff7979 !important;
+        width: 365px !important;
+    }
+
+    .mbody4 {
+        display: inline-block;
+        width: 960px;
+        margin-top: 15px;
+        margin-left: 63px;
+    }
+
+        .mbody4 span {
+            font-size: 14px;
+            color: #555;
+            display: inline-block;
+        }
+
+        .mbody4 div {
+            display: inline-block;
+            margin-left: 15px;
+            border: 1px solid #ffc236;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+
+            .mbody4 div i {
+                display: inline-block;
+                color: #fe6902;
+            }
+
+            .mbody4 div a {
+                display: inline-block;
+                color: #2a73bf;
+                margin-left: 3px;
+                cursor: pointer;
+            }
+</style>
+<div class="container">
+    <div class="search_listheader">
+        <div class="search_listheader_l"><i class="iconfont icon-jiantou-copy1" onclick="return history.go(-1);"></i></div>
+        <div class="search_listheader_m"><i class="iconfont icon-llhomesearch" onclick="loadresult()"></i><input type="text" placeholder="请输入小区、商圈、地铁站" value="@ViewBag.Keywords" onkeyup=" loadresult()"></div>
+        <div class="search_listheader_r"><i class="iconfont if-map-list" onclick="jumpmap()"></i></div>
+    </div>
+    <article class="map">
+
+        <div class="map0">
+            <div id="dituContent" class="mapbox">
+
+            </div>
+            <div class="maplist">
+                <ul id="map-list"></ul>
+            </div>
+        </div>
+    </article>
+    <div style="display:none;" class="hideMap"></div>
+    </div>
+    <script type="text/javascript">
+        $("body").removeClass();
+    var point = new BMap.Point(121.469314, 31.237293);
+        var mp = new BMap.Map("dituContent", { minZoom: 0, maxZoom: 22 });
+        mp.centerAndZoom(point, 11);
+        mp.enableScrollWheelZoom(true);
+        function myFun(result) {
+            var cityName = result.name;
+            $("#sc").text(cityName);
+            mp.setCenter(cityName);
+        }
+        var myCity = new BMap.LocalCity();
+        myCity.get(myFun);
+    // 复杂的自定义覆盖物
+    function MapOver(point, title,content,id) {
+        this._point = point;
+        this._title = title;
+        this._content = content;
+        this._id = id;
+    }
+    MapOver.prototype = new BMap.Overlay();
+    MapOver.prototype.initialize = function (map) {
+        this._map = map;
+        var div = this._div = document.createElement("div");
+        //"z-index:" + BMap.Overlay.getZIndex(this._point.lat) +
+        div.setAttribute("style", ";position:absolute;display:block");
+        var ht = [];
+        ht.push('<div class="map-bix">');
+        ht.push('<span>' + this._title + '</span>');
+        ht.push('<div><a target="_blank" href="/house/details/'+this._id+'">' + this._content + '</a></div>');
+        ht.push('</div>');
+        $(div).append(ht.join(""));
+        $(div).click(function () {
+            $(div).find(".map-bix div").slideToggle();
+        });
+        mp.getPanes().labelPane.appendChild(div);
+        return div;
+    }
+    MapOver.prototype.draw = function () {
+        var map = this._map;
+        var pixel = map.pointToOverlayPixel(this._point);
+        this._div.style.left = pixel.x + "px";
+        this._div.style.top = pixel.y + 35 + "px";
+    }
+    function setDiv(x, y, title, content,id) {
+        var myCompOverlay = new MapOver(new BMap.Point(x, y), title, content,id);
+        mp.addOverlay(myCompOverlay);
+    }
+
+    maplist($("#sc").text())
+    function maplist(id) {
+        $.post(globalKey.InterfaceDomain + 'api/House/GetList', {pageSize:5}, function (results, status) {
+            if (results.code==200) {
+
+                var length = results.data.items.length;
+                var data = results.data.items;
+                for (var i = 0; i < length; i++) {
+                    //c.push('<li onclick="overPoti(this)" data-y="' + data[i].PointY + '" data-x="' + data[i].PointX + '">');
+                    //c.push('<a><input id="' + data[i].Id + '" type="checkbox" /><label for="cb1">选择你要查询的地区</label></a>');
+                    //c.push('<p><span>门店名称：</span><em>' + data[i].ShopName + '</em></p>');
+                    //c.push('<p><span>服务电话：</span><em>' + data[i].WorkPhone + '||' + data[i].Cellphone + '</em></p>');
+                    //c.push('<p><span>地址：</span><em>' + data[i].Address + '</em></p>');
+                    //c.push('<p><span>联系人：</span><em>' + data[i].Name + '</em></p>');
+                    //c.push('<p><span>工作时间：</span><em>' + data[i].WorkTime + '</em></p>');
+                    //c.push('<i onclick="overPotid()">门店信息发送到手机</i><i onclick="send(\''+data[i].Id+'\')">门店详情</i>');
+                    //c.push("</li>");
+                    var contents = '<div><p>房源：<em>' + data[i].houseTitle + '</em></p><p>租金：<em>￥' + data[i].hRent + '元/月</em></p><p>地铁：<em>' + data[i].subwayDistance + '</em></p></div>';
+
+                    setDiv(data[i].xCoordinate, data[i].yCoordinate, data[i].houseTitle, contents, data[i].id);
+                }
+            }
+                //$("#map-list").empty();
+                //$("#map-list").append(c.join(""));
+
+        }, 'json')
+    }
+
+    function overPoti(obj) {
+        $(obj).addClass("maplist-select").siblings().removeClass("maplist-select");
+        mp.centerAndZoom(new BMap.Point($(obj).data("x"), $(obj).data("y")), 18);
+    }
+
+    $("#sci").click(function (e) {
+        show(this, "sc", maplist);
+
+    });
+    </script>

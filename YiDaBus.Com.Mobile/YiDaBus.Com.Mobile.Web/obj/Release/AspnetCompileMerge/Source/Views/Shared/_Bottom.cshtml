@@ -1,0 +1,49 @@
+﻿<style>
+    .div_circle {
+        position: absolute;
+        top: 3px;
+        right: 23%;
+        border-radius: 50%;
+        background-color: red;
+        height: 20px;
+        width: 20px;
+    }
+
+    .em_circle {
+        color: #fff;
+        height: 20px;
+        line-height: 20px;
+        position: absolute;
+        right: 6px;
+        text-align: center;
+    }
+</style>
+<footer id="footer">
+    <ul>
+        <li class="cur"><a href="/home"><i class="iconfont icon-shouye2"></i> 首页 </a></li>
+        <li ><a id="orderA" href="/order/"><i class="iconfont icon-dingdan"></i> 意向单 </a></li>
+        <li><a href="/account/"><i class="iconfont icon-juxing6-copy-copy1"></i> 我的 </a></li>
+    </ul>
+</footer>
+<script>
+    $(function () {
+        $('#footer>ul>li:eq(' + $('#indextab').val() + ')').addClass('cur').siblings('li').removeClass('cur');
+        //使用ajax获取订单的数量
+        if (Boolean($('#IsLogin').val() == "True")) {
+            //已登录
+            $.ar({
+                url: globalKey.InterfaceDomain + 'api/Users/GetUserOrderCount',
+                data: { userId: $('#Uid').val() },
+                load: false,
+                success: function (data) {
+                    if (data.data.orderCount > 0) {
+                        //存在显示个数
+                        $('#orderA').append('<em>' + data.data.orderCount + '</em>');
+                    } 
+                }
+            })
+        } else {
+            //未登录
+        }
+    });
+</script>

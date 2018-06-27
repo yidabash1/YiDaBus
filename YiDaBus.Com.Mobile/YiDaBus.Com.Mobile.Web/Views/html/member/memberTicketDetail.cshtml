@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "易达快乐巴士 - 上海订票";
+    Layout = "~/Views/Shared/master.cshtml";
+}
+
+<header class="demos-header">
+    <h1 class="demos-title">上海订票信息</h1>
+</header>
+
+<div class="weui-form-preview">
+    <div class="weui-form-preview__hd">
+        <label class="weui-form-preview__label">票价总额</label>
+        <em class="weui-form-preview__value">¥120.00</em>
+    </div>
+    <div class="weui-form-preview__bd">
+        <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">类型</label>
+            <span class="weui-form-preview__value">上海订票</span>
+        </div>
+        <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">订单号</label>
+            <span class="weui-form-preview__value">SH201806101010001</span>
+        </div>
+        <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">车辆</label>
+            <span class="weui-form-preview__value">苏FM1122 | 南通-上海</span>
+        </div>
+        <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">预订座位</label>
+            <span class="weui-form-preview__value">13座、14座</span>
+        </div>
+        <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">发车时间</label>
+            <span class="weui-form-preview__value">2018年6月10日 星期一</span>
+        </div>
+        <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">客户姓名</label>
+            <span class="weui-form-preview__value">张三</span>
+        </div>
+        <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">客户电话</label>
+            <span class="weui-form-preview__value">13811223344</span>
+        </div>
+        <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">是否接送</label>
+            <span class="weui-form-preview__value">是</span>
+        </div>
+        <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">接送地点</label>
+            <span class="weui-form-preview__value">南通市崇川区大庆路888号（小明水果店门口）88路车站前等</span>
+        </div>
+        <div class="weui-form-preview__item">
+            <label class="weui-form-preview__label">车票状态</label>
+            <span class="weui-form-preview__value">有效/过期</span>
+        </div>
+
+        <div class="weui-form-preview__item">
+            @*<label class="weui-form-preview__label">备注说明</label>*@
+            <span class="weui-form-preview__value" style="color: #f00; text-align: left;">注：预订成功后，客服专员会在第一时间与你电话联系，请保持电话畅通，如需取消，请在发车前2小时与客服联系，否则视弃票！</span>
+        </div>
+    </div>
+
+    <div class="weui-form-preview__ft">
+        <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="/Home/MemberTicket">返回</a>
+        <a  class="weui-form-preview__btn weui-form-preview__btn_default" href="javascript:" id="btnDel">删除</a>
+    </div>
+</div>
+
+@section footContainer{
+    <script>
+        $(function() {
+            $("#btnDel").on("click", function() {
+                $.confirm({
+                    title: '删除提示',
+                    text: '您确定删除这条预订信息吗？只能删除过期预订信息哟',
+                    onOK: function () {
+                        $.toptip('操作成功', 'success');
+                        return false;
+                        location.href = "/Home/MemberTicket";
+                    },
+                    onCancel: function () {
+                    }
+                });
+            });
+
+        });
+    </script>
+}
+

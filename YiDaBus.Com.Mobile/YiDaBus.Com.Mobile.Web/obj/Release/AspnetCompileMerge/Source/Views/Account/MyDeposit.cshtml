@@ -1,0 +1,180 @@
+﻿@{
+    ViewBag.Title = "我的交易保障金";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+</div>
+<script id="DepositTemplate" type="text/html">
+    {{#  if(d!=null){ }}
+    {{#  if(d.isDeposit){ }}
+
+    <div class="search_listheader" style="background:#fff;position: relative;">
+        <div class="search_listheader_l" onclick="window.location.href = '/Account/Index'"><i class="iconfont icon-jiantou-copy1"></i></div>
+        <h2> 我的交易保障金</h2>
+        <div class="search_listheader_r" style="width:80px"><a href="/Account/DepositDetail">明细</a></div>
+    </div>
+
+    <div class="myyajin" style="padding-top:25px; padding-bottom:25px;">
+        <dl class="myyajin_cont">
+            <div class="huangguan"><img width="36" src="/Content/img/huangguang.png"></div>
+            <dt>{{d.deposit}}</dt>
+            <dd>交易保障金额（元）</dd>
+        </dl>
+
+    </div>
+    <div class="tequan">
+        <div class="tequan_tit">交易保障金特权</div>
+        <div class="tequan_cont">
+            <dl>
+                <dt><em class="color1"></em></dt>
+                <dd>
+                    <h3>浏览房源</h3>
+                    <p>开放所有房源</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt><em class="color2"></em></dt>
+                <dd>
+                    <h3>联系房东</h3>
+                    <p>开放房东信息</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt><em class="color3"></em></dt>
+                <dd>
+                    <h3>在线下单</h3>
+                    <p>在线确定租房</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt><em class="color4"></em></dt>
+                <dd>
+                    <h3>违约赔偿</h3>
+                    <p>双倍赔偿</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt><em class="color5"></em></dt>
+                <dd>
+                    <h3>免费咨询</h3>
+                    <p>交易全程免费</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt><em class="color6"></em></dt>
+                <dd>
+                    <h3>法律援助</h3>
+                    <p>随时随地提供</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt><em class="color7"></em></dt>
+                <dd>
+                    <h3>全程文本</h3>
+                    <p>交易合同文本</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt><em class="color8"></em></dt>
+                <dd>
+                    <h3>尊贵图标</h3>
+                    <p>身份标识</p>
+                </dd>
+            </dl>
+            <dl>
+                <dt><em class="color9"></em></dt>
+                <dd>
+                    <h3>专属活动</h3>
+                    <p>定期举行活动</p>
+                </dd>
+            </dl>
+
+        </div>
+    </div>
+    <a style="position: fixed; bottom: 0px;width:100%;" class="shenqing_yjtk" href="javascript:void(0)">申请交易保障金退款</a>
+    <div class="overlay"></div>
+    <div class="tyajing_tc">
+        <div class="tyajing_tc_tit">
+            <img width="90" src="/Content/img/yajin_tcimg.png">
+        </div>
+        <div class="tyajing_tc_cont">
+            交易保障金退还时间为2-7个工作日，在此期间您的账号将无法联系房东，是否仍然退交易保障金？
+        </div>
+        <div class="kanfang_tc_set">
+            <a class="kanfang_tc_btn bg1" href="javascript:void(0)">取消</a>
+            <a id="rdeposit" class="kanfang_tc_btn bg2" href="javascript:void(0)" >退交易保障金</a>
+        </div>
+    </div>
+    {{#  }else{ }}
+    <div class="search_listheader" style="background:#fff;position:relative;">
+        <div class="search_listheader_l" onclick="window.location.href = '/Account/Index'"><i class="iconfont icon-jiantou-copy1"></i></div>
+        <h2> 我的交易保障金</h2>
+        <div class="search_listheader_r" style="width:80px"><a href="/Account/DepositDetail">明细</a></div>
+    </div>
+    <div class="myyajin">
+        <dl class="myyajin_cont">
+            <dt>{{d.deposit.toFixed(2)}}</dt>
+            <dd>交易保障金金额（元）</dd>
+        </dl>
+    </div>
+    <div class="login_btm" style="padding-top:25px;">
+        <a class="login_btn bgred" href="javascript:void(0);" style="border-radius:2px; margin-left:15px; margin-right:15px; width:auto" onclick="$.GoToPayHandler();">去充值</a>
+    </div>
+    {{#  } }}
+    {{#  } }}
+</script>
+<script>
+    var Fuc = {
+        Init: function () {
+            $('body').removeClass('bg01');
+            $.LayDetails({
+                elem: '.container'
+              , Template: '#DepositTemplate'
+              , mb: 100
+              , url: globalKey.InterfaceDomain + '/api/Users/CheUIsDepositAndGetUserInfo'
+              , type: 'post'
+              , data: { userId: $("#Uid").val() }
+              , success: function (html, data) {
+                  $('.container').html(html);
+                  if (data.isDeposit) {
+                      Fuc.Js();
+                  }
+              }
+            });
+        },
+        Js: function () {
+            $(".shenqing_yjtk").click(function () {
+                $(".overlay").show();
+                $(".tyajing_tc").slideDown();
+
+            });
+            $(".kanfang_tc_btn.bg1").click(function () {
+                $(".overlay").hide();
+                $(this).parent().parent().slideUp();
+
+            });
+            $(".overlay").click(function () {
+                $(this).hide();
+                $(".tyajing_tc").slideUp();
+            });
+            $("#rdeposit").click(function () {
+                $.ar({
+                    url: globalKey.InterfaceDomain + 'api/Users/AddReturnDeposit'
+                    , data: { userId: $('#Uid').val() }
+                    , success: function (data) {
+                        window.location.href = "/Account/DRefundSuc?deposit=" + data.data.deposit;
+                    }
+                });
+            });
+        },
+        //退还交易保障金
+        ReturnDepositHandler: function () {
+            
+            
+        }
+    }
+    $(function () {
+       
+        Fuc.Init();
+    })
+</script>

@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "易达快乐巴士 - 我的车票";
+    Layout = "~/Views/Shared/master.cshtml";
+}
+
+@*搜索条可以暂时不用*@
+@*<div class="weui-search-bar" id="searchBar">
+    <form class="weui-search-bar__form">
+        <div class="weui-search-bar__box">
+            <i class="weui-icon-search"></i>
+            <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
+            <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+        </div>
+        <label class="weui-search-bar__label" id="searchText">
+            <i class="weui-icon-search"></i>
+            <span>搜索</span>
+        </label>
+    </form>
+    <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+</div>*@
+<header class="demos-header">
+    <h1 class="demos-title">我的车票</h1>
+</header>
+
+<div class="weui-cells__title">我预订的车票</div>
+<div class="weui-cells">
+    @{
+        for (var i = 1; i <= 2; i++)
+        {
+            string linkUrl = "/Home/MemberTicketDetail?ordercode=" + i;
+            <a class="weui-cell weui-cell_access" href="@linkUrl">
+                <div class="weui-cell__bd">
+                    <p>
+                        【班车】苏FM1234 | 南通-上海<br />
+                        【座位】13座、14座<br />
+                        【班次】2018年6月10日 星期一<br />
+                        【票价】¥100.00元<br />
+                    </p>
+                </div>
+                <div class="weui-cell__ft">
+                </div>
+            </a>
+        }
+    }
+    
+
+    <a class="weui-cell weui-cell_access" href="/Home/MemberTicketDetail?ordercode=1&bustype=hz">
+        <div class="weui-cell__bd">
+            <p>
+                【车辆】苏FM3344 | 启东-杭州<br />
+                【座位】23座<br />
+                【时间】2018年6月10日 星期一<br />
+                【票价】120.00元<br />
+            </p>
+        </div>
+        <div class="weui-cell__ft">
+        </div>
+    </a>
+</div>
+
+<div class="weui-loadmore">
+    <i class="weui-loading"></i>
+    <span class="weui-loadmore__tips">正在加载</span>
+</div>
+<div class="weui-loadmore weui-loadmore_line">
+    <span class="weui-loadmore__tips">暂无数据</span>
+</div>
+
+
+
+<div class='demos-content-padded'>
+    <a href="javascript:void(0);" class="weui-btn weui-btn_primary" id="btnLoadMore">显示更多</a>
+    <a href="/Home/" class="weui-btn weui-btn_primary">返回</a>
+</div>
+
+
+@section footContainer{
+    <script>
+        $(function() {
+            $("#btnLoadMore").on("click", function () {
+                $.toast("异步加载数据....", "text");
+            });
+        });
+        
+    </script>
+}

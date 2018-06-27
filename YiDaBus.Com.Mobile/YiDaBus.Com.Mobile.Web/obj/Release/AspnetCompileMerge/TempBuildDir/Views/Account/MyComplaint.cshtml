@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "问题反馈";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style="padding-top: 40px;">
+    <div class="search_listheader nopadding" style="background:#fff;" >
+        <div class="search_listheader_l" onclick="window.location.href = '/Account/Index'"><i class="iconfont icon-jiantou-copy1"></i></div>
+        <h2> 问题反馈</h2>
+    </div>
+
+    <!---投诉为空的情况下调用此段代码-->
+    <div class="search_null">
+        <dl>
+            <dt><img width="75" src="~/Content/img/tousu_nullicon.png"></dt>
+            <dd>没有任何反馈</dd>
+        </dl>
+    </div>
+    <!---投诉为空的情况下调用代码结束-->
+
+</div>
+

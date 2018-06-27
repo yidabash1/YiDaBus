@@ -1,0 +1,73 @@
+﻿<style>
+    .ui-input {
+        border-width: 0px 0px 1px 0px;
+        border-color: #555;
+        width: 40%;
+        text-align: center;
+    }
+
+    .ui-indent2 {
+        text-indent: 2em;
+    }
+</style>
+<script id="ContractTemplate" type="text/html">
+    <div class="box_main">
+        <form id="contractForm" style="padding-top: 45px;">
+            {{# if(d!=null){ }}
+            <div class="help_con">
+                <p>
+                    <input id="id" name="id" type="hidden" lay-reqmsg="合同不存在或已被删除" value="{{d.id}}">
+                    出租方(以下简称甲方)：<input id="signatoryName" name="signatoryName" type="text" value="{{d.signatoryName}}" class="ui-input" style="width:40%;" /><br />
+                    身份证号：<input id="signatoryIDCard" name="signatoryIDCard" type="text" value="{{d.signatoryIDCard}}" class="ui-input" style="width:60%;" /><br />
+                </p>
+                <p>
+                    承租方(以下简称乙方)：<input id="lessorName" name="lessorName" type="text" value="{{d.lessorName}}" class="ui-input" /><br />
+                    身份证号：<input id="lessorIDCard" name="lessorIDCard" type="text" value="{{d.lessorIDCard}}" class="ui-input" style="width:60%;" /><br />
+                </p>
+                <p class="ui-indent2">
+                    根据《中华人民共和国合同法》 、《 上海市房屋租赁条例》等相关法律法规的规定，
+                    甲、乙双方在平等、自愿的基础上，就乙方租赁甲方房屋事宜，为明确双方权利义务，经协
+                    商一致，订立本合同。
+                </p>
+                <p class="ui-indent2">一、租赁地点及设施：  </p>
+                <p class="ui-indent2">1、租赁房屋地址：<input id="city" name="city" type="text" value="{{d.city}}" class="ui-input" style="width:20%;" /><input id="district" name="district" type="text" value="{{d.district}}" class="ui-input" style="width:20%;" /><input id="detailAddress" name="detailAddress" type="text" value="{{d.detailAddress}}" class="ui-input" style="width:40%;" /><input id="areasName" name="areasName" type="text" value="{{d.areasName}}" class="ui-input" style="width:30%;" />小区<input id="buildingNO" name="buildingNO" type="text" value="{{d.buildingNO}}" class="ui-input" style="width:30%;" />号楼<input id="roomNO" name="roomNO" type="text" value="{{d.roomNO}}" class="ui-input" style="width:30%;" />室; 房型规格<input id="hSpec" name="hSpec" type="text" value="{{d.hSpec}}" class="ui-input" style="width:30%;" />；建筑面积约<input id="rentalArea" name="rentalArea" type="text" value="{{d.rentalArea}}" class="ui-input" style="width:20%;" />平米。（ 双方交割时签订附属设  施清单作为本合同附件，毛坯房不用）。</p>
+                <p class="ui-indent2">
+                    二、甲方保证具备上述房屋出租权，并保证所出租的房屋符合国家对租赁房屋的有关
+                    规定。甲方通过指房向 APP 或网站对外发布相关房屋的出租信息，签约前应向乙方出具房
+                    产证（或具有出租权的其他有效证明）、身份证明（营业执照）等原件，乙方应提供身份证
+                    明等原件。双方验证后可复印对方文件备存，所有复印件仅供本次租赁使用。
+                </p>
+                <p class="ui-indent2">甲方有办理租赁信息登记或备案的义务，乙方非上海户口的，应配合乙方办理居住证。</p>
+                <p class="ui-indent2">三、租用期限及其约定：</p>
+                <p class="ui-indent2">1、租用期限：甲方同意乙方租用<input id="totalMonth" name="totalMonth" type="text" value="{{d.totalMonth}}" class="ui-input" style="width:10%;" />个月;自<input id="contractSignTime" name="contractSignTime" type="text" value="{{d.contractSignTime}}" class="ui-input" style="width:30%;" />起至<input id="contractDueTime" name="contractDueTime" type="text" value="{{d.contractDueTime}}" class="ui-input" style="width:30%;" /></p>
+                <p class="ui-indent2">2、房屋租金：每月<input id="contractAmount" name="contractAmount" type="text" value="{{d.contractAmount}}" class="ui-input" style="width:30%;" />元人民币（ 大写 <input id="bContractAmount" name="bContractAmount" type="text" value="{{d.bContractAmount}}" class="ui-input" style="width:30%;" />/30 天）;  </p>
+                <p class="ui-indent2">
+                    3、付款方式：<input id="rentMoneyWay" name="rentMoneyWay" type="text" value="{{d.rentMoneyWay}}" class="ui-input" style="width:30%;" />首次付款共计<input id="firstPayment" name="firstPayment" type="text" value="{{d.firstPayment}}" class="ui-input" style="width:20%;" />元人民币，其中交易保障金<input id="houseDeposit" name="houseDeposit" type="text" value="{{d.houseDeposit}}" class="ui-input" style="width:20%;" />元，<input id="fTotalMonth" name="fTotalMonth" type="text" value="{{d.fTotalMonth}}" class="ui-input" style="width:20%;" />个月
+                    房租<input id="fTotalMoney" name="fTotalMoney" type="text" value="{{d.fTotalMoney}}" class="ui-input" style="width:20%;" />元。
+                </p>
+                <p class="ui-indent2">4、租赁期内的水、电、煤、电话、有线、保洁等使用房屋所产生的费用由乙方支付；甲方支付物业费、租赁税、房产税，房屋修缮、管道维护等费用。房屋到期是，甲方验收无误，乙方结清承担的费用后，甲方将交易保障金退还给乙方。</p>
+                <p class="ui-indent2">签订本合同时，甲方支付服务费<input type="text" value="零" class="ui-input" style="width:10%;" />元整，乙方支付服务费<input type="text" value="伍佰" class="ui-input" style="width:10%;" />元整。</p>
+                <p class="ui-indent2">五、双方责任及义务： </p>
+                <p class="ui-indent2">1、租用期内，乙方应严格遵守国家和《上海市居住房屋租赁管理办法》及小区物业管理的规定，不得在房屋内作违法违规的事；故意损毁房屋配置物件，照价赔偿。  </p>
+                <p class="ui-indent2">2、租期未满，甲方提前收回房屋，应赔偿乙方 <input type="text" value="三个月房租" class="ui-input" style="width:30%;" />作为违约金。</p>
+                <p class="ui-indent2">3、租期未满，乙方擅自搬出，交易保障金不退；租期满后，乙方如需继续租用，应提前 天提出，<input type="text" value="15" class="ui-input" style="width:10%;" />在同等条件下享有优先租用权。  </p>
+                <p class="ui-indent2">六、双方有任何争议依据《上海市居住房屋租赁管理办法》处理，可以友好协商，协商不成双方向房屋所在地派出所申请调解，调解不成的自争议发起日 60 日内向仲裁机构申请仲裁或直接向房屋所在地人民法院起诉。  </p>
+                <p class="ui-indent2">七、本合同未尽事宜，经甲、乙双方协商一致，可订立补充条款。 当事双方房屋交割时所签交割清单及其他补充条款作为本合同附件，与本合同具有同等法律效力。 </p>
+                <p class="ui-indent2">八、本合同双方电子签字后生效。在未经涂改的前提下，下载打印件同具法律效力。</p>
+                <p>
+                    出 租 方  ：<input id="signatory" type="text" value="{{d.signatoryName}}" class="ui-input" style="width:28%;" />
+                    承 租 方  ：<input id="lessor" type="text" value="{{d.lessorName}}" class="ui-input" style="width:28%;" />
+                </p>
+                <p>
+                    联系电话：<input id="signatoryPhone" name="signatoryPhone" type="text" value="{{d.signatoryPhone}}" class="ui-input" style="width:28%;" />
+                    联系电话：<input id="lessorPhone" name="lessorPhone" type="text" value="{{d.lessorPhone}}" class="ui-input" style="width:28%;" />
+                </p>
+                <p>
+                    签约日期：<input id="signTime" name="signTime" type="text" value="{{d.signTime}}" class="ui-input" style="width:28%;" />
+                </p>
+                <p style="text-align:right;">指房向 1.001 版  </p>
+            </div>
+            {{#  } }}
+        </form>
+    </div>
+</script>

@@ -1,0 +1,144 @@
+﻿@using ZFX365.Com.Manager.Common.Extend
+@{
+    ViewBag.Title = "房源搜索结果";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .saixuan ul li a span{
+        overflow: hidden;white-space: nowrap;text-overflow: ellipsis;
+
+    }
+</style>
+
+<div class="container">
+    <div class="search_listheader" style="position: relative;">
+        <div class="search_listheader_l"><i class="iconfont icon-jiantou-copy1" onclick="return window.location.href='/Home/Index';"></i></div>
+        <div class="search_listheader_m"><i class="iconfont icon-llhomesearch" onclick="loadresult()"></i><input type="text" placeholder="请输入小区、商圈、地铁站" value="@ViewBag.Keywords" oninput="loadresult()"></div>
+        <div class="search_listheader_r">@*<i class="iconfont icon-03" onclick="jumpmap()"></i>*@</div>
+    </div>
+    <div class="saixuan">
+        <ul>
+            <li>
+                <a onclick="showmore('d')"><span>@(ViewBag.District != "" ? ViewBag.District : "区域/地铁")<em><i class="iconfont icon-arrow-down-copy"></i></em></span></a>
+
+            </li>
+            <li>
+                <a onclick="showmore('r')"><span>@(ViewBag.RentMoney != "" ? ViewBag.RentMoney + "" : "租金")<em><i class="iconfont icon-arrow-down-copy"></i></em></span></a>
+
+            </li>
+            <li>
+                <a onclick="showmore('o')"><span>@(ViewBag.HRoom != "" ? int.Parse(ViewBag.HRoom) >= 4 ? "4室以上" : ViewBag.HRoom + "室" : "户型")<em><i class="iconfont icon-arrow-down-copy"></i></em></span></a>
+
+            </li>
+            <li style="border-right:0; width:23%;">
+                <a onclick="showmore('m')"><span>更多<em><i class="iconfont icon-arrow-down-copy"></i></em></span></a>
+
+            </li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+    <div class="box_main">
+        <div class="iprolist">
+            <div class="iprolistc">
+            </div>
+        </div>
+
+        <div class="search_null" style="display:none">
+            <dl>
+                <dt><img width="70" src="/content/img/null.png"></dt>
+                <dd>没有查到相关的结果                
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+</div>
+<script type="text/html" id="results">
+    {{#  layui.each(d, function(index, item){ }}
+
+    <dl onclick="todetails({{item.id}})">
+        <dt>
+            <a href="/house/details/{{item.id}}">
+                {{# if(item.videoCount>0){ }}
+                <div class="videoicon" style="position: absolute;left:  48%;top: 30%;z-index: 99999;"><i class="icon iconfont icon-bofang1" style="font-size: 40px;color: #fff;opacity: 1;margin-left: -20px;"></i></div>
+                {{# } }}
+                <img src="{{item.houseCorver}}" onerror="this.onerror='';this.src='/Content/img/ad1.png'">
+            </a>
+        </dt>
+        <dd>
+            <h3><em>{{ getDistance(item.xCoordinate,item.yCoordinate)}}</em><a href="/house/details/{{item.id}}">{{item.houseTitle}}</a></h3>
+
+            <div class="iprolist_about">
+                <span> {{# if(item.rentalArea>0){ }}{{item.rentalArea}}㎡{{#  }else{}}  暂无数据 {{# } }} {{# if(item.hFloor>0){ }}  |{{item.hFloor}}/{{item.hFloorTotal}}层{{# } }}</span>
+                <div class="iprolist_price"><em>￥{{item.hRent}}</em>/月</div>
+            </div>
+            <div class="iprolist_tag">
+                {{# if(item.hTags!=""){ }}
+                {{# layui.each(item.hTags.split(','),function(index,itemdetails){}}
+                <em class="color{{index+1}}">{{itemdetails}}</em>
+                {{#  });}}
+                {{# } }}
+            </div>
+            {{# if(item.subwayDistance!=""){ }}
+            <div class="iprolist_adress"><i class="iconfont icon-ditu2"></i> {{item.subwayDistance}}</div>
+            {{# } }}
+        </dd>
+    </dl>
+    {{#  }); }}
+    {{#  if(d.length === 0){ }}
+    @*什么都不做*@
+    {{$(".search_null").show()}}
+    {{#  } }}
+</script>
+<script>
+    function showmore(p) {
+        // 组装参数
+        var paras = "&district=@ViewBag.district&RentMoney=@ViewBag.RentMoney&HRoom=@ViewBag.HRoom&hDecoration=@ViewBag.hDecoration&hfloor=@ViewBag.hfloor&RentalArea=@ViewBag.RentalArea&rentModel=@ViewBag.RentModel&htags=@ViewBag.htags";
+        //跳转
+        window.location.href = "/house/advancesearch?" + paras+"&active="+p;
+    }
+    function jumpmap() {
+        window.location.href = "/house/mapsearch";
+    }
+    function loadresult() {
+        getloaction();
+        var data = {
+            pagesize: 5,
+            HouseVillageId: '@ViewBag.VillageId',
+            Keywords: $(".search_listheader_m input").val(),
+            RentMode: '@ViewBag.RentModel',
+            IsAppartment: '@ViewBag.IsAppartment'==1?true:"",
+            RentMoney: '@ViewBag.RentMoney',
+            HRoom: '@ViewBag.HRoom',
+            HDecoration: '@ViewBag.hDecoration',
+            HFloorCondtion: '@ViewBag.hfloor',
+            RentalAreaCondition: '@ViewBag.RentalArea',
+            HTags: '@ViewBag.htags',
+            SubwayLines: '@ViewBag.district',// '@ViewBag.subLine',
+            SubwayStations:  '@ViewBag.district',//'@ViewBag.substations',
+            District: '@ViewBag.district',
+            TradingArea: '@ViewBag.treadingarea'
+            ,HStatus:0
+        };
+        $.LayPage({
+            elem: '.iprolistc'
+      , Template: '#results'
+      , mb: 100
+      , url: globalKey.InterfaceDomain + 'api/House/GetList'
+      , type: 'post'
+      , load:false
+      , data: data//参数
+      , NullColor: '#ffffff'
+        });
+    };
+    function jumptosearch() {
+        location.href = "/house/search";
+    }
+    function todetails(id)
+    {
+        location.href = "/house/details/" + id;
+    }
+   
+    loadresult();
+    $("body").removeClass();
+</script>

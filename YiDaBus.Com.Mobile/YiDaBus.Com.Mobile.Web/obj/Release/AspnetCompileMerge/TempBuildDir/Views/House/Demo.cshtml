@@ -1,0 +1,126 @@
+﻿
+@{
+    ViewBag.Title = "Demo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #div_show {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        -webkit-animation-duration: .5s;
+        animation-duration: .5s;
+        /*height: 400px;
+    left: 80px;
+    position: fixed;
+    top: 88px;
+    width: 80%;*/
+        z-index: -100;
+    }
+
+    .div_show_title {
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#12a3f4', endColorstr='#0e86c9', GradientType=0);
+           clear: both;
+    display: block;
+    background: #F5F5F5;
+    color: #333333;
+    font-weight: 700;
+    position: relative;
+    height: 30px;
+    width: 100%;
+    }
+
+    .div_show_font {
+        color:#333333;
+        float: left;
+        font-weight: 700;
+        margin: 0.4em 0 0.4em 10px;
+    }
+
+    .div_show_btn {
+        float: right;
+        margin: 0.4em 10px 0.4em 0;
+    }
+
+    #mapdetails {
+        height: 100%;
+        border: 5px solid white;
+    }
+</style>
+<div id="div_body">
+    <input type="button" value="click" onclick="divtoshow()" />
+</div>
+
+<div id="div_show"> </div>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=XBPX8dmIuAzluWeOtTAzsCECpkxkLudV"></script>
+<script type="text/javascript">
+    //显示百度地图弹出层
+    function divtoshow() {
+        div_show = document.getElementById("div_show");
+        div_show.innerHTML = "<div class=\"div_show_title\"> <span class=\"div_show_font\"></span> <a  onclick=\"close_show();\" class=\"div_show_btn\" ><i class=\"icon iconfont icon-guanbi\"></i></a> </div><div id=\"mapdetails\" ></div>";
+
+        mlayer.open({
+            content: div_show.innerHTML
+ , type: 1
+, style: 'position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;'
+        });
+        //getshade();
+        //getpopup();
+        getbaidumap(116.404, 39.915);
+        div_show.style.zIndex = "10000000000000000";
+        div_show.style.display = "block";
+    }
+
+    //创建遮罩层
+    function getshade() {
+        var div = document.createElement("div");
+        div.style.width = Math.max(document.documentElement.scrollWidth, document.documentElement.clientWidth) + "px";
+        div.style.height = Math.max(document.documentElement.scrollHeight, document.documentElement.clientHeight) + "px";
+        div.style.backgroundColor = "#000000";
+        div.style.position = "absolute";
+        div.style.opacity = 0.5;
+        div.style.left = 0;
+        div.style.top = 0;
+        div.id = "tohotelshade";
+        div.style.zIndex = 100;
+        document.getElementById("div_body").appendChild(div);
+    }
+
+    //创建用于显示百度地图的DIV
+    function getpopup() {
+        var div = document.createElement("div");
+        div.style.width = "100%";
+        div.style.height = "100%";
+        div.id = "mapdetails";
+        document.getElementById("mapdetails").appendChild(div);
+    }
+
+    //清除弹出层和遮罩层
+    function close_show() {
+        var tohotelshade = document.getElementById("tohotelshade");
+        var tohotelmap = top.document.getElementById("tohotelmap");
+        var div_show = document.getElementById("div_show");
+        var div_hotelmap = document.getElementById("div_hotelmap");
+        div_show.style.zIndex = "-100";
+        tohotelshade.parentNode.removeChild(tohotelshade);
+        tohotelmap.parentNode.removeChild(tohotelmap);
+        div_show.innerHTML = "";
+    }
+
+    //通过经纬度显示百度地图
+    function getbaidumap(Longitude, Latitude) {
+        var map = new BMap.Map("mapdetails");
+        var point = new BMap.Point(121.535717, 31.304510);
+        map.centerAndZoom(point, 22);
+        var marker = new BMap.Marker(point);  // 创建标注
+        map.addOverlay(marker);              // 将标注添加到地图中
+
+        var label = new BMap.Label("大连西路四弄", { offset: new BMap.Size(20, -10) });
+        marker.setLabel(label);
+              
+    }
+
+</script>

@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "交易保障金退换成功";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="search_listheader" style="background:#fff">
+        <div class="search_listheader_l" onclick="window.location.href = '/Account/Index'"><i class="iconfont icon-jiantou-copy1"></i></div>
+        <h2>申请退款成功</h2>
+    </div>
+    <div class="fankui_null">
+        <dl>
+            <dt><img width="60" src="/Content/img/tksuccess_icon.png"></dt>
+            <dd>
+                <h3 style="font-weight:100">申请退款成功</h3>
+                <div id="deposit" class="fankui_null_money"></div>
+                <p style="color:#666666">退款将在2-7个工作日内到账</p>
+                <p><a style="color:#FD7A20" href="/Account/DepositDetail">查看明细</a></p>
+            </dd>
+        </dl>
+        <div class="login_btm" style="padding-top:25px;">
+            <a class="login_btn bgred" href="/Account/Index" style="border-radius:2px; margin-left:15px; margin-right:15px; width:auto">确定</a>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#deposit').text('￥'+$.request('deposit'));
+    });
+</script>

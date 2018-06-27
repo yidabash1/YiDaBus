@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "LaytplDemo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*
+//第一步：编写模版。你可以使用一个script标签存放模板，如：*@
+<script id="NewsListTemplate" type="text/html">
+    <ul>
+        {{#  layui.each(d, function(index, item){ }}
+        <li>
+            <img style="height:100px;" lay-src="{{ item.imgUrl }}">
+            <span>{{ item.newsTitle || '' }}</span>
+        </li>
+        {{#  }); }}
+
+        {{#  if(d.length === 0){ }}
+        无数据
+        {{#  } }}
+    </ul>
+</script>
+@*第二步：建立视图。用于呈现渲染结果。*@
+<ul id="newsList"></ul>
+<script>
+    $.LayPage({
+        elem: '#newsList'//需要填充到哪个元素里面
+        , Template: '#NewsListTemplate'//使用的模板元素
+        //, isAuto: true//是否自动加载。默认true。如果设为false，点会在列表底部生成一个“加载更多”的button，则只能点击它才会加载下一页数据。
+        //, mb: 100//与底部的临界距离，默认50。即当滚动条与底部产生该距离时，触发加载。注意：只有在isAuto为true时有效。额，等等。。mb=margin-bottom，可不是骂人的呀。
+        , url: 'http://xjapi.shzhuoyan.com/api/news/GetNewsList'//请求的url地址
+        , data: { pagesize: 5 }//参数
+    });
+</script>

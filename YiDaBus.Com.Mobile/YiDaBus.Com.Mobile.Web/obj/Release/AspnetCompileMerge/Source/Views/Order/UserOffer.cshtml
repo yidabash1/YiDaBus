@@ -1,0 +1,151 @@
+﻿@{
+    ViewBag.Title = "立即出价";
+    Layout = "~/views/shared/_layout.cshtml";
+}
+<div class="container">
+    <form class="layui-form">
+        <div class="box_main">
+            <div class="search_listheader" style="background:#fff;position: relative;">
+                <div class="search_listheader_l" onclick="window.history.go(-1);"><i class="iconfont icon-jiantou-copy1"></i></div>
+                <h2> 我的出价</h2>
+            </div>
+            <div id="iprolist" class="iprolist" style="margin-top:0">
+            </div>
+            <div class="chujia_part1">
+                <div class="login_con" style="padding-top:0px">
+                    <ul>
+                        <li>
+                            <span>月租金 </span>
+                            <input id="price" name="price" lay-verify="number" type="tel" maxlength="8" placeholder="请输入你理想中的月租价位" lay-reqmsg="请输入你理想中的月租价位">
+                        </li>
+                    </ul>
+                    <div class="chujia_yips"> ▍此价格会影响房东决策，请慎重填写，一旦出价不得修改，房东确认后系统默认成交！</div>
+                </div>
+            </div>
+            <div class="chujia_part1">
+                <div class="chujia_part_txt">
+                    <textarea id="ToLandlordContent" name="ToLandlordContent" lay-reqmsg="请输入您要对房东说的" placeholder="我对房东说的..."></textarea>
+                </div>
+            </div>
+            <div class="login_btm" style="padding-top:55px;">
+                <a class="login_btn bgred" href="javascript:void(0);" lay-submit="" lay-filter="offerSubmit" style="border-radius:2px; margin-left:15px; margin-right:15px; width:auto">立即提交</a>
+            </div>
+        </div>
+    </form>
+</div>
+<!--房屋模板-->
+<script id="housedetailsTemplate" type="text/html">
+    {{# if(d!=null){ }}
+    <div class="iprolistc" id="tab1">
+        <dl>
+            <dt>
+                <a href="/house/details/{{d.id}}">
+                    <img src="{{d.houseCorver==""?"/Content/img/ad1.png":d.houseCorver}}" onerror="this.onerror='';this.src='/Content/img/ad1.png'">
+                </a>
+            </dt>
+            <dd>
+                <h3> <a href="/house/details/{{d.id}}">{{d.houseTitle}}</a>&nbsp;<span>{{d.rentMode}}</span></h3>
+                <div class="iprolist_about">
+                    <span> {{# if(d.rentalArea>0){ }}{{d.rentalArea}}㎡{{#  }else{}}  暂无数据 {{# } }} {{# if(d.hFloor>0){ }}  |{{d.hFloor}}/{{d.hFloorTotal}}层{{# } }}</span>
+                    <div class="iprolist_price"><em id="hRent" data-rent="{{d.hRent}}">￥{{d.hRent}}</em>/月</div>
+                </div>
+                <div class="iprolist_tag">
+                    {{# if(d.hTags!=""){ }}
+                    {{# layui.each(d.hTags.split(','),function(index,itemdetails){}}
+                    <em class="color{{index+1}}">{{itemdetails}}</em>
+                    {{#  });}}
+                    {{# } }}
+                </div>
+                <div class="iprolist_adress">
+                    {{# if(d.subwayDistance==""||d.subwayDistance==null){ }}
+                    {{# }else{ }}
+                    <i class="iconfont icon-ditu2"></i> {{d.subwayDistance}}
+                    {{# } }}
+                </div>
+            </dd>
+        </dl>
+    </div>
+    {{#  } }}
+
+    {{#  if(d==null||d.length === 0){ }}
+    <div class="search_null">
+        <dl>
+            <dt><img width="70" src="/content/img/null.png"></dt>
+            <dd>房屋不存在或已被删除！</dd>
+        </dl>
+    </div>
+    {{#  } }}
+</script>
+<script>
+    var houseId = $.request('houseId');
+    $(function () {
+        getDetails();
+        InitForm();
+    });
+    //加载房源详细
+    function getDetails() {
+        $.LayDetails({
+            elem: '#iprolist'
+          , Template: '#housedetailsTemplate'
+          , mb: 100
+          , url: globalKey.InterfaceDomain + 'api/house/details'
+          , type: 'post'
+          , data: { id: houseId }//参数
+          , success: function (html) {
+              $('#iprolist').html(html);
+          }
+        });
+    }
+    //初始化表单
+    function InitForm() {
+        layui.use(['form'], function () {
+            var form = layui.form();
+            //监听提交
+            form.on('submit(offerSubmit)', function (data) {
+                //判断价格是否小于90%；
+                //try {
+                //    if (parseInt(data.field.price) < parseInt($('#hRent').attr('data-rent')) * 0.9) {
+                //        $.modalMsg({
+                //            content: "您的出价过低！"
+                //        });
+                //        return false;
+                //    }
+                //} catch (e) {
+
+                //}
+                $.modalConfirm({
+                    content: '此价格会影响房东决策，请慎重填写，一旦出价<span style="color:red;">不得修改</span>，房东确认后系统默认成交！'
+                    , callBack: function () {
+                        data.field["userId"] = $('#Uid').val();
+                        data.field["orderNo"] = $.request('orderNo');
+                        data["type"] = 0;
+                        $.ar({
+                            url: globalKey.InterfaceDomain + 'api/LeaseOffer/Create'
+                           , data: data.field
+                           , success: function (data) {
+                               $.modalMsg({
+                                   content: data.msg, success: function () {
+                                       window.location.href = "/order/index?type=1";
+                                   }
+                               });
+                           }
+                           , error: function (data) {
+                               $.modalMsg({
+                                   content: data.msg, success: function () {
+                                       if (data.data != null && data.data != undefined && data.data.errCode == -2) {
+                                           window.location.href = "/WxPay/DepositExplain?payReturnUrl=" + encodeURIComponent(window.location.href);
+                                       }
+                                       if (data.data != null && data.data != undefined && data.data.errCode == -1) {
+                                           window.location.href = "/order/index?type=1";
+                                       }
+                                   }
+                               });
+                           }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+    }
+</script>

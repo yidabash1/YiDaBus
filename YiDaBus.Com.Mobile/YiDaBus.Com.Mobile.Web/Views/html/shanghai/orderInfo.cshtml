@@ -1,0 +1,192 @@
+﻿@{
+    ViewBag.Title = "易达快乐巴士 - 上海订票预订信息";
+    Layout = "~/Views/Shared/master.cshtml";
+
+    string week = Request.QueryString["week"] ?? "";
+}
+
+<header class="demos-header">
+    <h1 class="demos-title">上海订票</h1>
+</header>
+<form>
+    <div class="weui-form-preview">
+        <div class="weui-form-preview__hd">
+            <label class="weui-form-preview__label">票价总额</label>
+            <em class="weui-form-preview__value" id="elemTotalMoney">¥200.00</em>
+        </div>
+    </div>
+    <div class="weui-cells__title">预订座位</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>13座、14座</p>
+            </div>
+            <div class="weui-cell__ft">苏FM1122</div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>南通 - 上海</p>
+            </div>
+            <div class="weui-cell__ft">@DateTime.Today.ToString("yyyy年MM月dd日") @week</div>
+        </div>
+    </div>
+
+
+    <div class="weui-cells__title">联系方式</div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">客户姓名</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" name="customerName" placeholder="请输入您的姓名和微信名">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">联系电话</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="tel" name="customerPhone" placeholder="请输入您的手机号码">
+            </div>
+        </div>
+        <div class="weui-cell weui-cell_switch">
+            <div class="weui-cell__bd">是否单程</div>
+            <div class="weui-cell__ft">
+                <input class="weui-switch" type="checkbox" id="elemSwitchOneway">
+            </div>
+        </div>
+        <div class="weui-cell weui-cell_switch">
+            <div class="weui-cell__bd">是否接送</div>
+            <div class="weui-cell__ft">
+                <input class="weui-switch" type="checkbox" checked="checked" id="elemSwitchShuttle">
+            </div>
+        </div>
+        <div id="shuttleInfo">
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">接的地点</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" name="shuttleAddr1" placeholder="接的详细地点">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">送的地点</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" name="shuttleAddr2" placeholder="送的详细地点">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--星期几-->
+    @Html.Hidden("week", week)
+
+    <!--车牌号码-->
+    @Html.Hidden("busNumber","苏FM1122")
+
+    <!--选择的座位-->
+    @Html.Hidden("chooseSeat", "13,14")
+
+    <!--是否单程，0=否，1=是-->
+    @Html.Hidden("isOneway", 0)
+
+    <!--是否接送，0=不接送，1=接送-->
+    @Html.Hidden("isShuttle", 0)
+
+    <!--接送单价-->
+    @Html.Hidden("shuttlePrice", 20)
+
+    <!--每座票价-->
+    @Html.Hidden("seatPrice", 100)
+
+    <!--票价总额-->
+    @Html.Hidden("totalMoney", 0)
+
+</form>
+<div class='demos-content-padded'>
+    <a href="javascript:void(0);" class="weui-btn weui-btn_primary" id="btnSubmit">确认提交</a>
+    <a href="/Home/ShangHai?week=@Url.Encode(week)" class="weui-btn weui-btn_primary">重选座位</a>
+</div>
+
+@section footContainer
+{
+    <script>
+        function initInfo() {
+            //$("#myTicketInfo").hide();
+            calcTotalMoney();
+        }
+
+        //计算票价总额
+        function calcTotalMoney() {
+            var chooseSeat = $("#chooseSeat").val();
+            var seatCount = chooseSeat.split(',').length;
+            if (seatCount === 0) {
+                $.toast("预订座位数量不能为0", "text");
+                return;
+            }
+            var seatPrice = Number($("#seatPrice").val());
+            var way = $("#elemSwitchOneway").is(":checked") ? 1 : 2;
+            //如果需要接送补接送价20元
+            var shuttlePrice = $("#elemSwitchShuttle").is(":checked") ? Number($("#shuttlePrice").val()) : 0;
+            var totalMoney = (seatCount * (seatPrice + shuttlePrice) * way).toFixed(2);
+
+            $("#totalMoney").val(totalMoney);
+            $("#elemTotalMoney").text("¥" + totalMoney);
+        }
+
+        $(function() {
+            initInfo(); //初始化
+
+            $("input[name='ticketType']").on("change", function() {
+                calcTotalMoney();
+            });
+            //是否单程
+            $("#elemSwitchOneway").on("change", function () {
+                var flag = $(this).is(":checked");
+                var isshuttle = flag ? 1 : 0;
+                $("#isOneway").val(isshuttle);
+                calcTotalMoney();
+            });
+
+            //是否接送
+            $("#elemSwitchShuttle").on("change", function() {
+                var flag = $(this).is(":checked");
+                var isshuttle = flag ? 1 : 0;
+                $("#isShuttle").val(isshuttle);
+                var obj = $("#shuttleInfo");
+                if (flag) {
+                    obj.show();
+                } else {
+                    obj.hide();
+                }
+                calcTotalMoney();
+            }); 
+
+            //提交
+            $("#btnSubmit").on("click", function() {
+                var data = $("form").serialize();
+                console.log(data);
+                $.alert(data, "提交的数据",function() {
+                    location.href = "/Home/ShangHaiSuccess";
+                });
+                
+                //$.ajax({
+                //    success: function(d) {
+                //        console.log(d);
+                //    },
+                //    complete:function() {
+                        
+                //    },
+                //    error: function() { $.toast("网络请求出错", "text"); }
+                //});
+
+            });
+        });
+
+
+    </script>
+}

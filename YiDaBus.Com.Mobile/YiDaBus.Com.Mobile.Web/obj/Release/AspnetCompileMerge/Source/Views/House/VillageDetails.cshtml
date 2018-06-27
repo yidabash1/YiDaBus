@@ -1,0 +1,372 @@
+﻿
+@{
+    ViewBag.Title = "小区详情";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript" src="/content/js/WapCircleImg.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".detail_btmset_part2 .detail_btm_btn.bg1").click(function () {
+            $(".overlay").show();
+            $(".hetong_tc").show();
+
+        });
+        $(".goyxfbtn").click(function () {
+            $(".overlay").hide();
+            $(this).parent().parent().hide();
+
+        });
+
+        $(".detail_btmset_part2 .detail_btm_btn.bg2").click(function () {
+            $(".overlay").show();
+            $(".fangdong_tc").slideDown();
+
+        });
+        $(".overlay").click(function () {
+            $(this).hide();
+            $(".fangdong_tc").slideUp();
+            $(".hetong_tc").hide();
+            $(".share_tc").slideUp();
+        });
+        $("#share").click(function () {
+            $(".overlay").show();
+            $(".share_tc").slideDown();
+
+        });
+        $(".cancel_btn").click(function () {
+            $(this).hide();
+            $(".overlay").slideUp();
+            $(".share_tc").hide();
+
+
+        });
+    });
+</script>
+
+
+<style type="text/css">
+    html, body {
+        position: relative;
+        height: 100%;
+    }
+</style>
+<div class="container" id="container" style="height:100%">
+</div>
+<script type="text/html" id="villagetemplate">
+    {{# if(d!=null){ }}
+    <div class="search_listheader">
+        <div class="search_listheader_l"><i class="iconfont icon-jiantou-copy1" onclick="return history.go(-1)"></i></div>
+        <h2>{{d.villagName}}</h2>
+        {{# document.title=d.villagName; }}
+    </div>
+    <div class="banner_box">
+        <div id="Cimgf0d5c2216b8cbscroller_imglist" class="roll_img_mb_01">
+            <div class="img_box" style="mix-height:125px">
+                <ul>
+                    {{# layui.each(d.pics, function(index, item){ }}
+                    {{# if(item.resourceType==0){ }}
+                    <li>
+                        <img src="{{item.picUrl}}" onerror="this.onerror='';this.src='/Content/img/ad9.png'" />
+                    </li>
+                    {{# }else{ }}
+                    <li onclick="showvideo()">
+                        <div class="videoicon"><i class="icon iconfont icon-bofang1" style="font-size: 60px;"></i></div>
+                        <img src="{{ d.cover}}" onerror="this.onerror='';this.src='/Content/img/ad1.png'" />
+                        <div id="showvideo" name="showvideo" style="display:none;width:0px;height:0px;">
+                            <span class="hv-ring"><i class="hv-icon hv-icon-play"></i></span>
+                            <video id="myvideo" controls="controls" -webkit-playsinline x-webkit-airplay style="width:100%;" muted="muted" poster="{{ d.cover}}" src="{{ item.picUrl}}" type="video/mp4">
+                                暂不支持该设备播放视频
+                            </video>
+                        </div>
+                    </li>
+                    {{# } }); }}
+
+                </ul>
+            </div>
+            <div class="nav_box">
+                <ul id="li_on_name">
+                    <li class="li_on"></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="detail_info">
+        <div class="detail_tit"><h3>{{d.villagName}}</h3></div>
+        <div class="detail_tag">
+            {{# if(d.tags!=""){ }}
+            {{# layui.each(d.tags.split(','),function(index,itemdetails){}}
+            <em class="color{{index+1}}">{{itemdetails}}</em>
+            {{#  });}}
+            {{# } }}
+        </div>
+
+    </div>
+    <div class="detail_about">
+        <div class="detail_about_tab w2">
+            @*<dl>
+                    <dt>均&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价</dt>
+                    <dd>5.3万/平</dd>
+                </dl>
+                <dl>
+                    <dt>月&nbsp;环&nbsp;&nbsp;比</dt>
+                    <dd>4.1%</dd>
+
+                </dl>*@
+            <dl>
+                <dt>所在版块</dt>
+                <dd>{{ d.villageArea==null||d.villageArea==""? "暂无数据":d.villageArea}}</dd>
+            </dl>
+            <dl>
+                <dt>房屋类型</dt>
+                <dd>{{ d.houseType==null||d.houseType==""? "暂无数据":d.houseType}}</dd>
+            </dl>
+            <dl>
+                <dt>建造年代</dt>
+                <dd>{{ d.buildingAge==null||d.buildingAge==""? "暂无数据":d.buildingAge}}</dd>
+            </dl>
+            <dl>
+                <dt>占地面积</dt>
+                <dd>{{ d.areaCover==null||d.areaCover==""? "暂无数据":d.areaCover}}</dd>
+            </dl>
+            <dl>
+                <dt>房屋总数</dt>
+                <dd>{{ d.houseTotal==null||d.houseTotal==""? "暂无数据":d.houseTotal}}</dd>
+            </dl>
+            <dl>
+                <dt>楼栋总数</dt>
+                <dd>{{ d.buildingTotal==null||d.buildingTotal==""? "暂无数据":d.buildingTotal}}</dd>
+            </dl>
+            <dl>
+                <dt>物&nbsp;业&nbsp;&nbsp;费</dt>
+                <dd>{{d.propertyFee==null||d.propertyFee==""? "暂无数据":d.propertyFee}}</dd>
+            </dl>
+            <dl>
+                <dt>停&nbsp;车&nbsp;&nbsp;位</dt>
+                <dd>{{ d.parkingTotal==null||d.parkingTotal==""? "暂无数据":d.parkingTotal}}</dd>
+            </dl>
+            <dl>
+                <dt>物业公司</dt>
+                <dd>{{ d.propertyCompany==null||d.propertyCompany==""? "暂无数据":d.propertyCompany}}</dd>
+            </dl>
+            <dl>
+                <dt>容&nbsp;积&nbsp;&nbsp;率</dt>
+                <dd>{{ d.volumeRatio==null||d.volumeRatio==""? "暂无数据":d.volumeRatio}}</dd>
+            </dl>
+
+
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="detail_about">
+        <div class="detail_about_tab">
+            <dl>
+                <a href="">
+                    <dt>小区：</dt>
+                    <dd>{{d.villagName}}</dd>
+                </a>
+            </dl>
+            <dl>
+                <a href="">
+                    <dt>地址：</dt>
+                    <dd>{{d.detailsAddress}}</dd>
+                </a>
+            </dl>
+            <dl>
+                <dt>地铁：</dt>
+                <dd>{{d.subwayDistance}}</dd>
+            </dl>
+            <dl>
+                <dt>公交：</dt>
+                <dd>{{d.line}}</dd>
+            </dl>
+           
+        </div>
+
+
+    </div>
+
+    <div class="detail_about">
+        <div class="detail_about_tab">
+            <div class="detail_h">位置及周边</div>
+            <div class="detail_about_map" id="detail_about_map" data-xpoint="{{d.xCoordinate}}" data-ypoint="{{d.yCoordinate}}" data-title="{{d.houseTitle}}">
+                <a href="//api.map.baidu.com/marker?location={{d.yCoordinate}},{{d.xCoordinate}}&title={{d.villagName}}&content={{d.villagName}}&output=html">
+                    <img src="//api.map.baidu.com/staticimage?width=371&height=168&markers={{d.xCoordinate}},{{d.yCoordinate}}&zoom=16&markerStyles=-1,$staticUrl/wap/assets/img/map.png?v=1,-1">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="detail_morelist">
+        <div class="detail_h">小区在租房源（{{d.houseCount}}套）</div>
+        <div class="iprolistc" id="tab1">
+            {{#  layui.each(d.onSaleHouse, function(index, item){ }}
+            <dl onclick="showdetails({{item.id}})">
+                <dt>
+                    <a href="/house/details/{{item.id}}">
+                        <img src="{{item.houseCorver}}" onerror="this.onerror='';this.src='/Content/img/ad1.png'">
+                    </a>
+                </dt>
+                <dd>
+                    <h3><em>{{ getDistance(item.xCoordinate,item.yCoordinate)}}</em><a href="/house/details/{{item.id}}">{{item.houseTitle}}</a></h3>
+
+                    <div class="iprolist_about">
+                        <span> {{# if(item.rentalArea>0){ }}{{item.rentalArea}}㎡{{#  }else{}}  暂无数据 {{# } }} {{# if(item.hFloor>0){ }}  |{{item.hFloor}}/{{item.hFloorTotal}}层{{# } }}</span>
+                        <div class="iprolist_price"><em>￥{{item.hRent}}</em>/月</div>
+                    </div>
+                    <div class="iprolist_tag">
+                        {{# if(item.hTags!=""){ }}
+                        {{# layui.each(item.hTags.split(','),function(index,itemdetails){}}
+                        <em class="color{{index+1}}">{{itemdetails}}</em>
+                        {{#  });}}
+                        {{# } }}
+                    </div>
+                    {{# if(item.subwayDistance!=""){ }}
+                    <div class="iprolist_adress"><i class="iconfont icon-ditu2"></i> {{item.subwayDistance}}</div>
+                    {{# } }}
+                </dd>
+            </dl>
+            {{#  }); }}
+
+            <div class="clear"></div>
+            <div class="seeall_btnk"><a class="seeall_btn" href="/house/searchlist?villageid={{d.id}}">查看全部</a></div>
+        </div>
+    </div>
+
+
+    <div class="btmline"></div>
+    <div class="detail_btmset">
+        <div class="detail_btmset_part2" style="width:100%">
+            <a style="width:33%;background-color:#fff;color:#666666;" class="detail_btm_btn bg1" href="javascript:void(0)" onclick="return history.go(-1);">返回</a>
+            {{# if(d.isCollected==0){ }}
+            <a style="width:67%" class="detail_btm_btn bg1" href="javascript:void(0)" onclick="AddCollectionHandler(this);">加入收藏</a>
+            {{#  }else{ }}
+            <a style="width:67%" class="detail_btm_btn bg1" href="javascript:void(0)" >已收藏</a>
+            {{#  } }}
+        </div>
+    </div>
+    {{# } else{ }}
+    @*<div class="search_listheader">
+        <div class="search_listheader_l"><i class="iconfont icon-jiantou-copy1" onclick="return history.go(-1)"></i></div>
+        <h2>暂无数据</h2>
+    </div>*@
+    <div class="search_result_null search_null" style="display:none">
+        <dl>
+            <dt><img width="70" src="/content/img/null.png"></dt>
+            <dd>没有查到相关小区的具体信息</dd>
+        </dl>
+    </div>
+    {{# } }}
+</script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=XBPX8dmIuAzluWeOtTAzsCECpkxkLudV"></script>
+<script>
+    //load data
+    function details() {
+        getloaction();
+        $.LayDetails({
+            elem: '#container'
+      , Template: '#villagetemplate'
+      , mb: 100
+      , url: globalKey.InterfaceDomain + 'api/housevillage/details'
+      , type: 'post'
+      , data: { id: '@ViewBag.Id', userIdEncrypt: $('#Uid').val() }//参数
+    , success: function (html) {
+        console.log(html)
+        if (html=="") {
+            html='<div class="search_result_null search_null" style="display:none">'+
+        '<dl>            <dt><img width="70" src="/content/img/null.png"></dt>            <dd>没有查到相关小区的具体信息</dd>        </dl>    </div>'
+        }
+        $('#container').html(html);
+        WapCircleImg_01("Cimgf0d5c2216b8cbscroller_imglist", 3, true);
+    }
+            ,error:function(html)
+            {
+
+                html = ' <div class="search_listheader">    <div class="search_listheader_l"><i class="iconfont icon-jiantou-copy1" onclick="return history.go(-1)"></i></div>    <h2>暂无数据</h2></div><div class="search_result_null search_null" >' +
+                '<dl>            <dt><img width="70" src="/content/img/null.png"></dt>            <dd>没有查到相关小区的具体信息</dd>        </dl>    </div>'
+               
+                $('#container').html(html);
+            }
+        });
+    }
+    $(function () {
+        details();
+
+    });
+
+    function showdetails(id) {
+        location.href = "/house/details/" + id;
+    }
+    function showmore(str) {
+        $.modalLoad({ content: str });
+    }
+    function showconfig() {
+        $.modalLoad({ content: $(".detail_peitao_con").html() })
+    }
+    function showmap(x, y, title) {
+        mlayer.open({
+            content: '<div id="mapdetails" class="mapdetails"></div>'
+   , type: 1
+  , style: 'position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;'
+        });
+        var map = new BMap.Map("mapdetails");
+        var point = new BMap.Point(x, y);
+        map.centerAndZoom(point, 22);
+        var marker = new BMap.Marker(point);  // 创建标注
+        map.addOverlay(marker);              // 将标注添加到地图中
+
+        var label = new BMap.Label(title, { offset: new BMap.Size(20, -10) });
+        marker.setLabel(label);
+    };
+    function showvideo() {
+        div_show = document.getElementById("showvideo");
+        // div_show.show();
+        var htmls = "<div class=\"div_show_title\"> <span class=\"div_show_font\">" + "观看视频" + "</span> <a onclick=\"close_show();\" class=\"div_show_btn\" ><i class=\"icon iconfont icon-guanbi\"></i></a> </div>" + $(div_show).html();
+
+        mlayer.open({
+            content: htmls
+   , type: 1
+  , style: 'position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;'
+        });
+        div_show.style.zIndex = "10000000000000000";
+        div_show.style.display = "block";
+        var myVideo = document.getElementById("myvideo");
+        myVideo.play();
+        // $("#showvideo").hide();
+        $.modalCloseALL();
+    }
+    //加入收藏
+    function AddCollectionHandler(obj) {
+        if (UserIsLog()) {
+            $.ar({
+                url: globalKey.InterfaceDomain + 'api/HouseCollectLogs/Add',
+                data: { userId: $('#Uid').val(), houseId: '@ViewBag.Id', collectType: 1 },
+                success: function (data) {
+                    $.modalMsg({
+                        content: data.msg, success: function () {
+                            $(obj).text("已收藏").removeAttr('onclick');
+                        }
+                    });
+                }
+            })
+        }
+    }
+    @*//取消收藏
+    function CancleCollectionHandler(obj) {
+        if (UserIsLog()) {
+            $.ar({
+                url: globalKey.InterfaceDomain + 'api/HouseCollectLogs/Cancle',
+                data: { userId: $('#Uid').val(), houseId: '@ViewBag.Id', collectType: 1 },
+                success: function (data) {
+                    $.modalMsg({
+                        content: data.msg, success: function () {
+                            $(obj).text("加入收藏").attr('onclick', 'AddCollectionHandler(this);');
+                        }
+                    });
+                }
+            })
+        }
+    }*@
+</script>

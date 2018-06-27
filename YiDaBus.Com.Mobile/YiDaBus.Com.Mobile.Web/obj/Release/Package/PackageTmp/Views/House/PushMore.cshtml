@@ -1,0 +1,206 @@
+﻿
+@{
+    ViewBag.Title = "发布出租房源更多信息";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .webuploader-pick-hover{display:none;}
+    .webuploader-pick{display:none;}
+  .webuploader-container div>div{height:60px;width:60px;top:8px!important;left:0.45px!important;}
+  .webuploader-container div>div>input{display:none;}
+    /*.deletePic {color:white;background:#FD7A20;width:80px;height:30px;line-height:30px;text-align:center;border-radius: 4px;float:right;}*/
+</style>
+<div class="container">
+    <div class="search_listheader" style="background:#fff">
+        @*<div class="search_listheader_l"><i class="iconfont icon-jiantou-copy1"></i></div>*@
+        <h2> 发布出租房源</h2>
+    </div>
+    <div class="rentbox">
+        <h3>房源图片</h3>
+        <div class="rentbox_con">
+            <div class="rentbox_con_upload">
+                <a href="javascript:void(0)" data-value="self" class="cur" >自己上传</a>
+                <a href="javascript:void(0)"  data-value="wedo">上门拍照</a>
+            </div>
+            <div class="upload_img" style="overflow:hidden;">
+                <ul>
+                    @*<li><img src="~/content/img/ad1.png"></li>
+                    <li><img src="~/content/img/ad2.png"></li>
+                    <li><img src="~/content/img/ad3.png"></li>
+                    <li><img src="~/content/img/ad4.png"></li>
+                    <li><img src="~/content/img/ad5.png"></li>*@
+                    <li>
+                        <div id="uploader-demo" style="position: relative;">
+                            <div id="filePicker" class="webuploader-container"><i class="iconfont icon-tianjiatupian"></i></div>
+                        </div>
+                   <p>最多6张</p></li>
+                </ul>
+                @*<div class="deletePic">删除</div>*@
+            </div>
+            
+        </div>
+    </div>
+    <div class="rentbox">
+        <h3>配套设施</h3>
+        <div class="rentbox_con" style="padding:0">
+            <div class="wareSort3_box">
+                <ul>
+                    <li class="cur"><a href="javascript:void(0)" data-value="可做饭">可做饭</a></li>
+                    <li><a href="javascript:void(0)" data-value="热水器">热水器</a></li>
+                    <li><a href="javascript:void(0)" data-value="床">床</a></li>
+                    <li><a href="javascript:void(0)" data-value="空调">空调</a></li>
+                    <li><a href="javascript:void(0)" data-value="衣柜">衣柜</a></li>
+                    <li><a href="javascript:void(0)" data-value="桌子">桌子</a></li>
+                    <li><a href="javascript:void(0)" data-value="电视机">电视机</a></li>
+                    <li><a href="javascript:void(0)" data-value="宽带">宽带</a></li>
+                    <li><a href="javascript:void(0)" data-value="洗衣机">洗衣机</a></li>
+                    <li><a href="javascript:void(0)" data-value="沙发">沙发</a></li>
+                    <li><a href="javascript:void(0)" data-value="暖气">暖气</a></li>
+                    <li><a href="javascript:void(0)" data-value="独卫">独卫</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="rentbox">
+        <h3>房屋描述</h3>
+        <div class="rentbox_con">
+            <div class="fangwu_area"> <textarea placeholder="请输入你的房屋描述，例如宽敞，透亮等特点，方便租客选择你" id="details"></textarea></div>
+
+        </div>
+    </div>
+
+
+</div>
+<div class="btmline"></div>
+<div class="detail_btmset">
+    <div class="detail_btmset_part2" style="width:100%">
+        <a style="width:100%" class="detail_btm_btn bg1" href="javascript:;" onclick="pushmore()">提交</a>
+
+    </div>
+
+</div>
+<div class="popUpImg">
+    <div style="position:absolute;top:15px;width:100%;">
+        <div class="back" onclick="closePopupImg()"><i class="iconfont icon-jiantou-copy1" style="color:white;" ></i></div>
+        <div class="delete" onclick="clickDeleteBtn(this)"><i class="delete-icon"></i></div>
+    </div>
+    <span><img src=""/></span>
+</div>
+<script src="~/Content/js/webuploader/webuploader.min.js"></script>
+<script src="~/Content/js/uploader.js?v=1.1"></script>
+<script>
+    $(function()
+    {
+        $(".popUpImg").css({ width: $(window).width(), height: $(window).height() })
+        $(".rentbox_con_upload a").each(function (index, obj)
+        {
+            $(obj).click(function () {
+                if ($(obj).data("value") == "self") {
+                    $(".upload_img").show();
+                }
+                else
+                {
+                    $(".upload_img").hide();
+                }
+                $(obj).addClass('cur').siblings('a').removeClass('cur');
+            });
+        })
+        $(".wareSort3_box ul li").click(function () {
+
+            $(this).toggleClass("cur");
+        });
+        $("#filePicker").InitUploader({ swf: "~/Content/js/webuploader/uploader.swf", filetypes: "jpg,jpge,png,mp4" });
+        //$(".deletePic").click(function () {
+        //    if ($(".upload_img ul").find(".checkImg").length == 0) {
+        //        $.modalAlert("请选择要删除的图片");
+        //    } else {
+        //        $('.upload_img ul li').each(function (index, obj) {
+        //            if ($(obj).find(".checkImg").length > 0) {
+        //                $(obj).remove()
+        //            }
+        //        })
+        //    }
+        //})
+    })
+    function closePopupImg() {
+        $(".popUpImg").hide();
+    }
+    function selHandle(obj) {
+        if ($(obj).find(".checkImg").length > 0) {
+            $(obj).find("span").remove()
+            $(obj).find(".checkImg").remove()
+        } else {
+            $(obj).append("<span></span><img class='checkImg' src='/Content/images/checked-icon.png'/>")
+        }
+    }
+    function clickImg(obj) {
+        var objSrc = $(obj).find("img")[0].src;
+        $(".popUpImg").css("display","table")
+        $(".popUpImg").find("img").attr("src", objSrc)
+    }
+    function clickDeleteBtn(obj) {
+        var delSrc = $(obj).parents(".popUpImg").find("img")[0].src
+        var options = {
+            content: "是否要刪除该图片",
+            btn: ['删除', '取消'],
+            callBack: function () {
+                closePopupImg()
+                deleteImg(delSrc)
+            }
+        }
+        $.modalConfirm(options)
+    }
+    function deleteImg(delSrc) {
+        console.log(delSrc)
+        $('.upload_img ul li').each(function (index, obj) {
+            if ($(obj).find("img").length > 0) {
+                if ($(obj).find("img")[0].src == delSrc) {
+                    $(obj).remove()
+                }
+            }
+        })
+        
+    }
+    function pushmore()
+    {
+        //取数据
+        var config = "";
+        $(".wareSort3_box ul li.cur a").each(function(index,obj)
+        {
+            config = config + $(obj).data("value") + ","
+
+        })
+        var pics = "";
+        if ($(".rentbox_con_upload a.cur").data("value") == "self") {
+            $(".upload_img li img").each(function (index, obj) {
+                pics = pics + $(obj).attr("src") + ",";
+            })
+        }
+       
+        var data = {
+            Id: '@ViewBag.Id',
+            Details: $("#details").val(),
+            HouseConfig: config.substring(0, config.length - 1),
+            Pics: pics.substring(0, pics.length - 1),
+            UserIdEncrypt: $("#Uid").val(),
+        }
+        try {
+            $.ar({
+                url: globalKey.InterfaceDomain + "api/house/Update"
+                           , data: data
+                           , success: function (data) {
+                               if (data.code == 200) {
+                                   location.href = "/house/pushsuccess/tag="+ $(".rentbox_con_upload a.cur").data("value");
+                               }
+
+                           }
+            });
+        } catch (e) {
+            console.log(e.message);
+        }
+
+        
+    }
+</script>
+
+

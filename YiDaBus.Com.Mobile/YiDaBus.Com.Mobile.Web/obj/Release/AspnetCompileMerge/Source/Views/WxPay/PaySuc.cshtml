@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "支付成功";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="search_listheader" style="background:#fff">
+        <div class="search_listheader_l" onclick="GoBack();"><i class="iconfont icon-jiantou-copy1"></i></div>
+        <h2>支付成功</h2>
+    </div>
+    <div class="fankui_null">
+        <dl>
+            <dt><img width="86" src="/content/img/tjsuccess_icon.png"></dt>
+            <dd>
+                <h3 style="margin-top:10px;">支付成功</h3>
+                <div id="deposit" class="fankui_null_money"></div>
+                <p><a style="color:#FD7A20" href="/Account/DepositDetail">查看明细</a></p>
+            </dd>
+        </dl>
+        <div class="login_btm" style="padding-top:5em;">
+            <a class="login_btn bgred" href="javascript:void(0);" style="border-radius:2px; margin-left:15px; margin-right:15px; width:auto;" onclick="GoBack();">确定</a>
+        </div>
+
+    </div>
+    <p style="text-align:center;color:#808080;">感谢您信任指房向，去中介让租房更实惠！</p>
+</div>
+<script>
+    $(function () {
+        $('#deposit').text('￥' + $.request('deposit'));
+    });
+    function GoBack() {
+        var payReturnUrl = $.request('payReturnUrl');
+        if (payReturnUrl == "") {
+            return window.location.href = "/home/index";
+        }
+        else {
+            return window.location.href = decodeURIComponent(payReturnUrl);
+        }
+    }
+</script>

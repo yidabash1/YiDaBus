@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>@ViewBag.Title</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="上海指房网络科技有限公司" />
+    <link rel="shortcut icon" href="~/favicon.ico">
+    <!--引入jquery-->
+    <script src="~/Content/js/jquery/jquery-2.1.1.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="/content/css/skin.css?v1.1" />
+    <link type="text/css" rel="stylesheet" href="/content/css/pink001.css?v1.2" />
+    <link type="text/css" rel="stylesheet" href="/content/css/fonts/iconfont.css" />
+    <!--引入layui-->
+    <link href="~/Content/js/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/Content/js/layui/layui.js"></script>
+    <!--引入layui_mobile-->
+    <script src="~/Content/js/layer_mobile/layer.js"></script>
+    <!--引入框架js-->
+    <script src="~/Content/js/framework-ui.js?v5.0"></script>
+    <script src="~/Content/js/WapCircleImg.js"></script>
+    <!--公共逻辑方法js-->
+    <script src="~/Content/js/jquery.cookie.js"></script>
+    <script src="~/Content/js/Common.js?v=5.0"></script>
+
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=XBPX8dmIuAzluWeOtTAzsCECpkxkLudV"></script>
+    <script src="~/Content/js/map.js" type="text/javascript"></script>
+
+    <!--百度统计-->
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?d925b6aa10003a288a433e485faf055c";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+<body class="bg01">
+    @RenderBody()
+    @Html.AntiForgeryToken()
+
+    <div id="allmap" hidden></div>
+    <div id="mappoint" hidden></div>
+    <div class="welcome_page"></div>
+    <script id="loginTemplate" type="text/html">
+        <div class="closesub">
+            <a href="javascript:void(0)" onclick="HideLogin();"><i class="icon iconfont icon-2"></i></a>
+        </div>
+        <form id="loginForm" class="layui-form">
+            <div class="login">
+                <input id="ReturnUrl" name="ReturnUrl" value="" type="hidden" />
+                @*<div class="login_tit">
+                        密码登录
+                    </div>*@
+                <div class="login_logo">
+                    <img width="107" src="/Content/img/logo.png" />
+                </div>
+                <div class="login_con">
+                    <ul>
+                        <li>
+                            <span>手机号</span>
+                            <input id="logAccount" name="logAccount" lay-verify="phone" style="width:49%" type="tel" placeholder="请输入手机号码" lay-reqmsg="请输入手机号码" maxlength="15">
+                            <a class="getyaz" href="javascript:void(0);" onclick="GetVaildCode(this)">获取验证码</a>
+                        </li>
+                        <li>
+                            <span>验证码 </span>
+                            <input id="vaildCode" name="vaildCode" lay-verify="required" type="number" placeholder="请输入验证码" lay-reqmsg="请输入验证码" maxlength="8">
+                            @*<input id="vaildId" name="vaildId" type="hidden" value="0">*@
+                        </li>
+                    </ul>
+                </div>
+                <div class="login_btm">
+                    <a id="login_btn" class="login_btn " href="javascript:void(0);" lay-submit="" lay-filter="userlogin">登录</a>
+                    <p class="login_btm_tips"><a onclick="Agree();" style="font-size: 13px;text-align: center;color: #666666;"><i id="ok" class="icon iconfont icon-iconfontqueren2"></i> 阅读并同意</a> <a href="javascript:void(0);" onclick="ShowAgreementHandler();">《用户注册协议》</a></p>
+                    <input id="isAgree" type="hidden" value="1" lay-verify="required" lay-reqmsg="请先同意服务协议" />
+                </div>
+            </div>
+        </form>
+    </script>
+
+    <style type="text/css">
+        #div_regDetails h3 {
+            padding: 0 5px;
+            height: 45px;
+            line-height: 20px;
+            text-align: left;
+        }
+    </style>
+
+    <script id="regDetails" type="text/html">
+
+        <div id="div_regDetails" style="padding:0px 10px;height: 500px;overflow: auto;">
+            <h3><br>1、用户协议的成立</h3>
+            <p>本网站用户协议（“用户协议”）是用户与网站（简称“网站”，网址：[www.YiDaBus.com ]）运营者（以下简称为“甲方” ，与用户合称“双方”）之间就网站向用户提供服务等相关事宜所订立的协议，用户应当仔细阅读本用户协议。一旦用户点击确认本协议，并在网站注册成功，本用户协议即构成对双方有约束力的法律文件。</p>
+            <h3><br>2、用户协议的修改</h3>
+            <p>
+                甲方保留依其自主判断在将来的任何时间变更、修改、增加或删除本用户协议条款的权利。所有对协议条款的修改均构成本用户协议的一部分。甲方有权随时对本用户协议项下条款进行修改，一旦发生条款变动，甲方将[通过网站公布等方式向乙方]提示修改的内容。用户继续使用甲方通过网站提供的服务视为其同意甲方对用户协议的修改。
+            </p>
+
+            <h3><br>3、服务内容</h3>
+
+            <p>
+                甲方运用其操作系统通过国际互联网和移动互联网向用户提供包括各种[房地产相关的信息工具、个性化内容]等服务（以下简称“服务”）。除非另有明确规定，增强或强化目前服务的任何新功能均适用本用户协议。
+
+            </p>
+            <h3>
+                <br>4、用户保证
+            </h3>
+            <p>
+                (1)用户提供的信息是准确、完整、真实、合法的，不存在虚假、欺诈、骚扰性的、中伤他人的、伤害性的、诽谤、侮辱、恐吓、庸俗淫秽等违反法律、公序良俗或社会伦理道德的信息或内容，也不存在危害网络或计算机系统的安全性、完整性、稳定性、连续性的病毒、木马程序等电脑软件、文档或其他数据资料。
+                <br />(2)用户对用户提供的信息拥有完整的、独立的权利，或者已经得到相关权利人的合法授权，用户保证甲方使用用户提供的信息不会侵犯任何第三方的合法权利，亦不会违反用户与任何第三方的约定。
+                <br />(3)用户进行注册、使用甲方通过网站提供的信息或服务系出于个人需要，用户不得将其通过网站获得的信息或服务进行复制、出售、交易、公布、用于商业活动、或用于其他营利目的，用户仅可为其自身购房或租房需要之目的使用该等信息或服务。
+                <br />(4)如果用户违反上述第四条第1款至第3款的规定，或甲方有正当理由相信用户存在违反上述规定的情形，则甲方有权利通过技术手段或采取其他适当措施中断或终止向该用户继续提供网站服务，包括但不限于屏蔽、封锁该用户IP地址、注销用户的账户等。用户如有异议，可向甲方提出，并提供相应的证明材料。对于该用户因此而遭受的任何损失，甲方不承担任何责任。
+                <br />(5)对于用户提供信息中所涉及的用户个人信息，甲方将按照中华人民共和国相关法律规定予以保护。
+                <br />(6)用户同意授予甲方在全球范围内受限于法律法规的范围之内免费的、永久性的、不可撤销的使用、复制、修改、传播和展示用户提供信息的权利和许可。
+            </p>
+            <h3>
+                <br>5、网站使用
+            </h3>
+            <p>
+                (1)用户在使用本网站过程中，应当遵守所有适用的法律和法规以及本用户协议。
+                <br />(2)用户不得从事以下行为：
+                <br />a.上载、张贴、发送或传送任何非法、有害、淫秽、粗俗、猥亵的，胁迫、骚扰、中伤他人的，诽谤、侵害他人隐私或诋毁他人名誉或商誉的，种族歧视或其他不适当的信息或电子邮件，包括但不限于资讯、资料、文字、软件、音乐、照片、图形、信息或其他资料。
+                <br />b.以任何方式危害未成年人。
+                <br />c.冒充任何人或机构，或以虚伪不实的方式谎称或使人误认为其与任何人或任何机构有关。
+                <br />d.伪造标题或以其他方式操控识别资料，使人误认为该内容为甲方所传送。
+                <br />e.上载、张贴、发送电子邮件或以其他方式传送其无权传送的内容（例如内部资料、机密资料）。
+                <br />f.上载、张贴、发送电子邮件或以其他方式传送侵犯任何人的专利、商标、著作权、商业秘密或其他合法权利之内容。
+                <br />g.在甲方网站专供张贴广告的区域之外，上载、张贴、发送电子邮件或以其他方式传送广告函件、促销资料、“垃圾邮件”等。
+                <br />h.上载、张贴、发送电子邮件或以其他方式传送有关干扰、破坏或限制任何计算机软件、硬件或通讯设备功能的软件病毒或其他计算机代码、档案和程序之资料。
+                <br />i.干扰或破坏本服务或与本服务相连的服务器和网络，或不遵守本用户协议之规定。
+                <br />j.故意或非故意违反任何相关的中国法律、法规、规章、条例等其他具有法律效力的规范。
+                <br />k.其它被甲方视为不适当的行为。
+                <br />(3)用户在使用本网站时违反任何上述规定，甲方可自行判断要求用户改正或采取一切必要的措施（包括但不限于删除用户上传的内容、暂停或终止用户使用本网站的权利）以减轻用户不当行为造成的影响。
+            </p>
+            <h3>
+                <br>6、知识产权
+            </h3>
+            <p>
+                （1）用户对甲方或甲方关联企业拥有的商标、商号、标识、图案、本网站的名称及域名（以下简称“甲方标识”）不拥有任何权利。本用户协议亦不授予用户有关甲方标识的任何权利或权益。在未经甲方事先书面同意的情况下，用户不得在任何宣传或促销材料、出版物中或媒体上使用甲方标识。
+                <br />（2）本网站中包含的任何信息、文本、图形等网站内容均受著作权法、商标法和/或其他知识产权法等相关法律的保护，其相关权利归甲方或甲方关联方或该内容提供者所有。未经甲方或有关权利人事先同意，用户不得复制、分发、传播、修改、编辑，或在任何媒体直接或间接发布、播放该等内容，或者将该等内容用于任何商业目的。
+                <br />（3）在甲方或有关权利人事先同意的前提下，并且在遵循甲方或有关权利人指示的基础上，用户可以对网站内容（包括但不仅限于所有有关电子文档、广告宣言、本用户协议）进行复制或分发，但用户必须确保复制和分发的内容是完整和真实的。
+            </p>
+            <h3>
+                <br>
+                7、用户帐号、密码和安全
+            </h3>
+            <p>
+                用户一旦注册成功，便成为甲方的合法用户。用户有义务保证密码和帐号的安全。用户对利用该密码和帐号所进行的一切活动负全部责任。用户因未能妥善保管密码和账号而产生的任何损失或损害，甲方不承担任何责任。
+            </p>
+            <h3>
+                <br>
+                8、责任限制
+            </h3>
+            <p>
+                (1)基于互联网的特性及技术现状，甲方虽将尽其努力，但无法保证向用户提供的服务是连续的、即时的、准确的，无法保证缺陷一定会被及时纠正，也无法保证所提供的服务或服务器不受病毒或黑客等有害成分的侵袭。服务和网站内容依现状提供，甲方不作任何形式的有关服务或网站内容的准确性、完整性、令人满意的品质、不侵权或适合某一特殊目的的保证。
+                <br />(2)甲方保留随时修改、增减、取消、暂停、中断或终止提供（全部或部分）本网站的服务的权利，甲方就此将给予用户适当通知，但甲方在行使前述各项权利时无需取得用户同意，也不对用户承担任何责任。
+                <br />(3)甲方将尽可能地在本网站提供准确的信息。本网站内所涉及的房源外观、房屋图片可能与实物有所区别，效果演示图和示意图仅供参考，有关房源外观及房屋图片须以实物为准。
+                <br />(4)本网站服务器如因系统维护或升级而需暂停服务时，将事先公告。如因系统维护、升级而需暂停服务或因服务器故障、硬件故障、其他不可抗力因素而导致停止服务，于暂停服务期间造成的一切不便和资料、数据等遗失，本网站将尽力挽救恢复；如确实无法恢复，本网站不承担任何责任。
+                <br />(5)对于用户提供或发布的信息，包括但不限于因用户在没有获得授权的情形下使用权利人的信息，或因用户提供信息包含错误、不准确、病毒、诽谤、中伤、侵权等法律所禁止的内容或其他不适当内容而产生的任何责任，应由相关用户承担。用户应对其提供信息自行保留备份，甲方亦不对用户提供信息在任何情形下的丢失、删除、移除或传输失败承担任何责任。
+                <br />(6)对于用户通过本网站外部链接与第三方发生的任何法律行为，包括但不限于与第三方的交易，由用户与该第三方自行承担全部责任，甲方不承担任何责任。对于存在或源于此外部链接网站或资源的任何内容、广告、产品或其它资料，甲方不予任何保证，亦不承担任何责任。
+                <br />(7)用户特此承认并接受：甲方为用户便利而向用户提供网站信息服务，对于用户因使用本网站而遭受的损失，包括但不限于由于网站内容或服务的延误、不准确、错误和遗漏而产生的任何损害、责任、请求、损失或费用，甲方及甲方关联方不承担任何责任。
+            </p>
+            <h3>
+                <br>
+                9、赔偿
+            </h3>
+            <p>
+                因用户违反本网站用户协议的规定而产生的针对甲方或甲方关联方或由甲方或甲方关联方承担的任何类型的索赔、要求、费用、支出、损失、诉讼、政府调查和/或处罚、损害赔偿和责任，用户应向甲方或甲方关联方予以赔偿（包括但不限于律师和顾问费），且用户应为甲方抗辩，使甲方免受损害。
+            </p>
+            <h3>
+                <br>10、通知
+            </h3>
+            <p>
+                甲方向用户发出的通知，可以采用电子邮件、页面公告、常规信件或甲方认为适合的形式。
+            </p>
+            <h3>
+                <br>
+                11、法律的适用和管辖
+            </h3>
+            <p>
+                本用户协议的解释和执行均适用中华人民共和国法律。本用户协议及本网站内公布的任何附加条款，构成甲方与用户之间关于使用本网站的完整协议。如果该协议的内容与适用的强制性法律规定不一致，则以该强制性法律规定为准。因该协议的履行产生的任何纠纷，首先由双方协商解决；协商不成的，任何一方均可向[甲方所在地人民法院]提起诉讼。
+            </p>
+        </div>
+    </script>
+    <input id="IsLogin" value="@Request.IsAuthenticated.ToString()" type="hidden" />
+    <input id="Uid" value="@YiDaBus.Com.Manager.Common.DESEncrypt.Encrypt(User.Identity.Name)" type="hidden" />
+
+    @*<input id="Uid1" value="@User.Identity.Name" type="hidden" />*@
+    <script>
+        $(function () {
+            var isfirst = $.cookie('isfirst');
+            var iswelcome = $.cookie('iswelcome');
+            if (iswelcome == "true") {
+                $(".ad_page").show()
+                $.cookie('iswelcome', 'false', { expires: 30, path: '/' });
+            }
+            else if (isfirst == undefined) {
+                $(".ad_page").show()
+                $.cookie('isfirst', 'true', { expires: 30, path: '/' });
+
+            }
+            else {
+                $(".ad_page").hide();
+                $(".mask").hide();
+            }
+            var map = new BMap.Map("allmap");
+            map.centerAndZoom("上海", 12);
+        })
+
+    </script>
+</body>
+</html>

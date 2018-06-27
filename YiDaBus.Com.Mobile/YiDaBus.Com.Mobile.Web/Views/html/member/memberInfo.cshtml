@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "易达快乐巴士 - 个人信息";
+    Layout = "~/Views/Shared/master.cshtml";
+}
+
+<header class="demos-header">
+    <h1 class="demos-title">个人资料</h1>
+</header>
+<form>
+    <div class="weui-cells__title">基本信息</div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">姓名</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" name="customerName" placeholder="请输入您的姓名">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">手机</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="tel" name="customerPhone" placeholder="请输入您的手机号码">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label for="name" class="weui-label">称呼</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" id="customerSex" name="customerSex" type="text" value="帅哥">
+            </div>
+        </div>
+    </div>
+</form>
+<div class='demos-content-padded'>
+    <a href="javascript:void(0);" class="weui-btn weui-btn_primary" id="btnSave">保存</a>
+    <a href="/Home/" class="weui-btn weui-btn_primary">返回</a>
+</div>
+
+@section footContainer{
+    <script>
+        $(function () {
+            $("#customerSex").select({
+                title: "选择称呼",
+                items: ["帅哥", "美女"]
+            });
+
+
+            $("#btnSave").on("click", function () {
+                var data = $("form").serialize();
+                $.alert(data, "提交的数据");
+            });
+        });
+    </script>
+}

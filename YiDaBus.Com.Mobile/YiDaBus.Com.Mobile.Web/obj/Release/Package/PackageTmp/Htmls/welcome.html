@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" class="ui-mobile">
+     <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>指房向-租房从未如此简单</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      <meta name="apple-mobile-web-app-capable" content="yes" /><meta name="apple-mobile-web-app-status-bar-style" content="black" />
+      <meta name="Keywords" content="租房从未如此简单" /><meta name="Description" content="租房从未如此简单" />
+      <link type="text/css" rel="stylesheet" href="/Content/css/skin.css" />
+      <link type="text/css" rel="stylesheet" href="/Content/css/pink001.css" />
+      <script type="text/javascript" src="/Content/js/jquery-1.9.1.min.js"></script>
+         <script src="/Content/js/jquery.cookie.js"></script>
+      </head>
+   <body> 
+        <div class="welcome_page">
+            <img class="welcome-top" src="/Content/img/welcome-top.jpg" alt="" />
+            <img class="welcome-bot" src="/Content/img/welcome-bot.jpg" alt="" />
+        </div>
+       <script type="text/javascript">
+       $(function () {
+
+           $(".welcome_page").css({ "width": $(window).width(), "height": $(window).height() })
+           setTimeout(function () {
+               window.location.href = "/home/index";
+           }, 3000)
+       });
+       $.cookie('iswelcome', 'true', { expires: 30, path: '/' });
+      
+       </script>
+   </body>
+   
+</html>

@@ -1,0 +1,618 @@
+﻿@{
+    ViewBag.Title = "意向房";
+    Layout = "~/views/shared/_layout.cshtml";
+}
+<!--日期控件-->
+<link href="/Content/js/mobiscroll/plugs/mobiscroll/css/mobiscroll.scroller.css" rel="stylesheet" />
+<link href="~/Content/js/mobiscroll/plugs/mobiscroll/css/mobiscroll.scroller.android-ics.css" rel="stylesheet" />
+<script src="/Content/js/mobiscroll/plugs/mobiscroll/js/mobiscroll.core.js"></script>
+<script src="/Content/js/mobiscroll/plugs/mobiscroll/js/mobiscroll.scroller.js"></script>
+<script src="/Content/js/mobiscroll/plugs/mobiscroll/js/mobiscroll.datetime.js"></script>
+<script src="/Content/js/mobiscroll/plugs/mobiscroll/js/mobiscroll.scroller.android-ics.js"></script>
+<script src="/Content/js/mobiscroll/plugs/mobiscroll/js/mobiscroll.i18n.zh.js"></script>
+<!--联系房东js-->
+<script src="/Content/js/linkLandlord.js?v=2.1"></script>
+<div class="container">
+    <input id="indextab" value="1" type="hidden" />
+    <div class="box_main">
+        @*<div class="search_listheader" style="background:#fff">
+                <h2> 意向房</h2>
+            </div>*@
+        <div class="iprolist yixiang" style="margin-top:0">
+            <div class="iprolist_tab2" style="background:#fff">
+                <ul>
+                    <li flag="1" class="cur">待出价</li>
+                    <li flag="2">已出价</li>
+                </ul>
+            </div>
+            <!--待出价-->
+            <div class="iprolistc" id="tab1"> </div>
+            <!--已出价-->
+            <div class="iprolistc" id="tab2" style="display:none"></div>
+            <!--未登录-->
+            <div id="noLogin" style="display:none;margin-left: 30%; margin-top: 100px;" class="layui-btn layui-btn-primary" onclick="ShowLogin();">尚未登录，请先登录</div>
+        </div>
+        <div style="display:none;">
+            <input id="houseId" value="" type="hidden" />
+        </div>
+    </div>
+    <div class="btmline"></div>
+    @Html.Partial("~/views/shared/_bottom.cshtml")
+</div>
+<div class="overlay"></div>
+<!--原-->
+@*<div id="DivGene" class="hetong_tc">
+        <div class="hetong_tc_con">你正在发起签约，线上合同效力等同于纸质合同，一旦确认，平台默认为此订单交易成功！您需要根据租赁合同履行相关义务，同时已缴纳的500元交易保障金转化为支付给指房向的信息服务费。<input type="number" maxlength="8" id="price" value="" style="display: inline-block; width: 100px;border: 0px; border-bottom: 1px solid#999999;" /></div>
+        <div class="hetong_tc_con_set"><a class="hetong_tc_con_btn bg1" href="javascript:void(0)">取消</a><a class="hetong_tc_con_btn bg2" href="javascript:void(0)" onclick="SureHandler()">确定</a></div>
+    </div>*@
+<!--新-->
+<div id="DivGene" class="qianyue_tc">
+    <div class="qy_top"><div class="qy-circle"></div></div>
+    <div class="qy_title"><img src="/content/img/qy_laugh.png" height="21" width="21" alt=""><b>恭喜您与房东洽谈成功！</b></div>
+    <div class="qy_content"><input id="price" maxlength="8" type="tel" placeholder="输入签约价">元/月</div>
+    <div class="qy_text">
+        <p>注：请耐心等待房东确认，确认后可直接生成合同完成签约， 签约成功既等同于纸质合同具有相同的法律效力，房东确认既 视为交易成功！</p>
+    </div>
+    <div class="qy_bot">
+        <button class="qy_btn1">取消</button>
+        <button class="qy_btn2" onclick="SureHandler()">确定</button>
+    </div>
+</div>
+
+<!--联系房东子页面START-->
+@Html.Partial("~/views/Shared/_LinkToLandlordPartialPage.cshtml")
+<!--联系房东子页面END-->
+<!--更多操作按钮开始-->
+<div class="yixiangfang_tcset">
+    <ul id="UlMoreBtn"></ul>
+</div>
+<!--更多操作按钮结束-->
+<script src="/Content/js/zepto.fx.js"></script>
+<script src="/Content/js/swipe.min.js"></script>
+<!--待出价模板-->
+<script id="needOfferTemplate" type="text/html">
+    {{#  layui.each(d, function(index, item){}}
+    <div class="yixiang_box">
+        <div class="yixiang_box_tit">
+            {{# if(item.orderStatus!=2){ }}
+            <em style="font-size: 14px;color: #666666;float:left;" onclick="FaceSignHandler('{{item.orderNo}}')">当面签约</em>
+            {{#  } }}
+            {{# if(item.isUserDeposit){ }}
+            <a href="tel:{{item.houseDetail.linkTel}}" style="float: right;"><i class="icon iconfont icon-phone-alt" style="font-size: 17px;"></i></a>
+            {{# }else{ }}
+            <a href="javascript:void(0);" onclick="GoToDepositExplain();" style="float: right;"><i class="icon iconfont icon-phone-alt" style="font-size: 17px;"></i></a>
+            {{# } }}
+
+        </div>
+        <dl>
+            <div class="swipe_content" onclick="GoHouseDetailHandler('{{item.houseID}}');">
+                <dt>
+                    <a href="/house/details/{{item.houseID}}"><img src="{{item.houseDetail.houseCorver==""?"/Content/img/ad1.png":item.houseDetail.houseCorver}}" onerror="this.onerror='';this.src='/Content/img/ad1.png'"></a>
+                    <div class="iprolistc_tc" style="opacity:0.5;">
+                        <a href="/house/details/{{item.houseID}}">
+                            {{# if(item.orderStatus==2){ }}
+                            <em class="del" style="color:#fff;">已释放</em>
+                            {{#  } }}
+                        </a>
+                    </div>
+                </dt>
+                <dd>
+                    <h3>
+
+                        <a href="/house/details/{{item.houseID}}">{{item.houseDetail.houseTitle.substring(0,14)}}</a>&nbsp;<span>{{item.houseDetail.rentMode}}</span>
+                    </h3>
+                    <div class="iprolist_about">
+                        <span> {{# if(item.houseDetail.rentalArea>0){ }}{{item.houseDetail.rentalArea}}㎡{{#  }else{}}  暂无数据 {{# } }} {{# if(item.houseDetail.hFloor>0){ }}  |{{item.houseDetail.hFloor}}/{{item.houseDetail.hFloorTotal}}层{{# } }}</span>
+
+                        <div class="iprolist_price"><em>￥{{item.houseDetail.hRent}}</em>/月</div>
+                    </div>
+                    <div class="iprolist_tag">
+                        {{# if(item.houseDetail.hTags!=""){ }}
+                        {{# layui.each(item.houseDetail.hTags.split(','),function(index,itemdetails){}}
+                        <em class="color{{index+1}}">{{itemdetails}}</em>
+                        {{#  });}}
+                        {{# } }}
+                    </div>
+                    <div class="iprolist_adress">
+                        {{# if(item.houseDetail.subwayDistance==""){ }}
+                        {{# }else{ }}
+                        <i class="iconfont icon-ditu2"></i> {{item.houseDetail.subwayDistance}}
+                        {{# } }}
+                    </div>
+                </dd>
+            </div>
+            <div class="swipe_hidden"><a href="javascript:void(0);" onclick="DelHandler('{{item.orderNo}}');">取消</a></div>
+        </dl>
+        <!--已看房-->
+        {{# if(item.orderStatus!=2){ }}
+        <div class="yixiang_box_set w50">
+            <ul>
+                <li style="width:33%;"><a href="javascript:void(0);" onclick="giveUpHandle('{{item.orderNo}}')"><i class="icon iconfont icon-zuofei"></i>放弃</a></li>
+                <li style="width:66%;"><a href="javascript:void(0);" style="color: #fd7a20;" onclick="ToPriceHandler('{{item.houseID}}','{{item.orderNo}}');"><i class="icon iconfont icon-qian" style="color: #fd7a20;"></i>出价</a></li>
+            </ul>
+        </div>
+        {{#  } }}
+    </div>
+    {{#  }); }}
+
+    {{#  if(d.length === 0){ }}
+    无数据
+    {{#  } }}
+</script>
+
+<!--已出价模板-->
+<script id="offeredTemplate" type="text/html">
+    {{#  layui.each(d, function(index, item){}}
+    <div class="yixiang_box">
+        <div class="yixiang_box_tit">
+            <span>我的出价：<b> ￥{{item.offerPrice}}/月</b></span>
+            {{# if(item.isAgree==0&&item.orderStatus==4){ }}
+            <em>等待房东回复</em>
+            {{#  } }}
+            {{# if(item.isAgree==1&&item.orderStatus==4){ }}
+            <em><img width="69" src="/Content/img/chegnjiao_icon.png"></em>
+            {{#  } }}
+            {{# if(item.isAgree==2&&item.orderStatus==4){ }}
+            <em><img width="69" src="/Content/img/chegnjiao_iconh.png"></em>
+            {{#  } }}
+            {{# if(item.orderStatus==5){ }}
+            <em><img width="69" src="/Content/img/chegnjiao_icon.png"></em>
+            {{#  } }}
+            {{# if(item.orderStatus==6){ }}
+            <em>已生成合同</em>
+            {{#  } }}
+            {{# if(item.orderStatus==7){ }}
+            <em>成功签约</em>
+            {{#  } }}
+        </div>
+        <dl>
+            <div class="swipe_content" onclick="GoHouseDetailHandler('{{item.houseID}}');">
+                <dt>
+                    <a href="/house/details/{{item.houseID}}"><img src="{{item.houseDetail.houseCorver==""?"/Content/img/ad1.png":item.houseDetail.houseCorver}}" onerror="this.onerror='';this.src='/Content/img/ad1.png'"></a>
+                    <div class="iprolistc_tc" style="opacity:0.5;">
+                        <a href="/house/details/{{item.houseID}}">
+                            {{# if(item.lookStatus==0){ }}
+                            <em class="unuse">待查看</em>
+                            {{#  } }}
+                            {{# if(item.lookStatus==1){ }}
+                            <em>预约看房中</em>
+                            {{#  } }}
+                            {{# if(item.lookStatus==2){ }}
+                            <em class="unuse">已看房</em>
+                            {{#  } }}
+                        </a>
+                    </div>
+                </dt>
+                <dd>
+                    <h3>
+                        <a href="/house/details/{{item.houseID}}">{{item.houseDetail.houseTitle.substring(0,14)}}</a>&nbsp;<span>{{item.houseDetail.rentMode}}</span>
+                    </h3>
+                    <div class="iprolist_about">
+                        <span> {{# if(item.houseDetail.rentalArea>0){ }}{{item.houseDetail.rentalArea}}㎡{{#  }else{}}  暂无数据 {{# } }} {{# if(item.houseDetail.hFloor>0){ }}  |{{item.houseDetail.hFloor}}/{{item.houseDetail.hFloorTotal}}层{{# } }}</span>
+
+                        <div class="iprolist_price"><em>￥{{item.houseDetail.hRent}}</em>/月</div>
+                    </div>
+                    <div class="iprolist_tag">
+                        {{# if(item.houseDetail.hTags!=""){ }}
+                        {{# layui.each(item.houseDetail.hTags.split(','),function(index,itemdetails){}}
+                        <em class="color{{index+1}}">{{itemdetails}}</em>
+                        {{#  });}}
+                        {{# } }}
+                    </div>
+                    <div class="iprolist_adress">
+                        {{# if(item.houseDetail.subwayDistance==""){ }}
+                        {{# }else{ }}
+                        <i class="iconfont icon-ditu2"></i> {{item.houseDetail.subwayDistance}}
+                        {{# } }}
+                    </div>
+            </div>
+            <div class="swipe_hidden"><a href="javascript:void(0);" onclick="DelHandler('{{item.orderNo}}');">取消</a></div>
+        </dl>
+        {{# if(item.isAgree==0){ }}
+        <div class="yixiang_box_set w50">
+            <ul>
+                <li>
+                    {{# if(item.isUserDeposit){ }}
+                    <a href="tel:{{item.houseDetail.linkTel}}">
+                        <i class="icon iconfont icon-phone-alt"></i>联系房东
+                    </a>
+                    {{# }else{ }}
+                    <a href="javascript:void(0);" onclick="GoToDepositExplain();">
+                        <i class="icon iconfont icon-phone-alt"></i>联系房东
+                    </a>
+                    {{# } }}
+                </li>
+                <li class="hetong">
+                    {{# if(item.isGenerateContract==0){ }}
+                    <a href="javascript:void(0);" onclick="GenerateContractWithNoHandler('{{item.orderNo}}')"><i class="icon iconfont icon-dingdan1"></i>生成合同</a>
+                    {{#  }else{ }}
+                    <a href="/Order/ContractDetail?orderNo={{item.orderNo}}&action=view"><i class="icon iconfont icon-dingdan1"></i>查看合同</a>
+                    {{#  } }}
+                </li>
+            </ul>
+        </div>
+        {{#  } }}
+        {{# if(item.isAgree==1){ }}
+        <div class="yixiang_box_set w50">
+            <ul>
+                <li>
+                    <a href="tel:{{item.houseDetail.linkTel}}">
+                        <i class="icon iconfont icon-phone-alt"></i>联系房东
+                    </a>
+                </li>
+                <li class="hetong">
+                    {{# if(item.isGenerateContract==0){ }}
+                    <a href="javascript:void(0);" onclick="GenerateContractWithNoHandler('{{item.orderNo}}')"><i class="icon iconfont icon-dingdan1"></i>生成合同</a>
+                    {{#  }else{ }}
+                    <a href="/Order/ContractDetail?orderNo={{item.orderNo}}&action=view"><i class="icon iconfont icon-dingdan1"></i>查看合同</a>
+                    {{#  } }}
+                </li>
+            </ul>
+        </div>
+        {{#  } }}
+        {{# if(item.isAgree==2){ }}
+        <div class="yixiang_box_set w50">
+            <ul>
+                <li><a href="tel:{{item.houseDetail.linkTel}}"><i class="iconfont icon-phone-alt"></i> 联系房东</a></li>
+                <li><a href="https://www.sobot.com/chat/oldpc/index.html?sysNum=9dfdec2b55aa424e9c633babbb93dd17"><i class="iconfont icon-zixun"></i> 我还想要，寻求帮助</a></li>
+            </ul>
+        </div>
+        {{#  } }}
+    </div>
+    {{#  }); }}
+
+    {{#  if(d.length === 0){ }}
+    无数据
+    {{#  } }}
+</script>
+<style>
+
+</style>
+<script type="text/javascript">
+    $(function () {
+        //判断是否已经登录，如果没有登录，则显示登录
+        if (!CheckUserLog()) {
+            $('#noLogin').show();
+        } else {
+            getOrderCountGroupByType(); //获取订单中待出价和已出价的总数；
+
+            $(".iprolist_tab2 ul li").mousedown(function () {
+                $(".iprolist_tab2 ul li").each(function () {
+                    $(this).removeClass();
+                });
+                var flag = $(this).attr("flag");
+                $(this).addClass("cur");
+                $(".iprolistc").hide();
+                $("#tab" + flag).show();
+                if (flag == 1) {
+                    needOffer();
+                } else {
+                    Offered();
+                }
+            });
+            $('.overlay').click(function () {
+                $(this).hide();
+                $('.hetong_tc').hide();
+                $('.yixiangfang_tcset').hide();
+                $('.kanfang_tc').hide();
+            });
+
+            $(".hetong").click(function () {
+                $(".overlay").show();
+                $(".hetong_tc").show();
+            });
+            $(".hetong_tc_con_btn.bg1").click(function () {
+                $(".overlay").hide();
+                $('.yixiangfang_tcset').hide();
+                $(this).parent().parent().hide();
+            });
+
+            if ($.request('type') == 1) {
+                $('.iprolist_tab2 ul li:eq(1)').trigger('mousedown');
+            } else {
+                needOffer();
+            }
+        }
+    });
+
+    //获取订单中待出价和已出价的总数；
+    function getOrderCountGroupByType() {
+        $.ar({
+            url: globalKey.InterfaceDomain + 'api/Order/getOrderCountGroupByType'
+                , data: { userId: $('#Uid').val() }
+                , load: false
+                , success: function (data) {
+                    $('.iprolist_tab2 ul li:eq(0)').text('待出价（' + data.data.noPriceCount + '）');
+                    $('.iprolist_tab2 ul li:eq(1)').text('已出价（' + data.data.priceCount + '）');
+                }
+        });
+    }
+    //待出价
+    function needOffer() {
+        $.LayPage({
+            elem: '#tab1'
+      , Template: '#needOfferTemplate'
+      , load: false
+      , mb: 100
+      , url: globalKey.InterfaceDomain + 'api/Order/GetMyOrder'
+      , type: 'post'
+      , data: { userId: $('#Uid').val(), offerStatus: 0 }//参数
+      , NoMsg: '<p>还在努力寻找吗？不妨点我试试看！</p><a style="text-decoration: underline;color: #999999;padding: 1em;margin-top: 2em;border-radius: 3px;display: inline-block;width: 59%;" href="/house/fastfind/">私人订制</a>'
+
+        });
+    }
+    //已出价
+    function Offered() {
+        $.LayPage({
+            elem: '#tab2'
+      , Template: '#offeredTemplate'
+      , load: false
+      , mb: 100
+      , url: globalKey.InterfaceDomain + 'api/Order/GetMyOrder'
+      , type: 'post'
+      , data: { userId: $('#Uid').val(), offerStatus: 1 }//参数
+      , NoMsg: '出价即可优先订房，再不出手，花都谢了！'
+        });
+    }
+    //放弃
+    function giveUpHandle(orderNo) {
+        $.BottomDialog({
+            content: '您确认要<span style="color:red;">放弃</span>该房源吗?'
+                    , callBack: function () {
+                        $.ar({
+                            url: globalKey.InterfaceDomain + 'api/Order/GiveUp'
+                           , data: { userId: $('#Uid').val(), orderNo: orderNo }
+                           , success: function (data) {
+                               $.modalMsg({
+                                   content: data.msg, success: function () {
+                                       window.location.href = "/order/index";
+                                   }
+                               });
+                           }
+                        });
+                        return false;
+                    }
+        });
+    }
+    //当面签约
+    var $orderNo;
+    function FaceSignHandler(orderNo) {
+        //判断是否可以出价
+        $.ar({
+            url: globalKey.InterfaceDomain + 'api/LeaseOffer/IsCanLeaseOffer'
+            , data: { userId: $('#Uid').val(), orderNo: orderNo, type: 1 }
+            , success: function (data) {
+                $orderNo = orderNo;
+                $('.overlay').show();
+                $('.yixiangfang_tcset').slideUp();
+                $('#DivGene').show();
+            }
+            , error: function (data) {
+                $.modalMsg({
+                    content: data.msg, success: function () {
+                        if (data.data != null && data.data != undefined && data.data.errCode == -1) {
+                            window.location.href = "/order/index?type=1";
+                        }
+                        if (data.data != null && data.data != undefined && data.data.errCode == -2) {
+                            window.location.href = "/WxPay/DepositExplain?payReturnUrl=" + encodeURIComponent(window.location.href);
+                        }
+                    }
+                });
+            }
+        });
+    }
+    //生成合同
+    function GenerateContractWithNoHandler(orderNo) {
+        $.modalMsg({
+            content: "确定要生成合同吗？", btn: ["确认", "取消"], success: function () {
+                $.ar({
+                    url: globalKey.InterfaceDomain + 'api/OrderLeaseContract/Generate'
+                   , data: { userId: $('#Uid').val(), orderNo: orderNo }
+                   , success: function (data) {
+                       $.modalMsg({
+                           content: data.msg, success: function () {
+                               window.location.href = "/order/SelGenerateWay?orderNo=" + orderNo;
+                           }
+                       });
+                   }
+                   , error: function (data) {
+                        $.modalMsg({
+                            content: data.msg, success: function () {
+                                
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+    //确认【扣除交易保障金】
+    function SureHandler() {
+        var price = $('#price').val();
+        if (price == '') {
+            $.modalAlert("请输入价格！");
+            return false;
+        }
+        var reg = new RegExp("^[0-9]+$");
+        if (!reg.test(price)) {
+            $.modalAlert("价格只能是数字！");
+            return false;
+        }
+        var data = {};
+        data["userId"] = $('#Uid').val();
+        data["orderNo"] = $orderNo;
+        data["price"] = price;
+        data["type"] = 1;
+        $.ar({
+            url: globalKey.InterfaceDomain + 'api/LeaseOffer/Create'
+            , data: data
+            , success: function (data) {
+                $.modalMsg({
+                    content: data.msg, success: function () {
+                        window.location.href = "/order/index?type=1";
+                    }
+                });
+            }
+            , error: function (data) {
+                $.modalMsg({
+                    content: data.msg, success: function () {
+                        if (data.data != null && data.data != undefined && data.data.errCode == -1) {
+                            window.location.href = "/order/index?type=1";
+                        } else {
+                            window.location.href = "/order/index";
+                        }
+                    }
+                });
+            }
+        });
+    }
+    ////立即预约
+    function NowBooking(orderNo) {
+        $('.overlay').show();
+        $('.yixiangfang_tcset').hide();
+        $('.kanfang_tc').slideDown();
+        InitSureRemind(orderNo, 'add');
+    }
+    //更改看房时间
+    function ChangeBooking(orderNo) {
+        $('.overlay').show();
+        $('.yixiangfang_tcset').slideUp();
+        $('.kanfang_tc').slideDown();
+        InitSureRemind(orderNo, 'change');
+    }
+    ////初始化日期控件
+    //var fun = function () {
+    //    var currYear = (new Date()).getFullYear();
+    //    $('#bookingTime').scroller('destroy').scroller({
+    //        preset: 'datetime',
+    //        theme: 'android-ics light',
+    //        minDate: new Date(),
+    //        endYear: currYear + 1, //结束年份
+    //        lang: 'zh'
+    //    });
+    //}
+    ////初始化确认提醒表单
+    //function InitSureRemind(orderNo, action) {
+    //    layui.use(['form'], function () {
+    //        var form = layui.form()
+    //        , layer = layui.layer
+    //        var curr = new Date().getFullYear();
+    //        $(".fangdong_tc2").slideUp();
+    //        $('.settings select').bind('change', function () {
+    //            fun();
+    //        });
+    //        fun();
+    //        //alert('初始化确认提醒表单...');
+    //        //监听提交
+    //        form.on('submit(SureRemind)', function (data) {
+    //            data.field["userId"] = $('#Uid').val();
+    //            data.field["orderNo"] = orderNo;
+    //            //确认提醒表单
+    //            var action_url = '';
+    //            if (action == 'add') { action_url = 'api/Order/AddBooking'; }
+    //            if (action == 'change') { action_url = 'api/Order/UpdateBooking'; }
+    //            $.ar({
+    //                url: globalKey.InterfaceDomain + action_url,
+    //                data: data.field,
+    //                success: function (data) {
+    //                    $.modalMsg({
+    //                        content: data.data, success: function () {
+    //                            window.location.href = "/Order/Index";
+    //                        }
+    //                    });
+    //                    $(".overlay").hide();
+    //                    $(".kanfang_tc").slideUp();
+    //                }
+    //            })
+    //            return false;
+    //        });
+    //    });
+    //}
+    //不需要
+    function NoNeedHandler() {
+        $(".kanfang_tc").slideUp();
+        $(".overlay").slideUp();
+    }
+    //取消
+    function DelHandler(orderNo) {
+        $('.yixiangfang_tcset').slideUp();
+        $('.overlay').hide();
+        $.BottomDialog({
+            content: '您确认要取消该房源吗?'
+                  , callBack: function () {
+                      $.ar({
+                          url: globalKey.InterfaceDomain + 'api/Order/Del'
+                         , data: { userId: $('#Uid').val(), orderNo: orderNo }
+                         , success: function (data) {
+                             $.modalMsg({
+                                 content: data.msg, success: function () {
+                                     window.location.href = "/order/index";
+                                 }
+                             });
+                         }
+                      });
+                      return false;
+                  }
+        });
+    }
+    //出价
+    function ToPriceHandler(houseId, orderNo) {
+        //判断是否可以出价
+        $.ar({
+            url: globalKey.InterfaceDomain + 'api/LeaseOffer/IsCanLeaseOffer'
+            , data: { userId: $('#Uid').val(), orderNo: orderNo, type: 0 }
+            , success: function (data) {
+                window.location.href = "/Order/UserOffer?houseId=" + houseId + "&orderNo=" + orderNo;
+            }
+            , error: function (data) {
+                $.modalMsg({
+                    content: data.msg, success: function () {
+                        if (data.data == null || data.data == undefined) {
+                            window.location.href = "/order/index";
+                        }
+                        if (data.data != null && data.data != undefined && data.data.errCode == -2) {
+                            window.location.href = "/WxPay/DepositExplain?payReturnUrl=" + encodeURIComponent(window.location.href);
+                        }
+                        if (data.data != null && data.data != undefined && data.data.errCode == -1) {
+                            window.location.href = "/order/index?type=1";
+                        }
+                    }
+                });
+            }
+        });
+        ////判断是否已经缴纳交易保障金
+        //$.CheckUserPayDeposit({
+        //    trueHandler: function () {
+        //        //已经缴纳，直接跳转，出价；
+        //        window.location.href = "/Order/UserOffer?houseId=" + houseId + "&orderNo=" + orderNo;
+        //    }
+        //});
+    }
+    function OrderlinkLandlordHandler(tel, houseId) {
+        $('#houseId').val(houseId);
+        linkLandlordHandler(tel);
+    }
+    //联系房东
+    function TelToLandlordHandler(obj, linkTel) {
+        //判断是否已经缴纳交易保障金
+        $.CheckUserPayDeposit({
+            trueHandler: function () {
+                //已经缴纳，拨打电话；
+                $(obj).attr('href', 'tel:' + linkTel);//系统拨号框
+                //$(obj).next('a').trigger('click');
+            }
+        });
+    }
+    //跳转到房屋详细页面
+    function GoHouseDetailHandler(houseId) {
+        return location.href = "/house/details/" + houseId;
+    }
+    //跳转到支付说明页面
+    function GoToDepositExplain() {
+        $.modalMsg({
+            content: "请先支付交易保障金！", success: function () {
+              return  window.location.href = "/WxPay/DepositExplain?payReturnUrl=" + encodeURIComponent(window.location.href);
+            }
+        });
+    }
+</script>

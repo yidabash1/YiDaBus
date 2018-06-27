@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "测试支付";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<a onclick="testPayHandler()"><h2>测试支付</h2></a>
+<script>
+    function testPayHandler() {
+        $.ar({
+            url: globalKey.InterfaceDomain + 'api/Users/AddPayLog',
+            data: { userId: $('#Uid').val(), spBillno: "@ViewData["sp_billno"]", PayAmount: "@ViewData["PayAmount"]", UserCouponId: "@ViewData["UserCouponId"]" },
+            success: function (data) {
+                window.location.href = "@ViewData["payReturnUrl"]";
+            }
+        })
+    }
+
+</script>

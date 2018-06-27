@@ -1,0 +1,186 @@
+﻿
+@{
+    ViewBag.Title = "我的收藏";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="/Content/js/zepto.fx.js"></script>
+<script src="/Content/js/swipe.min.js"></script>
+
+<div class="container">
+    <input id="indextab" value="2" type="hidden" />
+    <div class="box_main">
+        <div class="search_listheader" style="background:#fff">
+            <div class="search_listheader_l" onclick="window.location.href = '/Account/Index'"><i class="iconfont icon-jiantou-copy1"></i></div>
+            <h2> 我的收藏</h2>
+        </div>
+        <div class="iprolist" style="padding-top: 34px;">
+            <div class="iprolist_tab2">
+                <ul>
+                    <li flag="1" class="cur">租赁房源（<span id="span1">0</span>）</li>
+                    <li flag="2">关注小区（<span id="span2">0</span>）</li>
+                </ul>
+            </div>
+            <div class="iprolistc" id="tab1"></div>
+            <div class="iprolistc" id="tab2" style="display:none">
+
+            </div>
+        </div>
+    </div>
+    <div class="btmline"></div>
+    @Html.Partial("~/views/shared/_bottom.cshtml")
+</div>
+<!--租赁房源模板-->
+<script id="HouseCollectTemplate" type="text/html">
+    {{#  layui.each(d, function(index, item){}}
+    <dl>
+        <div class="swipe_content" style="padding-right: 0px;">
+            <dt>
+                <a href="/house/details/{{item.houseId}}"><img src="{{item.houseDetail.houseCorver==""?"/Content/img/ad1.png":item.houseDetail.houseCorver}}" onerror="this.onerror='';this.src='/Content/img/ad1.png'"></a>
+            </dt>
+            <dd>
+                <h3>
+                    <a href="/house/details/{{item.houseID}}">{{item.houseDetail.houseTitle.substring(0,14)}}</a>&nbsp;<span>{{item.houseDetail.rentMode}}</span>
+                </h3>
+                <div class="iprolist_about">
+                    <span>{{item.houseDetail.rentalArea}}㎡ | {{item.houseDetail.hFloor}}/{{item.houseDetail.hFloorTotal}}层</span>
+                    <div class="iprolist_price"><em>￥{{item.houseDetail.hRent}}</em>/月</div>
+                </div>
+                <div class="iprolist_tag">
+                    {{# if(item.houseDetail.hTags!=""){ }}
+                    {{# layui.each(item.houseDetail.hTags.split(','),function(index,itemdetails){}}
+                    <em class="color{{index+1}}">{{itemdetails}}</em>
+                    {{#  });}}
+                    {{# } }}
+                </div>
+                <div class="iprolist_adress">
+                    {{# if(item.houseDetail.subwayDistance==""){ }}
+                    {{# }else{ }}
+                    <i class="iconfont icon-ditu2"></i> {{item.houseDetail.subwayDistance}}
+                    {{# } }}
+                </div>
+            </dd>
+        </div>
+        <div class="swipe_hidden" onclick="CancleCollectionHandler(this, '{{item.houseId}}','0')">
+            <a href="javascript:void(0);">取消</a>
+        </div>
+    </dl>
+    {{#  }); }}
+
+    {{#  if(d.length === 0){ }}
+    无数据
+    {{#  } }}
+</script>
+<!--关注小区模板-->
+<script id="VillageCollectTemplate" type="text/html">
+    {{#  layui.each(d, function(index, item){}}
+    <dl>
+        <div class="swipe_content" style="padding-right: 0px;">
+            <dt><a href="/house/VillageDetails/{{item.villageDetail.villageId}}"><img src="{{item.villageDetail.cover==""?"/Content/img/ad5.png":item.villageDetail.cover}}" onerror="this.onerror='';this.src='/Content/img/ad1.png'"></a></dt>
+            <dd>
+
+                <h3><a href="/house/details/{{item.villageDetail.villageId}}">{{item.villageDetail.villagName.substring(0,14)}}</a></h3>
+                <div class="iprolist_about">
+                    <span>共{{item.villageDetail.houseCount}}套在租</span>
+                </div>
+                <div class="iprolist_adress2"><i class="iconfont icon-ditu2"></i> {{item.villageDetail.detailsAddress}}</div>
+            </dd>
+        </div>
+        <div class="swipe_hidden" onclick="CancleCollectionHandler(this, '{{item.villageDetail.villageId}}','1')">
+            <a href="javascript:void(0);">取消</a>
+        </div>
+    </dl>
+    {{#  }); }}
+
+    {{#  if(d.length === 0){ }}
+    无数据
+    {{#  } }}
+</script>
+<script type="text/javascript">
+    $(function () {
+        $('body').removeClass('bg01');
+        //判断是否已经登录，如果没有登录
+        var isFirst = true;
+        $(".iprolist_tab2 ul li").mousedown(function () {
+            $(".iprolist_tab2 ul li").each(function () {
+                $(this).removeClass();
+            });
+            var flag = $(this).attr("flag");
+            $(this).addClass("cur");
+            $(".iprolistc").hide();
+            $("#tab" + flag).show();
+            //已出价，点击只加载一次，之后只能通过下拉加载；
+            if (isFirst) { GetVillageCollect(); isFirst = false; }
+        });
+        GetHouseCollect();
+    })
+    //获取租赁房源列表
+    function GetHouseCollect() {
+        $.LayPage({
+            elem: '#tab1'
+      , Template: '#HouseCollectTemplate'
+      , mb: 100
+      , url: globalKey.InterfaceDomain + 'api/HouseCollectLogs/GetList'
+      , type: 'post'
+      , NullColor: '#ffffff'
+      , data: { pagesize: 5, userId: $('#Uid').val(), collectType: 0 }//参数
+      , success: function (laytpl, next, page, data) {
+          //第三步：渲染模版
+          var getTpl = $('#HouseCollectTemplate').html();
+          laytpl(getTpl).render(data.data.houseCollectItem.items, function (html) {
+              //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+              //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+              $('#span1').text(data.data.housecollectCount);
+              $('#span2').text(data.data.villagecollectCount);
+              next(html, page < data.data.houseCollectItem.totalPages);
+          });
+      }
+        });
+    }
+    //获取关注小区列表
+    function GetVillageCollect() {
+        $.LayPage({
+            elem: '#tab2'
+      , Template: '#VillageCollectTemplate'
+      , mb: 100
+      , url: globalKey.InterfaceDomain + 'api/HouseCollectLogs/GetList'
+      , type: 'post'
+      , NullColor:'#ffffff'
+      , data: { pagesize: 5, userId: $('#Uid').val(), collectType: 1 }//参数
+      , success: function (laytpl, next, page, data) {
+          //第三步：渲染模版
+          var getTpl = $('#VillageCollectTemplate').html();
+          laytpl(getTpl).render(data.data.villageCollectItem.items, function (html) {
+              //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+              //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+              $('#span1').text(data.data.housecollectCount);
+              $('#span2').text(data.data.villagecollectCount);
+              next(html, page < data.data.villageCollectItem.totalPages);
+          });
+      }
+        });
+    }
+
+    //取消收藏
+    function CancleCollectionHandler(obj, houseId, collectType) {
+        if (UserIsLog()) {
+            $.ar({
+                url: globalKey.InterfaceDomain + 'api/HouseCollectLogs/Cancle',
+                data: { userId: $('#Uid').val(), houseId: houseId, collectType: collectType },
+                success: function (data) {
+                    $.modalMsg({
+                        content: data.msg, success: function () {
+                            $(obj).parent().remove();
+                            if(collectType == 0){
+                                $('#span1').text(parseInt($('#span1').text()) - 1)
+                            } else if (collectType == 1) {
+                                $('#span2').text(parseInt($('#span2').text()) - 1)
+                            } else {
+
+                            }
+                        }
+                    });
+                }
+            })
+        }
+    }
+</script>

@@ -1,0 +1,173 @@
+﻿@{
+    ViewBag.Title = "我的优惠券";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #div_show {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        -webkit-animation-duration: .5s;
+        animation-duration: .5s;
+        z-index: -100;
+    }
+
+    .div_show_title {
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#12a3f4', endColorstr='#0e86c9', GradientType=0);
+        clear: both;
+        display: block;
+        background: #F5F5F5;
+        color: #333333;
+        font-weight: 700;
+        position: relative;
+        height: 30px;
+        width: 100%;
+    }
+
+    .div_show_font {
+        color: #333333;
+        float: left;
+        font-weight: 700;
+        margin: 0.4em 0 0.4em 10px;
+    }
+
+    .div_show_btn {
+        float: right;
+        margin: 0.4em 10px 0.4em 0;
+    }
+
+    #mapdetails {
+        height: 100%;
+        width: 100%;
+        border: 5px solid white;
+    }
+
+    .icon-iconfontqueren2:before {
+        content: "";
+    }
+</style>
+<div class="container">
+    <div class="search_listheader" style="background:#fff">
+        <div class="search_listheader_l" onclick="window.location.href = '/Account/Index'"><i class="iconfont icon-jiantou-copy1"></i></div>
+        <h2> 优惠券</h2>
+    </div>
+    <div class="quan" style="padding-top: 45px;">
+        <div class="quan_tit">
+
+            <a href="javascript:;" onclick="showcondition()">
+                <i class="icon iconfont icon-bangzhu"></i>使用规则
+            </a>
+        </div>
+        <div class="quan_list">
+
+        </div>
+    </div>
+</div>
+<!--使用规则-->
+<div id="div_show" style="display:none">
+    <p class="MsoListParagraph" style="margin-left:24px;text-indent:0;line-height:21px">
+        <span style="font-size:10px;font-family:宋体">指房向针对不同活动会推出不同的“优惠券”，此优惠券只适用于平台活动，不可兑换现金，也不可转让。</span>
+    </p>
+    <p class="MsoListParagraph" style="margin-left:28px;line-height:21px">
+        <span style="font-size:10px;font-family:Wingdings">l<span style="font-variant-numeric: normal;font-stretch: normal;font-size: 9px;line-height: normal;font-family: &#39;Times New Roman&#39;">&nbsp;&nbsp; </span></span><span style="font-size:10px;font-family:宋体">如何领取优惠券：用户可参与平台活动，领取优惠券；同时，系统也会根据用户情况和活动，发放优惠券；</span>
+    </p>
+    <p class="MsoListParagraph" style="margin-left:28px;line-height:21px">
+        <span style="font-size:10px;font-family:Wingdings">l<span style="font-variant-numeric: normal;font-stretch: normal;font-size: 9px;line-height: normal;font-family: &#39;Times New Roman&#39;">&nbsp;&nbsp; </span></span><span style="font-size:10px;font-family:宋体">如何查看优惠券：点击后台 “我的优惠券”，可以查看所有优惠的信息和使用情况；</span>
+    </p>
+    <p class="MsoListParagraph" style="margin-left:28px;line-height:21px">
+        <span style="font-size:10px;font-family:Wingdings">l<span style="font-variant-numeric: normal;font-stretch: normal;font-size: 9px;line-height: normal;font-family: &#39;Times New Roman&#39;">&nbsp;&nbsp; </span></span><span style="font-size:10px;font-family:宋体">优惠券的使用范围：可用以抵扣交易“保障金”；</span>
+    </p>
+    <p class="MsoListParagraph" style="margin-left:28px;line-height:21px">
+        <span style="font-size:10px;font-family:Wingdings">l<span style="font-variant-numeric: normal;font-stretch: normal;font-size: 9px;line-height: normal;font-family: &#39;Times New Roman&#39;">&nbsp;&nbsp; </span></span><span style="font-size:10px;font-family:宋体">优惠券的使用方式：租客在支付交易“保障金”时，可自行选择“优惠券”抵扣；</span>
+    </p>
+    <p>
+        <span style="font-size:10px;font-family:宋体">未尽事宜最终解释全归上海知房网络科技有限公司所有。</span>
+    </p>
+    <p>
+        <br />
+    </p>
+</div>
+<script type="text/html" id="coupon">
+    {{#  layui.each(d, function(index, item){ }}
+    <a href="javascript:;">
+        {{# var isuserd=""; if(item.isUse==1||(item.isOver == 1)){isuserd="unuse";} }}
+        <dl class="{{isuserd}}">
+            <dt>
+                <h3>{{item.couponName}}</h3>
+                <p>有效期至{{item.endTime.substring(0,10)}}</p>
+                <span>￥<big>{{item.couponAmount}}</big><em><i class="icon iconfont icon-iconfontqueren2"></i></em></span>
+                {{# if(item.isOver == 1){ }}
+                <div class="guoqi"><img width="64" src="/Content/img/guoqi_icon.png"></div>
+                {{# } }}
+                {{# if(item.isUse==1){ }}
+                <div class="guoqi"><img width="64" src="/Content/img/yishiyong_icon.png"></div>
+                {{# } }}
+            </dt>
+            <dd>仅限个人使用</dd>
+        </dl>
+    </a>
+    {{# }) }}
+</script>
+<script>
+    function loadresult() {
+        var uid = $("#Uid").val();
+        $.LayPage({
+            elem: '.quan_list'
+                , Template: '#coupon'
+                , mb: 100
+                , url: globalKey.InterfaceDomain + 'api/Coupon/GetCouponByUserId'
+                , type: 'post'
+                , load: false
+                , data: {
+                    pagesize: 15,
+                    userId: $("#Uid").val()
+                }
+        });
+    };
+    function showcondition() {
+        mlayer.open({
+            content: "<div class=\"div_show_title\"> <span class=\"div_show_font\">优惠券使用说明</span> <a onclick=\"close_show();\" class=\"div_show_btn\" ><i class=\"icon iconfont icon-guanbi\"></i></a> </div>" + $("#div_show").html()
+      , type: 1
+     , style: 'position:fixed; left:0; top:0; width:100%; height:100%; border: none; -webkit-animation-duration: .5s; animation-duration: .5s;'
+        });
+    }
+    function close_show() {
+        $("#div_show").hide();
+        var div_show = document.getElementById("div_show");
+        div_show.style.zIndex = "-100";
+        $.modalCloseALL();
+    }
+    function myfunction() {
+        var timestamp = new Date().getTime().toString();
+        var cipherwx = strEnc(mobile, timestamp);
+        var murl = "https://m.licai.51duoying.com/";
+        $.ajax({
+            url: murl + "index/getcode/v1",
+            data: { "mobile": mobile, "ts": timestamp, "imageCode": imageCode },
+            type: "post",
+            dateType: 'json',
+            beforeSend: function (xhr) { xhr.setRequestHeader('cipherwx', cipherwx); },
+            cache: false,
+            async: false,
+            success: function (result) {
+                closeLoading();
+                if (result.success) {
+                    msg_code_show();
+                } else {
+                    $('#mobile_err').text(result.msg);
+                }
+            },
+            error: function () {
+                closeLoading();
+                alert('请稍后重试！');
+            }
+        });
+
+    }
+    $(function () {
+        loadresult();
+    });
+</script>

@@ -1,0 +1,228 @@
+﻿@{
+    ViewBag.Title = "私人定制";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/js/mobiscroll1/mobiscroll.frame.css?V=1.1" rel="stylesheet" />
+<link href="~/Content/js/mobiscroll1/mobiscroll.scroller.css?V=1.1" rel="stylesheet" />
+<script src="~/Content/js/mobiscroll1/mobiscroll.js"></script>
+@if (Request.IsAuthenticated)
+{
+    <input id="logaccount" hidden="hidden" value="@FormsAuthentication.Decrypt(ZFX365.Com.Manager.Common.WebHelper.GetCookie("logaccount")).Name" />
+}
+<script type="text/javascript">
+    $(function () {
+        InitControl();
+    });
+    //初始化控件
+    function InitControl() {
+        $('#userAccount').val($('#logaccount').val());
+        mobiscroll.scroller('#beginTime', {
+            theme: 'mobiscroll',
+            display: 'center',
+            lang: "zh",
+            wheels: [
+                [{
+                    label: 'First wheel',
+                    data: ['1室', '2室', '3室', '4室', '5室']
+                }, {
+                    label: 'Second wheel',
+                    data: ['0厅', '1厅', '2厅']
+                }]
+            ]
+        });
+        mobiscroll.scroller('#rentMode', {
+            theme: 'mobiscroll',
+            display: 'center',
+            lang: "zh",
+            wheels: [
+                [{
+                    label: 'First wheel',
+                    data: ['整租', '合租', '公寓']
+                }]
+            ]
+        });
+        mobiscroll.scroller('#price', {
+            theme: 'mobiscroll',
+            display: 'center',
+            lang: "zh",
+            circular: false,
+            wheels: [
+                [{
+                    label: 'First wheel',
+                    data: ['1500元以下', '1500-3000元', '3000-4000元', '4000-5000元', '5000-7000元', '7000元以上']
+                }]
+            ]
+        });
+        mobiscroll.scroller('#district', {
+            theme: 'mobiscroll',
+            display: 'center',
+            lang: "zh",
+            circular: false,
+            wheels: [
+                [{
+                    label: 'First wheel',
+                    data: ["杨浦", "黄浦", "徐汇", "长宁", "静安", "普陀", "虹口", "闵行", "宝山", "嘉定", "浦东", "金山", "松江", "青浦", "奉贤", "虹口", "崇明"]
+                }]
+            ]
+        });
+    }
+</script>
+<div class="container">
+    <div class="container">
+        <div class="search_listheader" style=" background:#fff">
+            <div class="search_listheader_l"><i class="iconfont icon-jiantou-copy1"></i></div>
+            <h2>私人定制</h2>
+        </div>
+        <div class="srdz_top"><img style="width:100%;" src="/content/img/srdz_top.png" alt="" /></div>
+        <div class="srdz_mid"><p>认真填写租房需求,24小时内专属客服为您实现完美定制！</p></div>
+        <div class="schetong_box input_right" style="padding-bottom:38px;background:white;margin-bottom:0px;">
+            <ul>
+                <li>
+                    <span>选择区域</span>
+                    <input type="text" placeholder="请选择区域名称" id="district" name="district" />
+                    <i class="icon iconfont icon-jikediancanicon13" style="color:#999;margin-left:10px;font-size:14px;"></i>
+                </li>
+                <li>
+                    <span>租赁形式</span>
+                    <input type="text" placeholder="请选择租赁形式" id="rentMode" name="rentMode" />
+                    <i class="icon iconfont icon-jikediancanicon13" style="color:#999;margin-left:10px;font-size:14px;"></i>
+                </li>
+                <li>
+                    <span>房源户型</span>
+                    <input type="text" placeholder="请选择户型" id="beginTime" name="beginTime" />
+                    <i class="icon iconfont icon-jikediancanicon13" style="color:#999;margin-left:10px;font-size:14px;"></i>
+                </li>
+                <li>
+                    <span>月租金</span>
+                    <input type="text" placeholder="请选择您的期望月租金" id="price" name="price" />
+                    <i class="icon iconfont icon-jikediancanicon13" style="color:#999;margin-left:10px;font-size:14px;"></i>
+                </li>
+                <li><span>姓名</span><input style="width:45%; float:left;text-align:left;" type="text" placeholder="请输入您的姓名" id="userName"><a class="xingbie_chose" href="javascript:;">女士</a><a class="xingbie_chose cur" href="javascript:;">先生</a></li>
+                <li><span>电话</span><input style="width:75%; text-align:left; float:left;border:0;" type="number" placeholder="请输入您的手机号" id="userAccount"></li>
+            </ul>
+        </div>
+
+    </div>
+    <div class="detail_btmset" style="position:static">
+        <div class="detail_btmset_part2" style="width:100%">
+            <a style="width:100%" class="detail_btm_btn bg1">提交</a>
+        </div>
+    </div>
+    <input type="hidden" name="HRoom" id="HRoom">
+    <input type="hidden" name="HOffice" id="HOffice">
+    <input type="hidden" name="HWashroom" id="HWashroom">
+    <input type="hidden" name="xingbie" id="xingbie" value="先生">
+    <div class="srdz_bot">
+        <h3>活动规则</h3>
+        <p>1.原需支付保障金500元，现只需支付1元，即可参与活动；</p>
+        <p>2.通过手机验证后，即可获得499元优惠券；</p>
+        <p>3.若定制房源不满意，可随时申请退还所支付金额；</p>
+        <p>4.本次活动的所有解释权归指房向所有。</p>
+    </div>
+    <div id="datePlugin"></div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        InitControl();
+        var addr = ["杨浦", "黄浦", "徐汇", "长宁", "静安", "普陀", "虹口", "闵行", "宝山", "嘉定", "浦东", "金山", "松江", "青浦", "奉贤", "虹口", "崇明"];
+        var rentMode = ["整租", "合租", "公寓"];
+        var price = ["1500元以下", "1500-3000元", "3000-4000元", "4000-5000元", "5000-7000元", "7000元以上"]
+        $(".search_listheader_l").click(function () {
+            window.history.go(-1);
+        })
+        $(".xingbie_chose").click(function () {
+            $(".xingbie_chose").removeClass('cur')
+            $(this).addClass('cur')
+            $("#xingbie").val($(this).text())
+        })
+        $(".detail_btmset a").click(function () {
+            function submithosue() {//组装data
+                var data = {
+                    district: $("#district").val(),
+                    rentMode: $("#rentMode").val(),
+                    hRoom: $("#beginTime").val(),
+                    price: $("#price").val(),
+                    userName: $("#userName").val(),
+                    userGender: $("#xingbie").val(),
+                    userAccount: $("#userAccount").val(),
+                    source: 1,
+                    appID: null,
+                    userId: $('#Uid').val(),
+                    //district: addr[$("#district").val()],
+                    //rentMode: rentMode[$("#rentMode").val()],
+                    //hRoom: $("#HRoom").val(),
+                    //price: price[$("#price").val()],
+                    //userId: $('#Uid').val(),
+                    //userName: $("#userName").val(),
+                    //userGender: $("#xingbie").val(),
+                    //userAccount: $("#userAccount").val(),
+                    //appID: null
+                }
+                if (data["district"] == "") {
+                    $.modalAlert("请选择区域");
+                    //$("#district").trigger("click");//.focus();
+                    return;
+                }
+                if (data["rentMode"] == "") {
+                    $.modalAlert("请选择租赁形式");
+                    //$("#rentMode").trigger("click");//.focus();
+                    return;
+                }
+                if (data["hRoom"] == "") {
+                    $.modalAlert("请选择户型");
+                    //$("#beginTime").trigger("click");//.focus();
+                    return;
+                }
+                if (data["price"] == "") {
+                    $.modalAlert("请选择月租金");
+                    //$("#price").trigger("click");//.focus();
+                    return;
+                }
+                if (data["userName"] == "") {
+                    $.modalAlert("请输入您的姓名");
+                    $("#userName").trigger("click");//.focus();
+                    return;
+                }
+                if (!(/^1[3|4|5|7|8]\d{9}$/.test($("#userAccount").val()))) {
+                    $.modalAlert("请输入正确手机号");
+                    $("#userAccount").focus();
+                    return;
+                }
+                
+                try {
+                    $.ar({
+                        url: globalKey.InterfaceDomain + "api/Order/InsertDemand",
+                        data: data,
+                        success: function (data) {
+                            //尚未登录，跳转到登录页面
+                            if (!CheckUserLog()) {
+                               return window.location.href = "/home/login?mobile=" + $('#userAccount').val();
+                            }
+                            $.CheckUserPayDeposit({
+                                trueHandler: function () {
+                                    //已经缴纳金额，直接跳转到首页
+                                    $.modalMsg({
+                                        content: "提交成功！", success: function () {
+                                            return window.location.href = "/home/index";
+                                        }
+                                    });
+                                }, falseHandler: function () {
+                                    //没有缴纳金额，跳转到押金支付页面
+                                    $.modalMsg({
+                                        content: "恭喜！您已成功提交定制需求<br>为保障您的交易安全，请继续完成手机验证和1元支付", success: function () {
+                                            return window.location.href = "/WxPay/index?payReturnUrl=" + encodeURIComponent(globalKey.MobileUrl);
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                } catch (e) {
+                    console.log(e.message);
+                }
+            }
+            submithosue();
+        })
+    });
+    
+</script>

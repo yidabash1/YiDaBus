@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "房东中心";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="search_listheader" style="background:#fff" >
+        <div class="search_listheader_l" onclick="window.location.href = '/Account/Index'"><i class="iconfont icon-jiantou-copy1"></i></div>
+        <h2> 房东中心</h2>
+    </div>
+    <div class="contact" style="padding-top: 45px;">
+        @*<div class="contact_box" style="margin-top:0">
+            <ul>
+                <a class="telbtn" href="/Account/MyLBooking"><li><span> 我的约看</span><em><b id="bookingCount">0 个</b><i class="icon iconfont icon-jikediancanicon13"></i></em></li></a>
+            </ul>
+        </div>*@
+        <div class="contact_box">
+            <ul>
+                <a class="telbtn" href="/Account/MyLContract"><li><span> 租赁合同</span><em><i class="icon iconfont icon-jikediancanicon13"></i></em></li></a>
+            </ul>
+        </div>
+        <div class="contact_box">
+            <ul>
+                <a class="telbtn" href="/Account/MyHouse"><li><span> 我的房屋</span><em><i class="icon iconfont icon-jikediancanicon13"></i></em></li></a>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        if (CheckUserLog()) {
+            //加载用户相关数据
+            $.ar({
+                url: globalKey.InterfaceDomain + 'api/Booking/GetBookingCount?userType=1&userId=' + $('#Uid').val()
+                                , data: { userType: 1, userId: $('#Uid').val() }
+                                , success: function (data) {
+                                    $("#bookingCount").html(data.data.bookingCount+" 个");
+                                }
+            });
+        }
+    });
+</script>

@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "我是房东";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="fangdong_con">
+    <h3>无佣金，快租房，<br />开启房屋租赁新模式！</h3>
+
+    <ul>
+        <li><span>1</span>手机委托</li>
+        <li><span>2</span>客服验证</li>
+        <li><span>3</span>上门拍照</li>
+        <li><span>4</span>上架出租</li>
+    </ul>
+    <div class="fangdong_btm">
+        <a href="/house/push">我要出租</a>
+        <a class="bg2" href="/account/myhouse">我的房屋</a>
+    </div>
+</div>
+<script>
+    $("body").removeClass();
+    $("body").addClass("fangdongbg")
+</script>

@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="微信" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^G:\\_7产品-知房网\\Zfx365\.Com\.Mobile\\Mobile\\ZFX365\.Com\.Mobile\\ZFX365\.Com\.Mobile\.Web\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^G:\\_7产品-知房网\\Zfx365\.Com\.Mobile\\Mobile\\ZFX365\.Com\.Mobile\\ZFX365\.Com\.Mobile\.Web\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+</parameters>

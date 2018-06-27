@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "快速搜索";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <form action="###">
+        <div class="search_header">
+            <i class="iconfont icon-llhomesearch" onclick="searchsuggestions(this)"></i><input type="text" placeholder="请输入小区、商圈、地铁站" oninput="searchsuggestions(this)">
+            <em class="search_delete" style="display:none" onclick="reset()"><i class="iconfont icon-shanchu"></i></em>
+            <a href="/">取消</a>
+        </div>
+    </form>
+    <div class="box_main">
+        <!---搜索记录为空的情况下调用此段代码-->
+        <div class="search_null" style="display:none">
+            <dl>
+                <dt><img width="70" src="/content/img/null.png"></dt>
+                <dd>没有任何搜索历史</dd>
+            </dl>
+        </div>
+
+        <!---以下为清除历史记录部门代码-->
+        <div class="search_jl">
+            <ul id="search_histories"></ul>
+            <div class="clear"></div>
+            <a class="qcjl" href="" onclick="clearsearchhistories()">@*清除历史记录*@</a>
+        </div>
+        <div class="search_result_null search_null" style="display:none">
+            <dl>
+                <dt><img width="70" src="/content/img/null.png"></dt>
+                <dd>没有查到相关的结果</dd>
+            </dl>
+        </div>
+        <!--搜索初步结果-->
+        <div class="search_resultlist" style="display:none;margin-top: 50px;">
+            <ul id="search_suggestions">
+            </ul>
+
+        </div>
+    </div>
+    @Html.Partial("~/views/shared/_bottom.cshtml")
+</div>
+<script type="text/html" id="searchhistories">
+    {{#  layui.each(d, function(index, item){ }}
+
+    <li><a href="/house/searchlist?keywords={{item.keywords}}">{{item.keywords}}</a></li>
+    {{#  }); }}
+    {{#  if(d.length === 0){ }}
+    {{# $(".search_jl").hide(); }}
+    {{# $(".search_null").show(); }}
+    {{#  } }}
+</script>
+<script type="text/html" id="search_suggestions_details">
+    {{#  layui.each(d, function(index, item){ }}
+       
+   {{# var values=$(".search_header input").val(); console.log(values); var hig = item.villagName.replace(values, "<em>" + values+ "</em>"); console.log(hig);}}
+    {{# var counthouse=item.houseCount-item.saledHouse;}}
+    {{# if(counthouse>0){  }}
+    <li><a href="/house/searchlist?villageId={{item.id}}"><span>{{counthouse}}套房源</span><div class="search_resultlist_l"><i class="iconfont icon-ditu1"></i>{{hig}}</div></a></li>
+    {{# }else{ }}
+    <li><a href="/house/searchlist?villageId={{item.id}}"><span class="hui">0套房源</span><div class="search_resultlist_l"><i class="iconfont icon-ditu1"></i>{{hig}}</div></a></li>
+    {{# } }}
+    {{#  }); }}
+    {{#  if(d.length === 0){ }}
+    {{# $(".search_jl").hide(); }}
+    {{# $(".search_result_null").show(); $(".search_resultlist").hide()}}
+    {{#  } }}
+</script>
+<script>
+    $(".search_header a").click(function () {
+        history.go(-1);
+    });
+    //获取记录
+    function searchsuggestions(obj) {
+        if ($(".search_header input").val().length > 0) {
+            $(".search_null").hide();
+            $(".search_jl").hide();
+            $(".search_delete").show();
+            $(".search_resultlist").show();
+            $('#search_suggestions').empty();
+            $.LayPage({
+                elem: '#search_suggestions'
+               , Template: '#search_suggestions_details'
+               , mb: 100
+               , url: globalKey.InterfaceDomain + 'api/housevillage/DistrictVillage'
+               , type: 'post'
+               , load: false
+               , data: { pagesize: 15, keywords: $(".search_header input").val() }//参数
+                        });
+        }
+        else {
+            $(".search_delete").hide();
+            $(".search_header a").show();
+            getsearchhistories();
+            $('#search_suggestions').empty();
+        }
+        //var ev = document.all ? window.event : obj;
+        //if (ev.keyCode == 13) {
+        //    location.href = "/house/searchlist?keywords=" + $(obj).val();
+        //}
+        //else {
+       
+        //}
+    };
+    function getsearchhistories() {
+        //$.LayPage({
+        //    elem: '#search_histories'
+        // , Template: '#searchhistories'
+        // , mb: 100
+        // , url: globalKey.InterfaceDomain + 'api/users/Getsearchlist'
+        // , type: 'post'
+        // , data: { pagesize: 5 }//参数
+        //});
+    }
+    //清楚搜索记录
+    function clearsearchhistories() {
+
+    }
+    $(function () {
+        //getsearchhistories();
+    });
+    function reset() {
+        $(".search_header input").val("");
+        $(".search_delete").hide();
+        $(".search_result_null").hidden;
+        getsearchhistories();
+    }
+    $("body").removeClass();
+</script>

@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Lucense4NetDemo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="text-align:center;">
+    <a href="javascript:void(0);" onclick="createIndex();" class="layui-btn layui-btn-warm">1、创建索引</a>
+    <table>
+        <tr>
+            <td>
+                <input id="SearchKey" value="" type="text" oninput="SearchFromIndexData();" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="javascript:void(0);" onclick="SearchFromIndexData();" class="layui-btn layui-btn-warm">2、从索引库中检索关键字</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="result"></div>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+<script>
+    $(function () {
+
+    });
+    //创建索引
+    function createIndex() {
+        $.ar({
+            url: globalKey.InterfaceDomain + 'api/House/CreateIndex'
+            , data: {}
+            , success: function (data) {
+                alert(data.msg);
+            }
+        });
+    }
+    // 从索引库中检索关键字
+    function SearchFromIndexData() {
+        var txt_SearchKey = $('#SearchKey').val();
+        $('#result').html('');
+        var html = '<ul>';
+        $.ar({
+            url: globalKey.InterfaceDomain + 'api/House/SearchFromIndexData'
+            , data: { SearchKey: txt_SearchKey }
+            , success: function (data) {
+                for (var i = 0; i < data.data.length; i++) {
+                    html += '<li data-id="' + data.data[i].id + '">' + data.data[i].villagName + '</li>';
+                }
+                html += '</ul>';
+                $('#result').append(html);
+            }
+        });
+    }
+</script>
