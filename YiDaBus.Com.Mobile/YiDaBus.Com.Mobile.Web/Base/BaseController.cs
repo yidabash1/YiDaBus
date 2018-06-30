@@ -33,7 +33,7 @@ namespace YiDaBus.Com.Mobile.Web.Base
         #endregion
         #region 公用方法
         /// <summary>
-        /// 根据OpenId获取用户ID 
+        /// 根据OpenId获取用户ID  
         /// </summary>
         /// <param name="openid"></param>
         /// <returns></returns>
