@@ -1,0 +1,125 @@
+﻿@{
+    ViewBag.Title = "易达快乐巴士 - 上海订票预订信息";
+    Layout = "~/Views/Shared/master.cshtml";
+
+    string week = Request.QueryString["week"] ?? "";
+}
+
+<header class="demos-header">
+    <h1 class="demos-title">上海订票</h1>
+</header>
+<form class="layui-form">
+    <div class="weui-form-preview">
+        <div class="weui-form-preview__hd">
+            <label class="weui-form-preview__label">票价总额</label>
+            <em class="weui-form-preview__value" id="elemTotalMoney">¥200.00</em>
+        </div>
+    </div>
+    <div class="weui-cells__title">预订座位</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p id="PSeats"></p>
+            </div>
+            <div class="weui-cell__ft">苏FM1122</div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>南通 - 上海</p>
+            </div>
+            <div class="weui-cell__ft">@DateTime.Today.ToString("yyyy年MM月dd日") @week</div>
+        </div>
+    </div>
+
+
+    <div class="weui-cells__title">联系方式</div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">客户姓名</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" name="UserNickName" placeholder="请输入您的姓名和微信名">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">联系电话</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="tel" name="Mobile" placeholder="请输入您的手机号码">
+            </div>
+        </div>
+        <div class="weui-cell weui-cell_switch">
+            <div class="weui-cell__bd">是否单程</div>
+            <div class="weui-cell__ft">
+                @*<input class="weui-switch" type="checkbox" id="elemSwitchOneway">*@
+                <input id="elemSwitchOneway" type="checkbox"  name="IsOneWay" lay-skin="switch" lay-filter="SwitchOneway" lay-text="1|0">
+            </div>
+        </div>
+        <div class="weui-cell weui-cell_switch">
+            <div class="weui-cell__bd">是否接送</div>
+            <div class="weui-cell__ft">
+                @*<input class="weui-switch" type="checkbox" checked="checked" id="elemSwitchShuttle">*@
+                <input id="elemSwitchShuttle" type="checkbox" checked="" name="IsShuttle" lay-skin="switch" lay-filter="SwitchShuttle" lay-text="1|0">
+            </div>
+        </div>
+        <div id="shuttleInfo">
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">接的地点</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" name="MeetPosition" placeholder="接的详细地点">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">送的地点</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" name="SendPosition" placeholder="送的详细地点">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--星期几-->
+    @Html.Hidden("week", week)
+
+    <!--车牌号码-->
+    @Html.Hidden("CarNumber", "苏FM1122")
+
+    <!--选择的座位-->
+    @*@Html.Hidden("chooseSeat", "13,14")*@
+
+    <!--是否单程，0=否，1=是-->
+   @* @Html.Hidden("isOneway", 0)*@
+
+    <!--是否接送，0=不接送，1=接送-->
+    @*@Html.Hidden("isShuttle", 0)*@
+
+    <!--接送单价-->
+    @Html.Hidden("shuttlePrice", 20)
+
+    <!--每座票价-->
+    @Html.Hidden("seatPrice", 100)
+
+    <!--票价总额-->
+    @Html.Hidden("totalMoney", 0)
+
+    <div class='demos-content-padded'>
+        <a href="javascript:void(0);" class="weui-btn weui-btn_primary" id="btnSubmit" lay-submit="" lay-filter="Submit">确认提交</a>
+        <a href="index?week=@Url.Encode(week)" class="weui-btn weui-btn_primary">重选座位</a>
+    </div>
+</form>
+@section footContainer
+{
+    <script src="~/Content/js/OrdersInfo.js"></script>
+    <script>
+        $(function () {
+            InitInfo(); //初始化
+        });
+        
+    </script>
+}

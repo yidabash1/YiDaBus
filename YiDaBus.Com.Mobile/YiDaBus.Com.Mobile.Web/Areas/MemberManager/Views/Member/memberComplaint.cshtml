@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "易达快乐巴士 - 投诉热线";
+    Layout = "~/Views/Shared/master.cshtml";
+}
+
+<header class="demos-header">
+    <h1 class="demos-title">投诉热线</h1>
+</header>
+
+
+<div class="weui-panel weui-panel_access">
+    @*<div class="weui-panel__hd">文字组合列表</div>*@
+    <div class="weui-panel__bd">
+        <div class="weui-media-box weui-media-box_text" style="text-align: center;">
+            <h4 class="weui-media-box__title">
+                <a href="tel:0513-11223344" style="font-size: 2em; color: #f00; font-family: arial;">@ViewBag.ComplaintsHotline</a>
+            </h4>
+            <p class="weui-media-box__desc">您的投诉将促使我们提供更优质的服务！</p>
+        </div>
+    </div>
+</div>
+
+
+<div class='demos-content-padded'>
+    <a href="/Home/" class="weui-btn weui-btn_primary">返回</a>
+</div>

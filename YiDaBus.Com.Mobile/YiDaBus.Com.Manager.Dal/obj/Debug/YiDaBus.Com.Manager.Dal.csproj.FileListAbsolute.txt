@@ -1,0 +1,13 @@
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Manager.Dal\bin\Debug\YiDaBus.Com.Manager.Dal.dll.config
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Manager.Dal\bin\Debug\YiDaBus.Com.Manager.Dal.dll
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Manager.Dal\bin\Debug\YiDaBus.Com.Manager.Dal.pdb
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Manager.Dal\bin\Debug\Dos.Common.dll
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Manager.Dal\bin\Debug\Dos.ORM.dll
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Manager.Dal\bin\Debug\Dos.ORM.MySql.dll
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Manager.Dal\bin\Debug\MySql.Data.dll
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Manager.Dal\bin\Debug\Dos.Common.xml
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Manager.Dal\bin\Debug\Dos.ORM.xml
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Manager.Dal\bin\Debug\Dos.ORM.MySql.xml
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Manager.Dal\obj\Debug\YiDaBus.Com.Manager.Dal.dll
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Manager.Dal\obj\Debug\YiDaBus.Com.Manager.Dal.pdb
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Manager.Dal\obj\Debug\YiDaBus.Com.Manager.Dal.csprojResolveAssemblyReference.cache

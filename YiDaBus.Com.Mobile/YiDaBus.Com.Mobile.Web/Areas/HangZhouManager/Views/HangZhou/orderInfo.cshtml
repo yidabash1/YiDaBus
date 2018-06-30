@@ -1,0 +1,144 @@
+﻿@{
+    ViewBag.Title = "易达快乐巴士 - 杭州订票预订信息";
+    Layout = "~/Views/Shared/master.cshtml";
+    string address = Request.QueryString["address"] ?? "";
+}
+
+<header class="demos-header">
+    <h1 class="demos-title">杭州订票</h1>
+</header>
+<form>
+    <div class="weui-form-preview">
+        <div class="weui-form-preview__hd">
+            <label class="weui-form-preview__label">票价总额</label>
+            <em class="weui-form-preview__value" id="elemTotalMoney">¥200.00</em>
+        </div>
+    </div>
+    <div class="weui-cells__title">预订座位</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>23座、24座</p>
+            </div>
+            <div class="weui-cell__ft">苏FM3344</div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@address - 杭州</p>
+            </div>
+            <div class="weui-cell__ft">@DateTime.Today.ToString("yyyy年MM月dd日")</div>
+        </div>
+    </div>
+
+    <div id="myTicketInfo" style="display: none;">
+        <div class="weui-cells__title">车票类型</div>
+        <div class="weui-cells weui-cells_checkbox">
+            <label class="weui-cell weui-check__label" for="s11">
+                <div class="weui-cell__hd">
+                    <input type="radio" class="weui-check" name="ticketType" id="s11" value="1">
+                    <i class="weui-icon-checked"></i>
+                </div>
+                <div class="weui-cell__bd">
+                    <p>单程</p>
+                </div>
+                <div class="weui-cell__ft">仅去或仅回</div>
+            </label>
+            <label class="weui-cell weui-check__label" for="s12">
+                <div class="weui-cell__hd">
+                    <input type="radio" class="weui-check" name="ticketType" id="s12" value="2" checked="checked">
+                    <i class="weui-icon-checked"></i>
+                </div>
+                <div class="weui-cell__bd">
+                    <p>双程</p>
+                </div>
+                <div class="weui-cell__ft">往返</div>
+            </label>
+        </div>
+    </div>
+
+    <div class="weui-cells__title">联系方式</div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">客户姓名</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" name="customerName" placeholder="请输入您的姓名和微信名">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">联系电话</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="tel" name="customerPhone" placeholder="请输入您的手机号码">
+            </div>
+        </div>
+        
+    </div>
+
+    <!--星期几-->
+    @Html.Hidden("address", address)
+
+    <!--车牌号码-->
+    @Html.Hidden("busNumber", "苏FM1122")
+
+    <!--选择的座位-->
+    @Html.Hidden("chooseSeat", "13,14")
+
+    <!--接送单价-->
+    @Html.Hidden("shuttlePrice", 20)
+
+    <!--每座票价-->
+    @Html.Hidden("seatPrice", 100)
+
+    <!--票价总额-->
+    @Html.Hidden("totalMoney", 0)
+
+</form>
+<div class='demos-content-padded'>
+    <a href="javascript:void(0);" class="weui-btn weui-btn_primary" id="btnSubmit">确认提交</a>
+    <a href="/Home/HangZhou?week=@Url.Encode(address)" class="weui-btn weui-btn_primary">重选座位</a>
+</div>
+
+@section footContainer
+{
+    <script>
+      
+
+        //计算票价总额
+        function calcTotalMoney() {
+            var chooseSeat = $("#chooseSeat").val();
+            var seatCount = chooseSeat.split(',').length;
+            if (seatCount === 0) {
+                $.toast("预订座位数量不能为0", "text");
+                return;
+            }
+            var seatPrice = Number($("#seatPrice").val());
+            var totalMoney = (seatCount * seatPrice).toFixed(2);
+
+            $("#totalMoney").val(totalMoney);
+            $("#elemTotalMoney").text("¥" + totalMoney);
+        }
+
+        $(function() {
+            calcTotalMoney(); //初始化
+
+            //$("input[name='ticketType']").on("change", function() {
+            //    calcTotalMoney();
+            //});
+
+
+            //提交
+            $("#btnSubmit").on("click", function() {
+                var data = $("form").serialize();
+                console.log(data);
+                $.alert(data, "提交的数据",function() {
+                    location.href = "/HangZhouManager/HangZhou/Success";
+                });
+            });
+        });
+
+
+    </script>
+}
