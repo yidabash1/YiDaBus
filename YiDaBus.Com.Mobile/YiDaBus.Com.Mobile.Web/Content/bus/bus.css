@@ -50,3 +50,7 @@
     background-color: red;
     color: #fff;
 }
+
+.seat-select {
+    border:1px solid#ff0000
+}

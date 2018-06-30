@@ -136,3 +136,6 @@ E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Web\bin\YiDaBus.Com.M
 E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Web\bin\Dos.Common.dll
 E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Web\bin\YiDaBus.Com.Manager.Dal.pdb
 E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Web\bin\Dos.Common.xml
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Web\bin\Dos.ORM.MySql.dll
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Web\bin\Dos.ORM.MySql.xml
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Web\bin\MySql.Data.dll

@@ -13,7 +13,7 @@ namespace YiDaBus.Com.Model
 	public partial class Sys_ItemsDetail : Entity
     {
 
-		public Sys_ItemsDetail():base("Sys_ItemsDetail", "FICO") {}
+		public Sys_ItemsDetail():base("Sys_ItemsDetail") {}
 
 	    #region Field
 		
@@ -101,11 +101,11 @@ namespace YiDaBus.Com.Model
                 
             }
         }
-        private byte _F_IsDefault = byte.MinValue;
+        private int _F_IsDefault = int.MinValue;
 	    /// <summary>
         /// 
         /// </summary>
-        public byte F_IsDefault
+        public int F_IsDefault
         {
             get { return _F_IsDefault; }
             set
@@ -143,11 +143,11 @@ namespace YiDaBus.Com.Model
                 
             }
         }
-        private byte _F_DeleteMark = byte.MinValue;
+        private int _F_DeleteMark = int.MinValue;
 	    /// <summary>
         /// 
         /// </summary>
-        public byte F_DeleteMark
+        public int F_DeleteMark
         {
             get { return _F_DeleteMark; }
             set
@@ -157,11 +157,11 @@ namespace YiDaBus.Com.Model
                 
             }
         }
-        private byte _F_EnabledMark = byte.MinValue;
+        private int _F_EnabledMark = int.MinValue;
 	    /// <summary>
         /// 
         /// </summary>
-        public byte F_EnabledMark
+        public int F_EnabledMark
         {
             get { return _F_EnabledMark; }
             set
@@ -185,11 +185,11 @@ namespace YiDaBus.Com.Model
                 
             }
         }
-        private byte[] _F_CreatorTime = null;
+        private DateTime _F_CreatorTime = DateTime.MinValue;
 	    /// <summary>
         /// 
         /// </summary>
-        public byte[] F_CreatorTime
+        public DateTime F_CreatorTime
         {
             get { return _F_CreatorTime; }
             set
@@ -213,11 +213,11 @@ namespace YiDaBus.Com.Model
                 
             }
         }
-        private byte[] _F_LastModifyTime = null;
+        private DateTime _F_LastModifyTime = DateTime.MinValue;
 	    /// <summary>
         /// 
         /// </summary>
-        public byte[] F_LastModifyTime
+        public DateTime F_LastModifyTime
         {
             get { return _F_LastModifyTime; }
             set
@@ -241,11 +241,11 @@ namespace YiDaBus.Com.Model
                 
             }
         }
-        private byte[] _F_DeleteTime = null;
+        private DateTime _F_DeleteTime = DateTime.MinValue;
 	    /// <summary>
         /// 
         /// </summary>
-        public byte[] F_DeleteTime
+        public DateTime F_DeleteTime
         {
             get { return _F_DeleteTime; }
             set
@@ -279,14 +279,7 @@ namespace YiDaBus.Com.Model
         {
             return _.F_CreatorTime;
         }
-				        /// <summary>
-        /// 获取实体中的主键列
-        /// </summary>
-        public override Field[] GetPrimaryKeyFields()
-        {
-            return new Field[] {_.F_Id };
-        }
-				 /// <summary>
+						 /// <summary>
         /// 获取列信息
         /// </summary>
         public override Field[] GetFields()

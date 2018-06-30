@@ -120,3 +120,5 @@ E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Web.Tests\bin\Debug\D
 E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Web.Tests\bin\Debug\Dos.ORM.xml
 E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Web.Tests\bin\Debug\YiDaBus.Com.Manager.Dal.pdb
 E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Web.Tests\bin\Debug\Dos.Common.xml
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Web.Tests\bin\Debug\YiDaBus.Com.Mobile.BLL.dll
+E:\_01项目\YiDaBus\YiDaBus.Com.Mobile\YiDaBus.Com.Mobile.Web.Tests\bin\Debug\YiDaBus.Com.Mobile.BLL.pdb

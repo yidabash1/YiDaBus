@@ -3,9 +3,10 @@ $.reload = function () {
     location.reload();
     return false;
 }
-//获取请求参数
+
 $.request = function (name) {
     var search = location.search.slice(1);
+    search = decodeURI(search);
     var arr = search.split("&");
     for (var i = 0; i < arr.length; i++) {
         var ar = arr[i].split("=");
@@ -716,8 +717,17 @@ $.FormatEmpty = function (data, emptyMsg) {
         return data;
     }
 }
+
+//删除末尾符号
+$.TrimEnd = function(str, char) {
+    eval("var reg = /" + char + "$/gi;");
+    return str.replace(reg, "");
+}
+
 var globalKey = {
     //InterfaceDomain: "https://wxapi.YiDaBus.com/",
     InterfaceDomain: "http://localhost:9000/",
     MobileUrl: "http://m.YiDaBus.com/",
 }
+
+

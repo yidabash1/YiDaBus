@@ -48,8 +48,8 @@
 				case "smallmoney": return "0";
 				case "text": return string.IsNullOrEmpty(defaultValue) ? "string.Empty" : string.Format("\"{0}\"", defaultValue);
 				case "time": return string.IsNullOrEmpty(defaultValue) ? "TimeSpan.MinValue" : defaultValue;
-				case "timestamp": return "null";
-				case "tinyint": return string.IsNullOrEmpty(defaultValue) ? "byte.MinValue" : string.Format("\"{0}\"", defaultValue);
+				case "timestamp": return "DateTime.MinValue";
+				case "tinyint": return string.IsNullOrEmpty(defaultValue) ? "int.MinValue" : string.Format("\"{0}\"", defaultValue);
 				case "uniqueidentifier": return string.IsNullOrEmpty(defaultValue) ? "Guid.NewGuid()" : string.Format("\"{0}\"", defaultValue);
 				case "varbinary": return "null";
 				case "varchar": return string.IsNullOrEmpty(defaultValue) ? "string.Empty" : string.Format("\"{0}\"", defaultValue);
@@ -67,7 +67,7 @@
 			switch (dbtype)
 			{
 				case "bigint": csharpType = isNull ? "long?" : "long"; break;
-				case "binary": csharpType = "byte[]"; break;
+				case "binary": csharpType = "int[]"; break;
 				case "bit": csharpType = isNull ? "bool?" : "bool"; break;
 				case "char": csharpType = "string"; break;
 				case "date": csharpType = isNull ? "DateTime?" : "DateTime"; break;
@@ -78,7 +78,7 @@
 				case "decimal": csharpType = "decimal"; break;
 				case "float": csharpType = isNull ? "double?" : "double"; break;
 				case "double": csharpType = isNull ? "double?" : "double"; break;
-				case "image": csharpType = "byte[]"; break;
+				case "image": csharpType = "int[]"; break;
 				case "int": csharpType = isNull ? "int?" : "int"; break;
 				case "money": csharpType = "decimal"; break;
 				case "nchar": csharpType = "string"; break;
@@ -93,10 +93,10 @@
 				case "sysname": csharpType = "object"; break;
 				case "text": csharpType = "string"; break;
 				case "time": csharpType = "TimeSpan"; break;
-				case "timestamp": csharpType = "byte[]"; break;
-				case "tinyint": csharpType = "byte"; break;
+				case "timestamp": csharpType = "DateTime"; break;
+				case "tinyint": csharpType = "int"; break;
 				case "uniqueidentifier": csharpType = "Guid"; break;
-				case "varbinary": csharpType = "byte[]"; break;
+				case "varbinary": csharpType = "int[]"; break;
 				case "varchar": csharpType = "string"; break;
 				case "xml": csharpType = "string"; break;
 				default: csharpType = "object"; break;
@@ -112,7 +112,7 @@
 			switch (dbtype)
 			{
 				case "bigint": commonType = isNull ? typeof(long?) : typeof(long); break;
-				case "binary": commonType = typeof(byte[]); break;
+				case "binary": commonType = typeof(int[]); break;
 				case "bit": commonType = isNull ? typeof(bool?) : typeof(bool); break;
 				case "char": commonType = typeof(string); break;
 				case "date": commonType = isNull ? typeof(DateTime?) : typeof(DateTime); break;
@@ -123,7 +123,7 @@
 				case "decimal": commonType = typeof(decimal); break;
 				case "float": commonType = isNull ? typeof(double?) : typeof(double); break;
 				case "double": commonType = isNull ? typeof(double?) : typeof(double); break;
-				case "image": commonType = typeof(byte[]); break;
+				case "image": commonType = typeof(int[]); break;
 				case "int": commonType = isNull ? typeof(int?) : typeof(int); break;
 				case "money": commonType = typeof(decimal); break;
 				case "nchar": commonType = typeof(string); break;
@@ -138,10 +138,10 @@
 				case "sysname": commonType = typeof(object); break;
 				case "text": commonType = typeof(string); break;
 				case "time": commonType = typeof(TimeSpan); break;
-				case "timestamp": commonType = typeof(byte[]); break;
-				case "tinyint": commonType = typeof(byte); break;
+				case "timestamp": commonType = typeof(DateTime); break;
+				case "tinyint": commonType = typeof(int); break;
 				case "uniqueidentifier": commonType = typeof(Guid); break;
-				case "varbinary": commonType = typeof(byte[]); break;
+				case "varbinary": commonType = typeof(int[]); break;
 				case "varchar": commonType = typeof(string); break;
 				case "xml": commonType = typeof(string); break;
 				default: commonType = typeof(object); break;

@@ -4,6 +4,7 @@
  * Description: 易达巴士后台管理系统
  * Website：http://www.nfine.cn
 *********************************************************************************/
+using System;
 using System.Configuration;
 using System.Web;
 namespace YiDaBus.Com.Manager.Common
@@ -18,6 +19,12 @@ namespace YiDaBus.Com.Manager.Common
         {
             return ConfigurationManager.AppSettings[key].ToString().Trim();
         }
+
+        public static string GetValue(object iNTERFACE_DOMAIN)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// 根据Key修改Value
         /// </summary>

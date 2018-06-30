@@ -28,6 +28,7 @@
     <script src="~/Content/bus/fastclick.js"></script>
     <script>
         $(function () {
+            $.toast.prototype.defaults.duration = 500
             FastClick.attach(document.body);
         });
     </script>

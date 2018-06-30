@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YiDaBus.Com.Mobile.BLL
+namespace YiDaBus.Com.Mobile.Model.Enum
 {
-    public class UserBLL
+    public enum AreaType
     {
-        public void UserLogin()
-        {
-
-        }
+        shanghai = 0,
+        hangzhou = 0,
     }
 }

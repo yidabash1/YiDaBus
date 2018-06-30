@@ -54,15 +54,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Const\YiDaBusConst.cs" />
+    <Compile Include="Enum\AreaType.cs" />
+    <Compile Include="Enum\IsDel.cs" />
+    <Compile Include="Enum\OrderHeader.cs" />
     <Compile Include="GenerateEntity.cs">
       <DependentUpon>GenerateEntity.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="messagetemplate.cs">
-      <DependentUpon>GenerateEntity.tt</DependentUpon>
-    </Compile>
-    <Compile Include="newsdetail.cs">
+    <Compile Include="Orders.cs">
       <DependentUpon>GenerateEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

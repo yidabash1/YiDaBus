@@ -24,7 +24,7 @@
                 string[] weekStrings = {"星期一", "星期二", "星期三", "星期四", "星期五"};
                 foreach (var item in weekStrings)
                 {
-                    string linkUrl = string.Format("/Home/ShangHai?week={0}", Url.Encode(item));
+                    string linkUrl = string.Format("/OrderManager/Orders/ShangHaiIndex?area=shanghai&week={0}", Url.Encode(item));
                     <a class="weui-cell weui-cell_access" href="@linkUrl">
                         <div class="weui-cell__bd">
                             <p>@item</p>
@@ -44,7 +44,7 @@
                 string[] addressStrings = { "南通市区", "如东通州", "启东海门", "如皋海安" };
                 foreach (var item in addressStrings)
                 {
-                    string linkUrl = string.Format("/Home/HangZhou?address={0}",Url.Encode(item));
+                    string linkUrl = string.Format("/OrderManager/Orders/HangZhouIndex?area=hangzhou&address={0}", Url.Encode(item));
                     <a class="weui-cell weui-cell_access" href="@linkUrl">
                         <div class="weui-cell__bd">
                             <p>@item</p>

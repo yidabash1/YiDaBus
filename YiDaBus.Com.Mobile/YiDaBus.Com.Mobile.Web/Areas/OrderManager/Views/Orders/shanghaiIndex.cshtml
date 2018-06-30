@@ -1,0 +1,177 @@
+﻿@{
+    ViewBag.Title = "易达快乐巴士 - 上海订票";
+    Layout = "~/Views/Shared/master.cshtml";
+
+    string week = Request.QueryString["week"] ?? "";
+}
+
+@section headContainer{
+    <link href="/Content/bus/bus.css" rel="stylesheet" />
+}
+
+
+<header class="demos-header" style="height: 60px; padding: 0px; line-height: 60px;background-color: #333;position: fixed; width: 100%; z-index: 999;">
+    <h1 class="demos-title" style="font-size: 24px; color: #fff;">上海订票 | @week</h1>
+</header>
+
+<div class="weui-flex" style="padding-top: 70px;">
+    <div class="weui-flex__item" style="padding: 0 5px;">
+        <div class="bus" style="width: 178px;">
+            <p class="bus-caption">苏F36199</p>
+            <div class="seat-container">
+                <a href="#" class="seat seat-unsold" style="top: 0px; left:0px;">44</a>
+                <a href="#" class="seat seat-unsold" style="top: 36px; left: 0px;">4</a>
+                <a href="#" class="seat seat-sold" style="top: 72px; left: 0px;">6</a>
+                <a href="#" class="seat seat-unsold" style="top: 108px; left: 0px;">8</a>
+                <a href="#" class="seat seat-unsold" style="top: 144px; left:0px;">12</a>
+                <a href="#" class="seat seat-unsold" style="top: 180px; left: 0px;">16</a>
+                <a href="#" class="seat seat-sold" style="top: 216px; left: 0px;">20</a>
+                <a href="#" class="seat seat-unsold" style="top: 252px; left: 0px;">22</a>
+                <a href="#" class="seat seat-unsold" style="top: 288px; left: 0px;">24</a>
+                <a href="#" class="seat seat-unsold" style="top: 324px; left:0px;">28</a>
+                <a href="#" class="seat seat-unsold" style="top: 360px; left:0px;">32</a>
+                <a href="#" class="seat seat-unsold" style="top: 396px; left:0px;">36</a>
+                <a href="#" class="seat seat-unsold" style="top: 432px; left:0px;">39</a>
+
+                <a href="#" class="seat seat-unsold" style="top: 0px; left:36px;">45</a>
+                <a href="#" class="seat seat-unsold" style="top: 36px; left: 36px;">3</a>
+                <a href="#" class="seat seat-sold" style="top: 72px; left: 36px;">5</a>
+                <a href="#" class="seat seat-unsold" style="top: 108px; left: 36px;">7</a>
+                <a href="#" class="seat seat-unsold" style="top: 144px; left:36px;">11</a>
+                <a href="#" class="seat seat-unsold" style="top: 180px; left: 36px;">15</a>
+                <a href="#" class="seat seat-sold" style="top: 216px; left: 36px;">19</a>
+                <a href="#" class="seat seat-unsold" style="top: 252px; left: 36px;">21</a>
+                <a href="#" class="seat seat-unsold" style="top: 288px; left: 36px;">23</a>
+                <a href="#" class="seat seat-unsold" style="top: 324px; left:36px;">27</a>
+                <a href="#" class="seat seat-unsold" style="top: 360px; left: 36px;">31</a>
+                <a href="#" class="seat seat-unsold" style="top: 396px; left:36px;">35</a>
+                <a href="#" class="seat seat-unsold" style="top: 432px; left:36px;">40</a>
+                <a href="#" class="seat seat-unsold" style="top: 432px; left: 72px;">41</a>
+
+                <a href="#" class="seat seat-unsold" style="top: 0px; left:108px;">46</a>
+                <a href="#" class="seat seat-sold" style="top: 72px; left:108px;">9</a>
+                <a href="#" class="seat seat-unsold" style="top: 108px; left:108px;">13</a>
+                <a href="#" class="seat seat-unsold" style="top: 144px; left:108px;">17</a>
+                <a href="#" class="seat seat-sold" style="top: 216px; left:108px;">25</a>
+                <a href="#" class="seat seat-unsold" style="top: 252px; left:108px;">29</a>
+                <a href="#" class="seat seat-unsold" style="top: 288px; left:108px;">33</a>
+                <a href="#" class="seat seat-unsold" style="top: 324px; left:108px;">37</a>
+                <a href="#" class="seat seat-unsold" style="top: 432px; left: 108px;">42</a>
+
+                <a href="#" class="seat seat-unsold" style="top: 0px; left:144px;">47</a>
+                <a href="#" class="seat seat-sold" style="top: 72px; left:144px;">10</a>
+                <a href="#" class="seat seat-unsold" style="top: 108px; left:144px;">14</a>
+                <a href="#" class="seat seat-unsold" style="top: 144px; left:144px;">18</a>
+                <a href="#" class="seat seat-sold" style="top: 216px; left:144px;">26</a>
+                <a href="#" class="seat seat-unsold" style="top: 252px; left:144px;">30</a>
+                <a href="#" class="seat seat-unsold" style="top: 288px; left:144px;">34</a>
+                <a href="#" class="seat seat-unsold" style="top: 324px; left:144px;">38</a>
+                <a href="#" class="seat seat-unsold" style="top: 432px; left: 144px;">43</a>
+
+
+                <div class="bus-aisle" style="top: 0px; left: 71px; width: 36px; height: 432px; line-height: 216px;">过<br />道</div>
+                <div class="bus-aisle" style="top: 36px; left: 106px; width: 72px; height: 36px; line-height: 36px;">前门</div>
+                <div class="bus-aisle" style="top: 360px; left: 106px; width: 72px; height: 72px; line-height: 36px;"></div>
+                <div class="bus-aisle" style="top: 180px; left: 106px; width: 72px; height: 36px; line-height: 40px;">后门</div>
+            </div>
+        </div>
+    </div>
+    <div class="weui-flex__item" style="padding: 0 5px;">
+        <div class="bus" style="width: 158px;">
+            <p class="bus-caption">苏F56789</p>
+            <div class="seat-container">
+
+                <a href="#" class="seat seat38 seat-unsold" style="top: 0px; left: 0px;">4</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 0px; left: 40px;">3</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 0px; left: 80px;">2</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 0px; left: 120px;">1</a>
+
+                <a href="#" class="seat seat38 seat-unsold" style="top: 72px; left: 0px;">5</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 72px; left: 40px;">6</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 72px; left: 120px;">7</a>
+
+                <a href="#" class="seat seat38 seat-sold" style="top: 108px; left: 0px;">8</a>
+                <a href="#" class="seat seat38 seat-sold" style="top: 108px; left: 40px;">9</a>
+                <a href="#" class="seat seat38 seat-sold" style="top: 108px; left: 120px;">10</a>
+
+                <a href="#" class="seat seat38 seat-unsold" style="top: 144px; left: 0px;">12</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 144px; left: 40px;">11</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 144px; left: 120px;">13</a>
+
+                <a href="#" class="seat seat38 seat-unsold" style="top: 180px; left: 0px;">14</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 180px; left: 40px;">15</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 180px; left: 120px;">16</a>
+
+                <a href="#" class="seat seat38 seat-unsold" style="top: 216px; left: 0px;">17</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 216px; left: 40px;">18</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 216px; left: 120px;">19</a>
+
+                <a href="#" class="seat seat38 seat-sold" style="top: 252px; left: 0px;">20</a>
+                <a href="#" class="seat seat38 seat-sold" style="top: 252px; left: 40px;">21</a>
+
+                <a href="#" class="seat seat38 seat-unsold" style="top: 288px; left: 0px;">22</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 288px; left: 40px;">23</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 288px; left: 120px;">24</a>
+
+                <a href="#" class="seat seat38 seat-unsold" style="top: 324px; left: 0px;">25</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 324px; left: 40px;">26</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 324px; left: 120px;">27</a>
+
+                <a href="#" class="seat seat38 seat-unsold" style="top: 360px; left: 0px;">28</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 360px; left: 40px;">29</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 360px; left: 120px;">30</a>
+
+                <a href="#" class="seat seat38 seat-unsold" style="top: 396px; left: 0px;">32</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 396px; left: 40px;">31</a>
+
+                <a href="#" class="seat seat38 seat-unsold" style="top: 432px; left: 0px;">33</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 432px; left: 40px;">34</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 432px; left: 80px;">35</a>
+                <a href="#" class="seat seat38 seat-unsold" style="top: 432px; left: 120px;">36</a>
+
+                <div class="bus-aisle" style="top: 36px; left: 79px; width: 40px; height: 395px; line-height: 180px;">过<br />道</div>
+                <div class="bus-aisle" style="top: 36px; left: 118px; width: 40px; height: 36px; line-height: 36px;">前门</div>
+                <div class="bus-aisle" style="top: 36px; left: 0px; width: 80px; height: 36px; line-height: 36px;"></div>
+                <div class="bus-aisle" style="top: 396px; left: 118px; width: 40px; height: 36px; line-height: 36px;"></div>
+                <div class="bus-aisle" style="top: 252px; left: 118px; width: 40px; height: 36px; line-height: 36px;">后门</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div style="border: 1px dotted #ccc; margin:10px 5px 10px 5px;">
+    <div class="weui-cells__title">友情提醒</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>每人每班车预订不能超过2个座位，绿色为可选座位，红色为已选座位</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class='demos-content-padded'>
+    <a href="/Home/" class="weui-btn weui-btn_primary">返回</a>
+    <a href="javascript:void(0);" class="weui-btn weui-btn_primary" onclick="NextHandler()">下一步</a>
+</div>
+
+
+
+@section footContainer{
+    <script src="~/Content/js/OrdersIndex.js"></script>
+    <script>
+        var seatList = [];
+        var chooseList = [];
+        
+
+        $(function () {
+            
+            $(".seat").each(function () {
+                $(this).attr("href", "javascript:void(0);");
+            });
+            Init();
+        });
+    </script>
+}

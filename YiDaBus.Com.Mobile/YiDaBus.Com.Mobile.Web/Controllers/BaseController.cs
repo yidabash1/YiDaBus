@@ -13,6 +13,7 @@ using Senparc.Weixin.HttpUtility;
 using YiDaBus.Com.Manager.Common;
 using Senparc.Weixin.Exceptions;
 using System.IO;
+using YiDaBus.Com.Mobile.Model.Const;
 
 namespace YiDaBus.Com.Mobile.Web.Controllers
 {
@@ -25,7 +26,7 @@ namespace YiDaBus.Com.Mobile.Web.Controllers
         /// <returns></returns>
         protected string getInterFaceDomain()
         {
-            return Configs.GetValue(ZFX365ManagerKey.INTERFACE_DOMAIN);
+            return Configs.GetValue(YiDaBusConst.INTERFACE_DOMAIN);
         }
         #region 返回数据
         /// <summary>

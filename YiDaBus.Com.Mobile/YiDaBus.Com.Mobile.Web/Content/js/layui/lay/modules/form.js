@@ -82,7 +82,6 @@ layui.define('layer', function (exports) {
         var that = this, items = {
             //下拉选择框
             select: function () {
-                console.log($(ELEM).find('select'));
                 var TIPS = '请选择', CLASS = 'layui-form-select', TITLE = 'layui-select-title'
 
                 , selects = $(ELEM).find('select'), hide = function (e, clear) {

@@ -12,6 +12,7 @@ using YiDaBus.Com.Dal.Base;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Linq.Expressions;
+using YiDaBus.Com.Mobile.Model.Const;
 
 namespace YiDaBus.Com.Manager.Web
 {
@@ -22,13 +23,13 @@ namespace YiDaBus.Com.Manager.Web
         public virtual string UserName { get; set; } = YiDaBus.Com.Manager.Common.OperatorProvider.Provider.GetCurrent().UserName;
         public virtual string tableName { get; set; } //表名
         public virtual string f_ModuleName { get; set; } //模块的中文名称
-                                                         /// <summary>
+        /// <summary>
                                                          /// 获取接口域名（末尾带反斜杠）
                                                          /// </summary>
                                                          /// <returns></returns>
         public static string getInterFaceDomain()
         {
-            return Configs.GetValue(ZFX365ManagerKey.INTERFACE_DOMAIN);
+            return Configs.GetValue(YiDaBusConst.INTERFACE_DOMAIN);
         }
         #region 【1】页面初始化
         [HttpGet]
