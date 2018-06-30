@@ -8,6 +8,7 @@
 #¹ıÂËÎÄ¼ş¼ĞDebug,Release,obj  
 Debug/  
 Release/  
-obj/  
+obj/ 
+bin/ 
 packages/
 WeixinTraceLog/
