@@ -19,8 +19,8 @@ namespace YiDaBus.Com.Mobile.Web.App_Start
             }
             if (!filterContext.HttpContext.Request.IsAuthenticated)
             {
-                filterContext.HttpContext.Response.Write("<script>window.location.href = '/MemberManager/Member/MemberInfo?ReturnUrl=" + HttpUtility.UrlEncode(filterContext.HttpContext.Request.Url.AbsoluteUri) +"';</script>");
-                return;                
+                filterContext.HttpContext.Response.Write("<script>window.location.href = '/MemberManager/Member/MemberInfo?ReturnUrl=" + HttpUtility.UrlEncode(filterContext.HttpContext.Request.Url.AbsoluteUri, System.Text.Encoding.UTF8) + "';</script>");
+                return;
             }
         }
     }

@@ -4,19 +4,26 @@ var week = $.request("week");
 var area = $.request("area");
 var address = $.request("address");
 var from = "", to = "";
+var busNum = $.request("busNum");
 //初始化
 function InitInfo() {
     calcTotalMoney();
     InitControl();//初始化控件
     InitForm()//初始化表单
+    InitData();//初始化数据
 }
 
 //初始化控件
 function InitControl() {
+    $("#CarNumber").val(busNum);
+    $("#busNumDiv").text(busNum);
     if (area == "shanghai") {
+        $("#AreaHead").text("上海订票");
         from = "南通";
         to = "上海";
     } else if (area == "hangzhou") {
+        $(".showOnlyShanghai").remove();
+        $("#AreaHead").text("杭州订票");
         from = address;
         to = "杭州";
     }
@@ -108,6 +115,22 @@ function InitForm() {
             });
             return false;
         });
+    });
+}
+
+
+//初始化数据
+function InitData() {
+    $.ar({
+        url: '/MemberManager/Member/GetUserInfo'
+              , data: null
+              , success: function (data) {
+                  var userInfo = data.data;
+                  if (userInfo) {
+                      $("#UserNickName").val(userInfo.UserNickName);
+                      $("#Mobile").val(userInfo.Mobile);
+                  }
+              }
     });
 }
 

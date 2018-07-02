@@ -19,6 +19,8 @@ namespace YiDaBus.Com.Mobile.Web.Areas.MemberManager.Controllers
 {
     public class MemberController : BaseController
     {
+        //Cookie保存是时间
+        private const int CookieSaveDays = 365;
         #region 视图
         /// <summary>
         /// 个人信息
@@ -87,7 +89,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.MemberManager.Controllers
         {
             //验证用户登录
             string openid = WebHelper.GetCookie("openid");
-
+            wx_Users.UserName = wx_Users.Mobile;
             //去数据库中查询，如果有就更新，如果没有就新增
             var currentUser = GetUserByOpenId(openid);
             if (currentUser == null)//如果没有就新增
@@ -102,6 +104,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.MemberManager.Controllers
                     return Error("创建账号失败");
                 }
                 currentUser = wx_Users;
+                currentUser.Id = r;
             }
             else//如果有就更新
             {
@@ -122,13 +125,13 @@ namespace YiDaBus.Com.Mobile.Web.Areas.MemberManager.Controllers
             #region  创造票据（1年）、输出到客户端（加密票据）
             //【用户id】
             //创造票据
-            FormsAuthenticationTicket userid_ticket = new FormsAuthenticationTicket(currentUser.Id.ToString(), true, 525600);
+            FormsAuthenticationTicket userid_ticket = new FormsAuthenticationTicket(2, currentUser.Id.ToString(), DateTime.Now, DateTime.Now.AddDays(CookieSaveDays), true, currentUser.ToJson());
             //加密票据并输出到客户端
-            WebHelper.WriteCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(userid_ticket), 525600);
+            WebHelper.WriteCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(userid_ticket), CookieSaveDays * 24 * 60);
 
-            //【用户手机号】
-            FormsAuthenticationTicket logaccount_ticket = new FormsAuthenticationTicket(currentUser.UserName, true, 525600);
-            WebHelper.WriteCookie("logaccount", FormsAuthentication.Encrypt(logaccount_ticket), 525600);
+            ////【用户手机号】
+            //FormsAuthenticationTicket logaccount_ticket = new FormsAuthenticationTicket(currentUser.UserName, true, 525600);
+            //WebHelper.WriteCookie("logaccount", FormsAuthentication.Encrypt(logaccount_ticket), 525600);
 
             #endregion
 
@@ -139,7 +142,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.MemberManager.Controllers
                 return Json(new
                 {
                     code = 200,
-                    msg = "登录成功",
+                    msg = "保存成功",
                     data = "",
                     userId = DESEncrypt.Encrypt(currentUser.Id.ToString())
                 }, JsonRequestBehavior.AllowGet);
@@ -149,7 +152,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.MemberManager.Controllers
                 return Json(new
                 {
                     code = 200,
-                    msg = "登录成功",
+                    msg = "保存成功",
                     data = Request["ReturnUrl"] ?? "",
                     userId = DESEncrypt.Encrypt(currentUser.Id.ToString())
                 }, JsonRequestBehavior.AllowGet);
@@ -157,7 +160,35 @@ namespace YiDaBus.Com.Mobile.Web.Areas.MemberManager.Controllers
 
         }
 
-        
+        [HttpPost]
+        public ActionResult GetUserIdByOpenId(Wx_Users wx_Users)
+        {
+            //验证用户登录
+            string openid = WebHelper.GetCookie("openid");
+
+            var currentUser = GetUserByOpenId(openid);
+
+            return Json(new
+            {
+                code = 200,
+                msg = "操作成功",
+                data = "",
+                userId = currentUser == null ? "" : DESEncrypt.Encrypt(currentUser.Id.ToString())
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult GetUserInfo()
+        {
+            var currentUser = base.GetUserInfo();
+
+            return Json(new
+            {
+                code = 200,
+                msg = "登录成功",
+                data = currentUser,
+            }, JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }

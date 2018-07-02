@@ -181,7 +181,7 @@ function Agree() {
     $("#ok").css("color", "")
     var isAgree = $("#isAgree").val();
     if (isAgree == '') {
-        $("#ok").attr("color", "#FD7A20");
+        $("#ok").attr("color", "#1aad19");
         $("#isAgree").val("1");
     }
     else {

@@ -5,10 +5,8 @@ var area = $.request("area");
 var week = $.request("week");
 var address = $.request("address");
 function Init() {
-
-    //获取当次的已下订单
-    //遍历seat-container下的a标签设置样式
-    $(".seat-unsold").on("click", SeatClickHandler);
+    GetSelectedSeatsByAare();
+    
 }
 
 //座位点击处理
@@ -94,6 +92,47 @@ function IsSampleBusNumByChooseList(arr, busNum) {
         }
     }
     return true;
+}
+
+//获取已选中的座位号
+function GetSelectedSeatsByAare() {
+    $.ar({
+        url: 'GetSelectedSeatsByAare'
+        , data: { area: area, week: week }
+        , success: function (data) {
+            //设置已选择的样式
+            var JsonData = data.data;
+            for (var i = 0; i < JsonData.length; i++) {
+                var seatcontainer = $(".bus-caption:contains(" + JsonData[i].CarNumber + ")").next().find('a');
+                for (var j = 0; j < JsonData[i].SeatIds.length; j++) {
+                    var seatId = JsonData[i].SeatIds[j];
+                    for (var k = 0; k < seatcontainer.length; k++) {
+                        if (seatcontainer[k].text == seatId) {
+                            seatcontainer[k].classList.add('seat-sold');
+                        } 
+                    }
+                }
+            }
+
+            //设置未选择的样式
+            var allSeat = $(".seat");
+            for (var i = 0; i < allSeat.length; i++) {
+                if (!allSeat[i].classList.contains('seat-unsold') && !allSeat[i].classList.contains('seat-sold')) {
+                    allSeat[i].classList.add('seat-unsold');
+                }
+            }
+
+            //对未选择的添加点击事件
+            $(".seat-unsold").on("click", SeatClickHandler);
+        }
+        , error: function (data) {
+            $.modalMsg({
+                content: data.msg, success: function () {
+
+                }
+            });
+        }
+    });
 }
 
 

@@ -6,7 +6,7 @@
 <header class="demos-header">
     <h1 class="demos-title">个人资料</h1>
 </header>
-<form class="layui-form">
+<form id="userInfoForm" class="layui-form">
     <div class="weui-cells__title">基本信息</div>
     <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
@@ -14,7 +14,7 @@
                 <label class="weui-label">姓名</label>
             </div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="text" name="UserNickName" placeholder="请输入您的姓名" lay-verify="required" lay-reqmsg="请输入您的姓名">
+                <input id="UserNickName" class="weui-input" type="text" name="UserNickName" placeholder="请输入您的姓名" lay-verify="required" lay-reqmsg="请输入您的姓名">
             </div>
         </div>
         <div class="weui-cell">
@@ -22,7 +22,7 @@
                 <label class="weui-label">手机</label>
             </div>
             <div class="weui-cell__bd">
-                <input class="weui-input" type="tel" name="Mobile" placeholder="请输入您的手机号码" lay-verify="required" lay-reqmsg="请输入您的手机号码">
+                <input id="Mobile" class="weui-input" type="tel" name="Mobile" placeholder="请输入您的手机号码" lay-verify="required" lay-reqmsg="请输入您的手机号码">
             </div>
         </div>
         <div class="weui-cell">
@@ -50,6 +50,7 @@
             });
 
             InitForm();
+            InitData();
         });
 
         //初始化表单
@@ -62,18 +63,43 @@
                         url: 'UpdateUserInfo'
                                , data: data.field
                                , success: function (data) {
-
+                                   $.SetUserId(data.userId);
+                                   var ReturnUrl = $.requestWithOutDecode("ReturnUrl");
+                                   if (ReturnUrl) {
+                                       window.location.href = decodeURIComponent(ReturnUrl)
+                                       return;
+                                   } else {
+                                       $.modalMsg({
+                                           content: data.msg, success: function () {
+                                               window.location.href = "/Home/Index"
+                                               return;
+                                           }
+                                       });
+                                   }
                                }
                                , error: function (data) {
                                    $.modalMsg({
                                        content: data.msg, success: function () {
-                                           
+
                                        }
                                    });
                                }
                     });
                     return false;
                 });
+            });
+        }
+        //初始化数据
+        function InitData() {
+            $.ar({
+                url: 'GetUserInfo'
+               , data: null
+               , success: function (data) {
+                   var userInfo = data.data;
+                   if (userInfo) {
+                       $("#userInfoForm").formSerialize(userInfo);
+                   }
+               }
             });
         }
     </script>

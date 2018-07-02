@@ -17,5 +17,8 @@ namespace YiDaBus.Com.Mobile.Model.Const
         public const string 投诉热线 = "ComplaintsHotline";
         public const string SeatSign = "@Z@";//座位ID的标识符
         public const string INTERFACE_DOMAIN = "";//域名
+        public const string 上海车牌号1 = "苏F36199";
+        public const string 上海车牌号2 = "苏F56789";
+        public const string 杭州车牌号 = "苏F25921";
     }
 }

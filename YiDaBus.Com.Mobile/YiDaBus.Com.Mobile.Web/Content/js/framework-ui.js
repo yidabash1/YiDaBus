@@ -20,6 +20,22 @@ $.request = function (name) {
     }
     return "";
 }
+
+$.requestWithOutDecode = function (name) {
+    var search = location.search.slice(1);
+    var arr = search.split("&");
+    for (var i = 0; i < arr.length; i++) {
+        var ar = arr[i].split("=");
+        if (ar[0] == name) {
+            if (unescape(ar[1]) == 'undefined') {
+                return "";
+            } else {
+                return unescape(ar[1]);
+            }
+        }
+    }
+    return "";
+}
 //下载
 $.download = function (url, data, method) {
     if (url && data) {
@@ -183,9 +199,22 @@ $.ar = function (options) {
             else {//失败
                 // console.log(options);
                 if (options.error != null) options.error(data);
+                else if (data.code == 301) {
+                    $.modalAlert(data.msg);
+                    $.modalMsg({
+                        title: '提示',
+                        content: data.msg,
+                        btn: '确认',
+                        success: function () {
+                            window.location.href = "/MemberManager/Member/MemberInfo?" + encodeURIComponent(window.location.href);
+                            return;
+                        },
+                        alwaysClose: true
+                    })
+                }
                 else if (data.code != 201 || data.msg != '查询成功无数据') {
                     if (options.isalert) $.modalAlert(data.msg);
-                }
+                } 
             }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -730,4 +759,21 @@ var globalKey = {
     MobileUrl: "http://m.YiDaBus.com/",
 }
 
+//获取用户ID
+$.GetUserId = function() {
+    return $("#userId").val();
+}
 
+$.SetUserId = function (userId) {
+    $("#userId").val(userId);
+}
+//根据OpenId获取UserId
+$.GetUserIdByOpenId = function () {
+    $.ar({
+        url: '/MemberManager/Member/GetUserIdByOpenId'
+        , data: null
+        , success: function (data) {
+            $.SetUserId(data.userId);
+        }
+    });
+}

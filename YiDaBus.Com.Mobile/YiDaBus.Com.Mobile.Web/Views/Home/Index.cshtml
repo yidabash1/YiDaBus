@@ -2,12 +2,12 @@
     ViewBag.Title = "易达快乐巴士";
     Layout = "~/Views/Shared/master.cshtml";
 }
-
+@using YiDaBus.Com.Mobile.Model.Enum;
 <header class="demos-header">
     <h1 class="demos-title">易达快乐巴士</h1>
     @{
         string curHost = Request.Url.Host;
-        string[] dnslist = {"www.js8zy.com","www.dtfjc.com"};
+        string[] dnslist = { "www.js8zy.com", "www.dtfjc.com" };
         if (dnslist.Contains<string>(curHost))
         {
             Response.Redirect("http://www.dtfjc.com/ntfjc/");
@@ -21,22 +21,22 @@
         <div class="weui-cells__title">上海订票</div>
         <div class="weui-cells">
             @{
-                string[] weekStrings = {"星期一", "星期二", "星期三", "星期四", "星期五"};
-                foreach (var item in weekStrings)
+                //string[] weekStrings = {"星期一", "星期二", "星期三", "星期四", "星期五"};
+                foreach (int item in Enum.GetValues(typeof(WeekCn)))
                 {
-                    string linkUrl = string.Format("/OrderManager/Orders/ShangHaiIndex?area=shanghai&week={0}", Url.Encode(item));
+                    string linkUrl = string.Format("/OrderManager/Orders/ShangHaiIndex?area=shanghai&week={0}", item);
                     <a class="weui-cell weui-cell_access" href="@linkUrl">
                         <div class="weui-cell__bd">
-                            <p>@item</p>
-                        </div>
-                        <div class="weui-cell__ft">
-                        </div>
-                    </a>
+                            <p>@Enum.GetName(typeof(WeekCn), item)</p>
+                            </div>
+                            <div class="weui-cell__ft">
+                            </div>
+                        </a>
                 }
             }
         </div>
     </div>
-   
+
     <div class="weui-flex__item">
         <div class="weui-cells__title">杭州订票</div>
         <div class="weui-cells">

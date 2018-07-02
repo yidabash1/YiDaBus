@@ -283,11 +283,11 @@ namespace YiDaBus.Com.Model
                 
             }
         }
-        private string _Week = string.Empty;
+        private int? _Week = int.MinValue;
 	    /// <summary>
         /// 星期几
         /// </summary>
-        public string Week
+        public int? Week
         {
             get { return _Week; }
             set
