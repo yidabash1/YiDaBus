@@ -75,8 +75,16 @@
                     过期
                 {{# } else { }}
                     未过期
+                {{# } }}/
+                {{# if(d.PayState == 0) { }}
+                    待支付
+                {{# } else if(d.PayState == 1) { }}
+                    支付成功
+                {{# } else if(d.PayState == 2) { }}
+                    支付失败
                 {{# } }}</span>
             </div>
+            
 
             <div class="weui-form-preview__item">
                 @*<label class="weui-form-preview__label">备注说明</label>*@
