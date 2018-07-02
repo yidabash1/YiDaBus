@@ -39,7 +39,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YiDaBus.Com.Manager.Dal", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06 文档", "06 文档", "{F9DC0C4D-EC5A-4383-BA61-0407B503CE80}"
 	ProjectSection(SolutionItems) = preProject
-		C:\Users\wuqingfeng\Desktop\数据库带数据YiDaBus.sql = C:\Users\wuqingfeng\Desktop\数据库带数据YiDaBus.sql
+		C:\Users\wuqingfeng\Desktop\YiDaBus.sql = C:\Users\wuqingfeng\Desktop\YiDaBus.sql
 	EndProjectSection
 EndProject
 Global

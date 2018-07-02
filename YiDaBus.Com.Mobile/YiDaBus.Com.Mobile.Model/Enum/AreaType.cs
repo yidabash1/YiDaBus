@@ -9,6 +9,6 @@ namespace YiDaBus.Com.Mobile.Model.Enum
     public enum AreaType
     {
         shanghai = 0,
-        hangzhou = 0,
+        hangzhou = 1,
     }
 }

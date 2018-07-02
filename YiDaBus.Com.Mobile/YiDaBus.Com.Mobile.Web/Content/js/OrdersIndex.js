@@ -5,8 +5,7 @@ var area = $.request("area");
 var week = $.request("week");
 var address = $.request("address");
 function Init() {
-    GetSelectedSeatsByAare();
-    
+    GetAndSetSeatsByAare();
 }
 
 //座位点击处理
@@ -94,8 +93,8 @@ function IsSampleBusNumByChooseList(arr, busNum) {
     return true;
 }
 
-//获取已选中的座位号
-function GetSelectedSeatsByAare() {
+//获取并设置座位号
+function GetAndSetSeatsByAare() {
     $.ar({
         url: 'GetSelectedSeatsByAare'
         , data: { area: area, week: week }

@@ -101,31 +101,31 @@ namespace YiDaBus.Com.Model
                 
             }
         }
-        private string _Seats = string.Empty;
+        private string _SeatIds = string.Empty;
 	    /// <summary>
         /// 座位（以逗号隔开，@Z@作为标识）
         /// </summary>
-        public string Seats
+        public string SeatIds
         {
-            get { return _Seats; }
+            get { return _SeatIds; }
             set
             {
-                this.OnPropertyValueChange(_.Seats, _Seats, value);
-                this._Seats = value;
+                this.OnPropertyValueChange(_.SeatIds, _SeatIds, value);
+                this._SeatIds = value;
                 
             }
         }
-        private string _Shift = string.Empty;
+        private string _DepartureTime = string.Empty;
 	    /// <summary>
-        /// 班次
+        /// 发车时间
         /// </summary>
-        public string Shift
+        public string DepartureTime
         {
-            get { return _Shift; }
+            get { return _DepartureTime; }
             set
             {
-                this.OnPropertyValueChange(_.Shift, _Shift, value);
-                this._Shift = value;
+                this.OnPropertyValueChange(_.DepartureTime, _DepartureTime, value);
+                this._DepartureTime = value;
                 
             }
         }
@@ -325,6 +325,34 @@ namespace YiDaBus.Com.Model
                 
             }
         }
+        private string _SeatTexts = string.Empty;
+	    /// <summary>
+        /// 座位描述
+        /// </summary>
+        public string SeatTexts
+        {
+            get { return _SeatTexts; }
+            set
+            {
+                this.OnPropertyValueChange(_.SeatTexts, _SeatTexts, value);
+                this._SeatTexts = value;
+                
+            }
+        }
+        private string _WeekTextCn = string.Empty;
+	    /// <summary>
+        /// 星期几中文描述
+        /// </summary>
+        public string WeekTextCn
+        {
+            get { return _WeekTextCn; }
+            set
+            {
+                this.OnPropertyValueChange(_.WeekTextCn, _WeekTextCn, value);
+                this._WeekTextCn = value;
+                
+            }
+        }
 		#endregion
 
 		#region Method
@@ -347,7 +375,7 @@ namespace YiDaBus.Com.Model
         /// </summary>
         public override Field[] GetFields()
         {
-            return new Field[] {_.Id,_.OrderNo,_.UserId,_.CarNumber,_.FromPosition,_.ToPosition,_.Seats,_.Shift,_.TotalAmount,_.UserName,_.UserNickName,_.Mobile,_.IsOneWay,_.IsShuttle,_.MeetPosition,_.SendPosition,_.CreateTime,_.UpdateTime,_.PayState,_.Week,_.Area,_.IsDel };
+            return new Field[] {_.Id,_.OrderNo,_.UserId,_.CarNumber,_.FromPosition,_.ToPosition,_.SeatIds,_.DepartureTime,_.TotalAmount,_.UserName,_.UserNickName,_.Mobile,_.IsOneWay,_.IsShuttle,_.MeetPosition,_.SendPosition,_.CreateTime,_.UpdateTime,_.PayState,_.Week,_.Area,_.IsDel,_.SeatTexts,_.WeekTextCn };
         }
 
         /// <summary>
@@ -355,7 +383,7 @@ namespace YiDaBus.Com.Model
         /// </summary>
         public override object[] GetValues()
         {
-            return new object[] {this._Id,this._OrderNo,this._UserId,this._CarNumber,this._FromPosition,this._ToPosition,this._Seats,this._Shift,this._TotalAmount,this._UserName,this._UserNickName,this._Mobile,this._IsOneWay,this._IsShuttle,this._MeetPosition,this._SendPosition,this._CreateTime,this._UpdateTime,this._PayState,this._Week,this._Area,this._IsDel };
+            return new object[] {this._Id,this._OrderNo,this._UserId,this._CarNumber,this._FromPosition,this._ToPosition,this._SeatIds,this._DepartureTime,this._TotalAmount,this._UserName,this._UserNickName,this._Mobile,this._IsOneWay,this._IsShuttle,this._MeetPosition,this._SendPosition,this._CreateTime,this._UpdateTime,this._PayState,this._Week,this._Area,this._IsDel,this._SeatTexts,this._WeekTextCn };
         }
 		#endregion
 		
@@ -403,12 +431,12 @@ namespace YiDaBus.Com.Model
 			/// <summary>
             /// 座位（以逗号隔开，@Z@作为标识）
             /// </summary>
-            public readonly static Field Seats = new Field("Seats", "Orders", "座位（以逗号隔开，@Z@作为标识）");
+            public readonly static Field SeatIds = new Field("SeatIds", "Orders", "座位（以逗号隔开，@Z@作为标识）");
 
 			/// <summary>
-            /// 班次
+            /// 发车时间
             /// </summary>
-            public readonly static Field Shift = new Field("Shift", "Orders", "班次");
+            public readonly static Field DepartureTime = new Field("DepartureTime", "Orders", "发车时间");
 
 			/// <summary>
             /// 订单总金额（单位元）
@@ -479,6 +507,16 @@ namespace YiDaBus.Com.Model
             /// 是否已删除（0：未删除；1：已删除；）
             /// </summary>
             public readonly static Field IsDel = new Field("IsDel", "Orders", "是否已删除（0：未删除；1：已删除；）");
+
+			/// <summary>
+            /// 座位描述
+            /// </summary>
+            public readonly static Field SeatTexts = new Field("SeatTexts", "Orders", "座位描述");
+
+			/// <summary>
+            /// 星期几中文描述
+            /// </summary>
+            public readonly static Field WeekTextCn = new Field("WeekTextCn", "Orders", "星期几中文描述");
 
 			
         }

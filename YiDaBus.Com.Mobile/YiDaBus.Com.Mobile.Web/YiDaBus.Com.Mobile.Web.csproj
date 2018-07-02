@@ -204,6 +204,7 @@
     <Content Include="Content\fonts\detailicon\style.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\images\ajax-loader.png" />
+    <Content Include="Content\images\null.png" />
     <Content Include="Content\jquery.mobile-1.0.1.css" />
     <Content Include="Content\jquery.mobile-1.0.1.min.css" />
     <Content Include="Content\jquery.mobile.structure-1.0.1.css" />
@@ -328,6 +329,8 @@
     <Content Include="Content\js\lrscroll.js" />
     <Content Include="Content\js\lrscroll2.js" />
     <Content Include="Content\js\map.js" />
+    <Content Include="Content\js\memberTicket.js" />
+    <Content Include="Content\js\memberTicketDetail.js" />
     <Content Include="Content\js\OrdersIndex.js" />
     <Content Include="Content\js\OrdersInfo.js" />
     <Content Include="Content\js\Share.js" />

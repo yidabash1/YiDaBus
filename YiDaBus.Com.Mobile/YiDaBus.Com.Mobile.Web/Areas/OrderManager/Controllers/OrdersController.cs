@@ -13,6 +13,7 @@ using YiDaBus.Com.Mobile.Model.Enum;
 using YiDaBus.Com.Mobile.Common;
 using YiDaBus.Com.Mobile.Web.App_Start;
 using Dos.ORM;
+using YiDaBus.Com.Mobile.Model.ResponseModel;
 
 namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
 {
@@ -34,6 +35,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
         /// <returns></returns>
         public ActionResult ShangHaiIndex()
         {
+            ViewBag.FriendlyReminder = CommonBLL.GetGlobalConstVariable(YiDaBusConst.友情提醒).FirstOrDefault()?.F_Description;
             return View();
         }
         /// <summary>
@@ -42,6 +44,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
         /// <returns></returns>
         public ActionResult HangZhouIndex()
         {
+            ViewBag.FriendlyReminder = CommonBLL.GetGlobalConstVariable(YiDaBusConst.友情提醒).FirstOrDefault()?.F_Description;
             return View();
         }
         [ValidateInput(false)]
@@ -75,32 +78,41 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
             DbTrans trans = Db.MySqlContext.BeginTransaction();
             try
             {
-                //获取班次
-                DateTime Shift = DateTime.Now;
+                //获取发车时间
+                DateTime DepartureTime = DateTime.Now;
+                string orderHeader = string.Empty;
                 if (orders.Area == AreaType.shanghai.ToString())
                 {
-                    Shift = GetDateTimeByWeek(orders.Week.ToInt());
+                    DepartureTime = GetDateTimeByWeek(orders.Week.ToInt());
+                    orderHeader = "SH";
+                }
+                else
+                {
+                    orders.Week = GetWeekByDateTime(DepartureTime);
+                    orderHeader = "HZ";
                 }
 
-                orders.Shift = Shift.ToString("yyyy-MM-dd");
-                string Seats = string.Empty;
+                orders.DepartureTime = DepartureTime.ToString("yyyy-MM-dd");
+                string SeatIds = string.Empty;
+                string SeatTexts = string.Empty;
                 foreach (var item in ChooseSeatsArr)
                 {
-                    Seats += YiDaBusConst.SeatSign + item + YiDaBusConst.SeatSign;
+                    SeatIds += YiDaBusConst.SeatSign + item + YiDaBusConst.SeatSign;
                     //判断座位是否已经被其他人下单
-                    var isExist = Db.MySqlContext.Exists<Orders>(d => d.Shift == orders.Shift && d.IsDel == (int)IsDel.否 && d.Seats.Contains(Seats) && d.Area == orders.Area);
+                    var isExist = Db.MySqlContext.Exists<Orders>(d => d.DepartureTime == orders.DepartureTime && d.IsDel == (int)IsDel.否 && d.SeatIds.Contains(SeatIds) && d.Area == orders.Area);
                     var areaCn = string.Empty;
                     if (orders.Area == AreaType.shanghai.ToString()) { areaCn = "上海"; }
                     else if (orders.Area == AreaType.hangzhou.ToString()) { areaCn = "杭州"; }
-                    if (isExist) { return Error($"车号：{orders.CarNumber}</br>前往：{areaCn}</br>时间：{orders.Shift}</br>座位号：{item}</br>已被其他人购买，请选择其他座位。"); }
-                    Seats += ",";
+                    if (isExist) { return Error($"车号：{orders.CarNumber}</br>前往：{areaCn}</br>时间：{orders.DepartureTime}</br>座位号：{item}</br>已被其他人购买，请选择其他座位。"); }
+                    SeatIds += ",";
+                    SeatTexts += item + "座、";
                 }
-                orders.Seats = Seats.TrimEnd(',');
-
+                orders.SeatIds = SeatIds.TrimEnd(',');
+                orders.SeatTexts = SeatTexts.TrimEnd('、');
                 orders.UserId = GetUserId();
                 orders.UserName = userInfo.UserName;
                 //生成订单号
-                orders.OrderNo = OrderHeader.U.ToString() + DateTime.Now.ToString("yyyyMMddHHmmss") + RandomHelper.GenetatorNumbers();
+                orders.OrderNo = orderHeader + DateTime.Now.ToString("yyyyMMddHHmmss") + RandomHelper.GenetatorNumbers();
                 string Area = Request["Area"] ?? "";
                 GetOrderBaseInfoByArea(Area);
                 //var IsOneWay = (Request["IsOneWay"] ?? "0").ToInt();//是否单程
@@ -115,6 +127,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                 orders.UpdateTime = DateTime.Now;
                 orders.IsDel = 0;
                 orders.PayState = 0;
+                orders.WeekTextCn = Enum.GetName(typeof(WeekCn), orders.Week.ToInt());
                 int r = Db.MySqlContext.Insert(trans, orders);
 
                 trans.Commit();
@@ -148,18 +161,18 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
         {
             WhereClipBuilder wherebuilder = new WhereClipBuilder();
             wherebuilder.And(Orders._.IsDel == IsDel.否);
-            var Shift = string.Empty;
+            var DepartureTime = string.Empty;
             if (area == AreaType.shanghai.ToString())
             {
                 wherebuilder.And(Orders._.CarNumber.In(YiDaBusConst.上海车牌号1, YiDaBusConst.上海车牌号2));
-                Shift = GetDateTimeByWeek(week.ToInt()).ToString("yyyy-MM-dd");
+                DepartureTime = GetDateTimeByWeek(week.ToInt()).ToString("yyyy-MM-dd");
             }
             else if (area == AreaType.hangzhou.ToString())
             {
                 wherebuilder.And(Orders._.CarNumber == YiDaBusConst.杭州车牌号);
-                DateTime.Now.ToString("yyyy-MM-dd");
+                DepartureTime = DateTime.Now.ToString("yyyy-MM-dd");
             }
-            wherebuilder.And(Orders._.Shift == Shift);
+            wherebuilder.And(Orders._.DepartureTime == DepartureTime);
 
             var data = Db.MySqlContext.From<Orders>().Where(wherebuilder.ToWhereClip()).ToList();
             var groupData = data.GroupBy(d => d.CarNumber);
@@ -170,7 +183,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                 List<string> seatsList = new List<string>();
                 foreach (var item in groupitem)
                 {
-                    seatsList = seatsList.Concat(item.Seats.Replace(YiDaBusConst.SeatSign, "").Split(',').ToList()).ToList();
+                    seatsList = seatsList.Concat(item.SeatIds.Replace(YiDaBusConst.SeatSign, "").Split(',').ToList()).ToList();
                 }
 
                 ordersByGroupCarNumberList.Add(new OrdersByGroupCarNumber()
@@ -182,6 +195,72 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
             }
             return base.Sucess("操作成功", 200, ordersByGroupCarNumberList);
         }
+
+        [HttpPost]
+        public ActionResult GetMyOrderList(int pageSize, int pageIndex)
+        {
+            var userid = GetUserId();
+            var linq = Db.MySqlContext.From<Orders>().Where(d => d.UserId == userid && d.IsDel == (int)IsDel.否).OrderByDescending(d => d.Id);
+
+            PageResponse<OrdersExt> pageList = getListByPaging<Orders, OrdersExt>(linq, pageSize, pageIndex);
+            if (pageList == null || pageList.totalItems == 0)
+                return Error(ErrCode.查询成功无数据);
+            else
+            {
+                foreach (var item in pageList.items)
+                {
+                    //var seatsArr = item.SeatIds.Replace(YiDaBusConst.SeatSign, "").Split(',').ToList();
+                    //for (int i = 0; i < seatsArr.Count; i++)
+                    //{
+                    //    seatsArr[i] = seatsArr[i] + "座";
+                    //}
+
+                    //item.SeatIds = string.Join(",", seatsArr);
+                    if (item.DepartureTime.ToDate() < DateTime.Now.Date)
+                    {
+                        item.IsExpir = 1;
+                    }
+                    else
+                    {
+                        item.IsExpir = 0;
+                    }
+
+                }
+                return Sucess("获取成功", 200, pageList);
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult GetOrderDetailsById()
+        {
+            var orderId = (Request["orderId"] ?? "").ToInt();
+            if (orderId <= 0) { return Error("订单不存在！"); }
+            var orderDetails = Db.MySqlContext.From<Orders>().Where(d => d.Id == orderId).First();
+            //if (orderDetails == null) { return Error("订单不存在！"); }
+
+            return base.Sucess("获取成功", 200, orderDetails);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteOrderByOrderId()
+        {
+            var orderId = (Request["orderId"] ?? "").ToInt();
+            if (orderId <= 0) { return Error("订单不存在！"); }
+            var orderDetails = Db.MySqlContext.From<Orders>().Where(d => d.Id == orderId).First();
+            if (orderDetails == null) { return Error("订单不存在！"); }
+            orderDetails.IsDel = (int)IsDel.是;
+            int r = Db.MySqlContext.Update(orderDetails);
+            if (r > 0)
+            {
+                return Sucess();
+            }
+            else
+            {
+                return Error();
+            }
+        }
+
         #endregion
 
         #region 私有方法
@@ -214,6 +293,15 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
             public string CarNumber { get; set; }
             //public List<Orders> OrdersList { get; set; }
             public List<string> SeatIds { get; set; }
+        }
+
+        protected class OrdersExt : Orders
+        {
+            /// <summary>
+            /// 是否过期
+            /// </summary>
+            public int IsExpir { get; set; }
+            //public string WeekText { get; set; }
         }
         #endregion
     }

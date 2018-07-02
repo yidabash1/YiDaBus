@@ -341,6 +341,7 @@ $.LayPage = function (options) {
         var flow = layui.flow;
         flow.lazyimg();
         var dataMsg = '';
+
         flow.load({
             elem: options.elem //指定列表容器
             , isLazyimg: true
@@ -358,7 +359,6 @@ $.LayPage = function (options) {
                     load: options.load,
                     success: function (data) {
                         if (options.success == null) {
-
                             //第三步：渲染模版
                             var getTpl = $(options.Template).html();
                             laytpl(getTpl).render(data.data.items, function (html) {
