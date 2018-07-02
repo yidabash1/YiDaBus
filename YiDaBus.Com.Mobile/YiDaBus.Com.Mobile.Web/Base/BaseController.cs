@@ -104,12 +104,12 @@ namespace YiDaBus.Com.Mobile.Web.Base
             }
         }
 
-        public DateTime GetDateTimeByWeek(int week)
+        public DateTime GetDateTimeByWeek(int week, ref int day)
         {
             var curDateTime = DateTime.Now;
             string weekstr = curDateTime.DayOfWeek.ToString();
             int curWeek = (int)((WeekEn)Enum.Parse(typeof(WeekEn), weekstr));//获取当前是星期几
-            var day = week - curWeek;
+            day = week - curWeek;
             curDateTime = curDateTime.AddDays(day);
             return curDateTime;
         }

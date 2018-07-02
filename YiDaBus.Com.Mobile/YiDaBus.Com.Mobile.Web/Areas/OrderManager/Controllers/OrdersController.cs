@@ -83,7 +83,12 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                 string orderHeader = string.Empty;
                 if (orders.Area == AreaType.shanghai.ToString())
                 {
-                    DepartureTime = GetDateTimeByWeek(orders.Week.ToInt());
+                    int day = 0;
+                    DepartureTime = GetDateTimeByWeek(orders.Week.ToInt(),ref day);
+                    if (day < 0)
+                    {
+                        return Error("请选择当前以及当前日期之后的车次！");
+                    }
                     orderHeader = "SH";
                 }
                 else
@@ -165,7 +170,9 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
             if (area == AreaType.shanghai.ToString())
             {
                 wherebuilder.And(Orders._.CarNumber.In(YiDaBusConst.上海车牌号1, YiDaBusConst.上海车牌号2));
-                DepartureTime = GetDateTimeByWeek(week.ToInt()).ToString("yyyy-MM-dd");
+                int day = 0;
+                DepartureTime = GetDateTimeByWeek(week.ToInt(), ref day).ToString("yyyy-MM-dd");
+                
             }
             else if (area == AreaType.hangzhou.ToString())
             {
