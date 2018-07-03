@@ -8,7 +8,7 @@ namespace YiDaBus.Com.Mobile.Model.ResponseModel
 {
     public class PageResponse<T>
     {
-        /// <summary>
+        /// <summary> 
         /// 当前页
         /// </summary>
         public long currentPage { get; set; }
