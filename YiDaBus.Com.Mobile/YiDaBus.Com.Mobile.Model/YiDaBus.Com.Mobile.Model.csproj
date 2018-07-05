@@ -59,6 +59,7 @@
     <Compile Include="Enum\ErrCode.cs" />
     <Compile Include="Enum\IsDel.cs" />
     <Compile Include="Enum\OrderHeader.cs" />
+    <Compile Include="Enum\PayState.cs" />
     <Compile Include="Enum\WeekCn.cs" />
     <Compile Include="Enum\WeekEn.cs" />
     <Compile Include="GenerateEntity.cs">

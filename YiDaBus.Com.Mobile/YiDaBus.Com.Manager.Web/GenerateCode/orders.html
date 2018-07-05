@@ -18,32 +18,28 @@
             colModel: [
 						{ label: "主键", name: "Id", hidden: true, key: true },
 							{ label: '订单号', name: 'OrderNo', width: 150, align: 'left' },
-							{ label: '订单状态：0代表已创建意向单；1代表预约看房中；2代表释放订单；3代表正式订单；4代表已出价；5代表已成交；6代表合同生成；7代表成功签约；', name: 'OrderStatus', width: 150, align: 'left' },
-							{ label: '订单生成时间', name: 'AddTime', width: 150, align: 'left' },
-							{ label: '订单更新时间', name: 'LastUpdateTime', width: 150, align: 'left' },
-							{ label: '订单金额', name: 'OrderAmount', width: 150, align: 'left' },
-							{ label: '租赁客户ID号', name: 'LeaseCustomerId', width: 150, align: 'left' },
-							{ label: '租赁客户的姓名', name: 'LeasingCustomerName', width: 150, align: 'left' },
-							{ label: '租赁客户手机号', name: 'LeasingCustomerMobile', width: 150, align: 'left' },
-							{ label: '房屋ID号', name: 'HouseID', width: 150, align: 'left' },
-							{ label: '房源小区ID', name: 'HouseVillageId', width: 150, align: 'left' },
-							{ label: '房屋全称（小区名称+楼栋号+室号）', name: 'HouseName', width: 150, align: 'left' },
-							{ label: '房屋名称', name: 'HouseTitle', width: 150, align: 'left' },
-							{ label: '房屋所在省', name: 'HProvince', width: 150, align: 'left' },
-							{ label: '房屋所在市', name: 'HCity', width: 150, align: 'left' },
-							{ label: '房屋所在区', name: 'HDistrict', width: 150, align: 'left' },
-							{ label: '房东ID号', name: 'LandlordId', width: 150, align: 'left' },
-							{ label: '房东名称', name: 'LandlordName', width: 150, align: 'left' },
-							{ label: '房东手机号', name: 'LandlordMobileNo', width: 150, align: 'left' },
-							{ label: '订单备注', name: 'OrderRemark', width: 150, align: 'left' },
-							{ label: '软删除：0表示未删除；1表示已删除', name: 'IsDel', width: 150, align: 'left' },
-							{ label: '创建人ID', name: 'CreatorID', width: 150, align: 'left' },
-							{ label: '操作人姓名', name: 'CreatorName', width: 150, align: 'left' },
-							{ label: '操作人ID', name: 'OperatorID', width: 150, align: 'left' },
-							{ label: '操作人姓名', name: 'OperatorName', width: 150, align: 'left' },
-							{ label: '是否已经预约看房：0表示未预约；1表示已预约；', name: 'IsBooking', width: 150, align: 'left' },
-							{ label: '是否已经出价：0代表未出价；1代表已出价；', name: 'IsPriced', width: 150, align: 'left' },
-							{ label: '是否已经生成合同：0代表未生成合同；1代表已生成合同；', name: 'IsGenerateContract', width: 150, align: 'left' },
+							{ label: '用户ID', name: 'UserId', width: 150, align: 'left' },
+							{ label: '车牌号', name: 'CarNumber', width: 150, align: 'left' },
+							{ label: '出发地', name: 'FromPosition', width: 150, align: 'left' },
+							{ label: '终点地', name: 'ToPosition', width: 150, align: 'left' },
+							{ label: '座位（以逗号隔开，@Z@作为标识）', name: 'SeatIds', width: 150, align: 'left' },
+							{ label: '发车时间', name: 'DepartureTime', width: 150, align: 'left' },
+							{ label: '订单总金额（单位元）', name: 'TotalAmount', width: 150, align: 'left' },
+							{ label: '用户账号', name: 'UserName', width: 150, align: 'left' },
+							{ label: '用户姓名', name: 'UserNickName', width: 150, align: 'left' },
+							{ label: '手机号', name: 'Mobile', width: 150, align: 'left' },
+							{ label: '是否单程（0：是；1：否）', name: 'IsOneWay', width: 150, align: 'left' },
+							{ label: '是否接送（0：是；1：否）', name: 'IsShuttle', width: 150, align: 'left' },
+							{ label: '接的地点', name: 'MeetPosition', width: 150, align: 'left' },
+							{ label: '送的地点', name: 'SendPosition', width: 150, align: 'left' },
+							{ label: '创建时间', name: 'CreateTime', width: 150, align: 'left' },
+							{ label: '更新时间', name: 'UpdateTime', width: 150, align: 'left' },
+							{ label: '支付状态（0：待支付；1：支付成功；2：支付失败；）', name: 'PayState', width: 150, align: 'left' },
+							{ label: '星期几', name: 'Week', width: 150, align: 'left' },
+							{ label: '区域', name: 'Area', width: 150, align: 'left' },
+							{ label: '是否已删除（0：未删除；1：已删除；）', name: 'IsDel', width: 150, align: 'left' },
+							{ label: '座位描述', name: 'SeatTexts', width: 150, align: 'left' },
+							{ label: '星期几中文描述', name: 'WeekTextCn', width: 150, align: 'left' },
 			],
             pager: "#gridPager",
             viewrecords: true
@@ -57,7 +53,7 @@
     function btn_add() {
         $.modalOpen({
             id: "Form",
-            title: "新增订单",
+            title: "新增",
             url: modulelUrl + "Form",
             width: "800px",
             height: "600px",
@@ -74,7 +70,7 @@
         }
         $.modalOpen({
             id: "Form",
-            title: "修改订单",
+            title: "修改",
             url: modulelUrl + "Form?keyValue=" + keyValue,
             width: "800px",
             height: "600px",
@@ -105,7 +101,7 @@
         }
         $.modalOpen({
             id: "Details",
-            title: "查看订单",
+            title: "查看",
             url: modulelUrl + "Form?action=Details&keyValue=" + keyValue,
             width: "800px",
             height: "600px",
@@ -134,15 +130,15 @@
 	<form id="SearchForm">
             <table>
                 <tr>
-								<!--主键自增ID号-->
+								<!--订单主键ID-->
 					<td>
                         <div class="input-group">
-                            <strong>主键自增ID号：</strong>
+                            <strong>订单主键ID：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="Id" name="Id" type="text" class="form-control" placeholder="主键自增ID号">
+                            <input id="Id" name="Id" type="text" class="form-control" placeholder="订单主键ID" >
                         </div>
                     </td>
 								<!--订单号-->
@@ -153,293 +149,249 @@
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="OrderNo" name="OrderNo" type="text" class="form-control" placeholder="订单号">
+                            <input id="OrderNo" name="OrderNo" type="text" class="form-control" placeholder="订单号" >
                         </div>
                     </td>
-								<!--订单状态：0代表已创建意向单；1代表预约看房中；2代表释放订单；3代表正式订单；4代表已出价；5代表已成交；6代表合同生成；7代表成功签约；-->
+								<!--用户ID-->
 					<td>
                         <div class="input-group">
-                            <strong>订单状态：0代表已创建意向单；1代表预约看房中；2代表释放订单；3代表正式订单；4代表已出价；5代表已成交；6代表合同生成；7代表成功签约；：</strong>
+                            <strong>用户ID：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="OrderStatus" name="OrderStatus" type="text" class="form-control" placeholder="订单状态：0代表已创建意向单；1代表预约看房中；2代表释放订单；3代表正式订单；4代表已出价；5代表已成交；6代表合同生成；7代表成功签约；">
+                            <input id="UserId" name="UserId" type="text" class="form-control" placeholder="用户ID" >
                         </div>
                     </td>
-								<!--订单生成时间-->
+								<!--车牌号-->
 					<td>
                         <div class="input-group">
-                            <strong>订单生成时间：</strong>
+                            <strong>车牌号：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="AddTime" name="AddTime" type="text" class="form-control" placeholder="订单生成时间">
+                            <input id="CarNumber" name="CarNumber" type="text" class="form-control" placeholder="车牌号" >
                         </div>
                     </td>
-								<!--订单更新时间-->
+								<!--出发地-->
 					<td>
                         <div class="input-group">
-                            <strong>订单更新时间：</strong>
+                            <strong>出发地：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="LastUpdateTime" name="LastUpdateTime" type="text" class="form-control" placeholder="订单更新时间">
+                            <input id="FromPosition" name="FromPosition" type="text" class="form-control" placeholder="出发地" >
                         </div>
                     </td>
-								<!--订单金额-->
+								<!--终点地-->
 					<td>
                         <div class="input-group">
-                            <strong>订单金额：</strong>
+                            <strong>终点地：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="OrderAmount" name="OrderAmount" type="text" class="form-control" placeholder="订单金额">
+                            <input id="ToPosition" name="ToPosition" type="text" class="form-control" placeholder="终点地" >
                         </div>
                     </td>
-								<!--租赁客户ID号-->
+								<!--座位（以逗号隔开，@Z@作为标识）-->
 					<td>
                         <div class="input-group">
-                            <strong>租赁客户ID号：</strong>
+                            <strong>座位（以逗号隔开，@Z@作为标识）：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="LeaseCustomerId" name="LeaseCustomerId" type="text" class="form-control" placeholder="租赁客户ID号">
+                            <input id="SeatIds" name="SeatIds" type="text" class="form-control" placeholder="座位（以逗号隔开，@Z@作为标识）" >
                         </div>
                     </td>
-								<!--租赁客户的姓名-->
+								<!--发车时间-->
 					<td>
                         <div class="input-group">
-                            <strong>租赁客户的姓名：</strong>
+                            <strong>发车时间：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="LeasingCustomerName" name="LeasingCustomerName" type="text" class="form-control" placeholder="租赁客户的姓名">
+                            <input id="DepartureTime" name="DepartureTime" type="text" class="form-control" placeholder="发车时间" >
                         </div>
                     </td>
-								<!--租赁客户手机号-->
+								<!--订单总金额（单位元）-->
 					<td>
                         <div class="input-group">
-                            <strong>租赁客户手机号：</strong>
+                            <strong>订单总金额（单位元）：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="LeasingCustomerMobile" name="LeasingCustomerMobile" type="text" class="form-control" placeholder="租赁客户手机号">
+                            <input id="TotalAmount" name="TotalAmount" type="text" class="form-control" placeholder="订单总金额（单位元）" >
                         </div>
                     </td>
-								<!--房屋ID号-->
+								<!--用户账号-->
 					<td>
                         <div class="input-group">
-                            <strong>房屋ID号：</strong>
+                            <strong>用户账号：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="HouseID" name="HouseID" type="text" class="form-control" placeholder="房屋ID号">
+                            <input id="UserName" name="UserName" type="text" class="form-control" placeholder="用户账号" >
                         </div>
                     </td>
-								<!--房源小区ID-->
+								<!--用户姓名-->
 					<td>
                         <div class="input-group">
-                            <strong>房源小区ID：</strong>
+                            <strong>用户姓名：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="HouseVillageId" name="HouseVillageId" type="text" class="form-control" placeholder="房源小区ID">
+                            <input id="UserNickName" name="UserNickName" type="text" class="form-control" placeholder="用户姓名" >
                         </div>
                     </td>
-								<!--房屋全称（小区名称+楼栋号+室号）-->
+								<!--手机号-->
 					<td>
                         <div class="input-group">
-                            <strong>房屋全称（小区名称+楼栋号+室号）：</strong>
+                            <strong>手机号：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="HouseName" name="HouseName" type="text" class="form-control" placeholder="房屋全称（小区名称+楼栋号+室号）">
+                            <input id="Mobile" name="Mobile" type="text" class="form-control" placeholder="手机号" >
                         </div>
                     </td>
-								<!--房屋名称-->
+								<!--是否单程（0：是；1：否）-->
 					<td>
                         <div class="input-group">
-                            <strong>房屋名称：</strong>
+                            <strong>是否单程（0：是；1：否）：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="HouseTitle" name="HouseTitle" type="text" class="form-control" placeholder="房屋名称">
+                            <input id="IsOneWay" name="IsOneWay" type="text" class="form-control" placeholder="是否单程（0：是；1：否）" >
                         </div>
                     </td>
-								<!--房屋所在省-->
+								<!--是否接送（0：是；1：否）-->
 					<td>
                         <div class="input-group">
-                            <strong>房屋所在省：</strong>
+                            <strong>是否接送（0：是；1：否）：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="HProvince" name="HProvince" type="text" class="form-control" placeholder="房屋所在省">
+                            <input id="IsShuttle" name="IsShuttle" type="text" class="form-control" placeholder="是否接送（0：是；1：否）" >
                         </div>
                     </td>
-								<!--房屋所在市-->
+								<!--接的地点-->
 					<td>
                         <div class="input-group">
-                            <strong>房屋所在市：</strong>
+                            <strong>接的地点：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="HCity" name="HCity" type="text" class="form-control" placeholder="房屋所在市">
+                            <input id="MeetPosition" name="MeetPosition" type="text" class="form-control" placeholder="接的地点" >
                         </div>
                     </td>
-								<!--房屋所在区-->
+								<!--送的地点-->
 					<td>
                         <div class="input-group">
-                            <strong>房屋所在区：</strong>
+                            <strong>送的地点：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="HDistrict" name="HDistrict" type="text" class="form-control" placeholder="房屋所在区">
+                            <input id="SendPosition" name="SendPosition" type="text" class="form-control" placeholder="送的地点" >
                         </div>
                     </td>
-								<!--房东ID号-->
+								<!--创建时间-->
 					<td>
                         <div class="input-group">
-                            <strong>房东ID号：</strong>
+                            <strong>创建时间：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="LandlordId" name="LandlordId" type="text" class="form-control" placeholder="房东ID号">
+                            <input id="CreateTime" name="CreateTime" type="text" class="form-control" placeholder="创建时间" >
                         </div>
                     </td>
-								<!--房东名称-->
+								<!--更新时间-->
 					<td>
                         <div class="input-group">
-                            <strong>房东名称：</strong>
+                            <strong>更新时间：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="LandlordName" name="LandlordName" type="text" class="form-control" placeholder="房东名称">
+                            <input id="UpdateTime" name="UpdateTime" type="text" class="form-control" placeholder="更新时间" >
                         </div>
                     </td>
-								<!--房东手机号-->
+								<!--支付状态（0：待支付；1：支付成功；2：支付失败；）-->
 					<td>
                         <div class="input-group">
-                            <strong>房东手机号：</strong>
+                            <strong>支付状态（0：待支付；1：支付成功；2：支付失败；）：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="LandlordMobileNo" name="LandlordMobileNo" type="text" class="form-control" placeholder="房东手机号">
+                            <input id="PayState" name="PayState" type="text" class="form-control" placeholder="支付状态（0：待支付；1：支付成功；2：支付失败；）" >
                         </div>
                     </td>
-								<!--订单备注-->
+								<!--星期几-->
 					<td>
                         <div class="input-group">
-                            <strong>订单备注：</strong>
+                            <strong>星期几：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="OrderRemark" name="OrderRemark" type="text" class="form-control" placeholder="订单备注">
+                            <input id="Week" name="Week" type="text" class="form-control" placeholder="星期几" >
                         </div>
                     </td>
-								<!--软删除：0表示未删除；1表示已删除-->
+								<!--区域-->
 					<td>
                         <div class="input-group">
-                            <strong>软删除：0表示未删除；1表示已删除：</strong>
+                            <strong>区域：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="IsDel" name="IsDel" type="text" class="form-control" placeholder="软删除：0表示未删除；1表示已删除">
+                            <input id="Area" name="Area" type="text" class="form-control" placeholder="区域" >
                         </div>
                     </td>
-								<!--创建人ID-->
+								<!--是否已删除（0：未删除；1：已删除；）-->
 					<td>
                         <div class="input-group">
-                            <strong>创建人ID：</strong>
+                            <strong>是否已删除（0：未删除；1：已删除；）：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="CreatorID" name="CreatorID" type="text" class="form-control" placeholder="创建人ID">
+                            <input id="IsDel" name="IsDel" type="text" class="form-control" placeholder="是否已删除（0：未删除；1：已删除；）" >
                         </div>
                     </td>
-								<!--操作人姓名-->
+								<!--座位描述-->
 					<td>
                         <div class="input-group">
-                            <strong>操作人姓名：</strong>
+                            <strong>座位描述：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="CreatorName" name="CreatorName" type="text" class="form-control" placeholder="操作人姓名">
+                            <input id="SeatTexts" name="SeatTexts" type="text" class="form-control" placeholder="座位描述" >
                         </div>
                     </td>
-								<!--操作人ID-->
+								<!--星期几中文描述-->
 					<td>
                         <div class="input-group">
-                            <strong>操作人ID：</strong>
+                            <strong>星期几中文描述：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="OperatorID" name="OperatorID" type="text" class="form-control" placeholder="操作人ID">
-                        </div>
-                    </td>
-								<!--操作人姓名-->
-					<td>
-                        <div class="input-group">
-                            <strong>操作人姓名：</strong>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input id="OperatorName" name="OperatorName" type="text" class="form-control" placeholder="操作人姓名">
-                        </div>
-                    </td>
-								<!--是否已经预约看房：0表示未预约；1表示已预约；-->
-					<td>
-                        <div class="input-group">
-                            <strong>是否已经预约看房：0表示未预约；1表示已预约；：</strong>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input id="IsBooking" name="IsBooking" type="text" class="form-control" placeholder="是否已经预约看房：0表示未预约；1表示已预约；">
-                        </div>
-                    </td>
-								<!--是否已经出价：0代表未出价；1代表已出价；-->
-					<td>
-                        <div class="input-group">
-                            <strong>是否已经出价：0代表未出价；1代表已出价；：</strong>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input id="IsPriced" name="IsPriced" type="text" class="form-control" placeholder="是否已经出价：0代表未出价；1代表已出价；">
-                        </div>
-                    </td>
-								<!--是否已经生成合同：0代表未生成合同；1代表已生成合同；-->
-					<td>
-                        <div class="input-group">
-                            <strong>是否已经生成合同：0代表未生成合同；1代表已生成合同；：</strong>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input id="IsGenerateContract" name="IsGenerateContract" type="text" class="form-control" placeholder="是否已经生成合同：0代表未生成合同；1代表已生成合同；">
+                            <input id="WeekTextCn" name="WeekTextCn" type="text" class="form-control" placeholder="星期几中文描述" >
                         </div>
                     </td>
 									<td>
@@ -473,13 +425,13 @@
 		<table>
 			<tr>
 				<td>
-					<a id="NF-edit" class="btn btn-default" authorize="yes" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>修改订单</a>
+					<a id="NF-edit" class="btn btn-default" authorize="yes" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>修改</a>
 				</td>
 				<td>
-					<a id="NF-delete" class="btn btn-default" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除订单</a>
+					<a id="NF-delete" class="btn btn-default" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除</a>
 				</td>
 				<td>
-					<a id="NF-Details" class="btn btn-default" authorize="yes" onclick="btn_details()"><i class="fa fa-search-plus"></i>查看订单</a>
+					<a id="NF-Details" class="btn btn-default" authorize="yes" onclick="btn_details()"><i class="fa fa-search-plus"></i>查看</a>
 				</td>
 			</tr>
 		</table>
@@ -555,7 +507,7 @@
     <div style="padding-top: 20px; margin-right: 20px;">
         <table class="form">
                   <tr>
-					<th class="formTitle">主键自增ID号</th>
+					<th class="formTitle">订单主键ID</th>
 					<td class="formValue">
 				                    </td>
     </tr>
@@ -566,159 +518,135 @@
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">订单状态：0代表已创建意向单；1代表预约看房中；2代表释放订单；3代表正式订单；4代表已出价；5代表已成交；6代表合同生成；7代表成功签约；</th>
+					<th class="formTitle">用户ID</th>
 					<td class="formValue">
-				   					<input id="OrderStatus" name="OrderStatus" type="text" class="form-control required" placeholder="请输入订单状态：0代表已创建意向单；1代表预约看房中；2代表释放订单；3代表正式订单；4代表已出价；5代表已成交；6代表合同生成；7代表成功签约；" />
+				   					<input id="UserId" name="UserId" type="text" class="form-control required" placeholder="请输入用户ID" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">订单生成时间</th>
+					<th class="formTitle">车牌号</th>
 					<td class="formValue">
-				   					<input id="AddTime" name="AddTime" type="text" class="form-control required" placeholder="请输入订单生成时间" />
+				   					<input id="CarNumber" name="CarNumber" type="text" class="form-control required" placeholder="请输入车牌号" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">订单更新时间</th>
+					<th class="formTitle">出发地</th>
 					<td class="formValue">
-				   					<input id="LastUpdateTime" name="LastUpdateTime" type="text" class="form-control required" placeholder="请输入订单更新时间" />
+				   					<input id="FromPosition" name="FromPosition" type="text" class="form-control required" placeholder="请输入出发地" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">订单金额</th>
+					<th class="formTitle">终点地</th>
 					<td class="formValue">
-				   					<input id="OrderAmount" name="OrderAmount" type="text" class="form-control required" placeholder="请输入订单金额" />
+				   					<input id="ToPosition" name="ToPosition" type="text" class="form-control required" placeholder="请输入终点地" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">租赁客户ID号</th>
+					<th class="formTitle">座位（以逗号隔开，@Z@作为标识）</th>
 					<td class="formValue">
-				   					<input id="LeaseCustomerId" name="LeaseCustomerId" type="text" class="form-control required" placeholder="请输入租赁客户ID号" />
+				   					<input id="SeatIds" name="SeatIds" type="text" class="form-control required" placeholder="请输入座位（以逗号隔开，@Z@作为标识）" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">租赁客户的姓名</th>
+					<th class="formTitle">发车时间</th>
 					<td class="formValue">
-				   					<input id="LeasingCustomerName" name="LeasingCustomerName" type="text" class="form-control required" placeholder="请输入租赁客户的姓名" />
+				   					<input id="DepartureTime" name="DepartureTime" type="text" class="form-control required" placeholder="请输入发车时间" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">租赁客户手机号</th>
+					<th class="formTitle">订单总金额（单位元）</th>
 					<td class="formValue">
-				   					<input id="LeasingCustomerMobile" name="LeasingCustomerMobile" type="text" class="form-control required" placeholder="请输入租赁客户手机号" />
+				   					<input id="TotalAmount" name="TotalAmount" type="text" class="form-control required" placeholder="请输入订单总金额（单位元）" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">房屋ID号</th>
+					<th class="formTitle">用户账号</th>
 					<td class="formValue">
-				   					<input id="HouseID" name="HouseID" type="text" class="form-control required" placeholder="请输入房屋ID号" />
+				   					<input id="UserName" name="UserName" type="text" class="form-control required" placeholder="请输入用户账号" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">房源小区ID</th>
+					<th class="formTitle">用户姓名</th>
 					<td class="formValue">
-				   					<input id="HouseVillageId" name="HouseVillageId" type="text" class="form-control required" placeholder="请输入房源小区ID" />
+				   					<input id="UserNickName" name="UserNickName" type="text" class="form-control required" placeholder="请输入用户姓名" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">房屋全称（小区名称+楼栋号+室号）</th>
+					<th class="formTitle">手机号</th>
 					<td class="formValue">
-				   					<input id="HouseName" name="HouseName" type="text" class="form-control required" placeholder="请输入房屋全称（小区名称+楼栋号+室号）" />
+				   					<input id="Mobile" name="Mobile" type="text" class="form-control required" placeholder="请输入手机号" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">房屋名称</th>
+					<th class="formTitle">是否单程（0：是；1：否）</th>
 					<td class="formValue">
-				   					<input id="HouseTitle" name="HouseTitle" type="text" class="form-control required" placeholder="请输入房屋名称" />
+				   					<input id="IsOneWay" name="IsOneWay" type="text" class="form-control required" placeholder="请输入是否单程（0：是；1：否）" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">房屋所在省</th>
+					<th class="formTitle">是否接送（0：是；1：否）</th>
 					<td class="formValue">
-				   					<input id="HProvince" name="HProvince" type="text" class="form-control required" placeholder="请输入房屋所在省" />
+				   					<input id="IsShuttle" name="IsShuttle" type="text" class="form-control required" placeholder="请输入是否接送（0：是；1：否）" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">房屋所在市</th>
+					<th class="formTitle">接的地点</th>
 					<td class="formValue">
-				   					<input id="HCity" name="HCity" type="text" class="form-control required" placeholder="请输入房屋所在市" />
+				   					<input id="MeetPosition" name="MeetPosition" type="text" class="form-control required" placeholder="请输入接的地点" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">房屋所在区</th>
+					<th class="formTitle">送的地点</th>
 					<td class="formValue">
-				   					<input id="HDistrict" name="HDistrict" type="text" class="form-control required" placeholder="请输入房屋所在区" />
+				   					<input id="SendPosition" name="SendPosition" type="text" class="form-control required" placeholder="请输入送的地点" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">房东ID号</th>
+					<th class="formTitle">创建时间</th>
 					<td class="formValue">
-				   					<input id="LandlordId" name="LandlordId" type="text" class="form-control required" placeholder="请输入房东ID号" />
+				   					<input id="CreateTime" name="CreateTime" type="text" class="form-control required" placeholder="请输入创建时间" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">房东名称</th>
+					<th class="formTitle">更新时间</th>
 					<td class="formValue">
-				   					<input id="LandlordName" name="LandlordName" type="text" class="form-control required" placeholder="请输入房东名称" />
+				   					<input id="UpdateTime" name="UpdateTime" type="text" class="form-control required" placeholder="请输入更新时间" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">房东手机号</th>
+					<th class="formTitle">支付状态（0：待支付；1：支付成功；2：支付失败；）</th>
 					<td class="formValue">
-				   					<input id="LandlordMobileNo" name="LandlordMobileNo" type="text" class="form-control required" placeholder="请输入房东手机号" />
+				   					<input id="PayState" name="PayState" type="text" class="form-control required" placeholder="请输入支付状态（0：待支付；1：支付成功；2：支付失败；）" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">订单备注</th>
+					<th class="formTitle">星期几</th>
 					<td class="formValue">
-				   					<input id="OrderRemark" name="OrderRemark" type="text" class="form-control required" placeholder="请输入订单备注" />
+				   					<input id="Week" name="Week" type="text" class="form-control required" placeholder="请输入星期几" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">软删除：0表示未删除；1表示已删除</th>
+					<th class="formTitle">区域</th>
 					<td class="formValue">
-				   					<input id="IsDel" name="IsDel" type="text" class="form-control required" placeholder="请输入软删除：0表示未删除；1表示已删除" />
+				   					<input id="Area" name="Area" type="text" class="form-control required" placeholder="请输入区域" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">创建人ID</th>
+					<th class="formTitle">是否已删除（0：未删除；1：已删除；）</th>
 					<td class="formValue">
-				   					<input id="CreatorID" name="CreatorID" type="text" class="form-control required" placeholder="请输入创建人ID" />
+				   					<input id="IsDel" name="IsDel" type="text" class="form-control required" placeholder="请输入是否已删除（0：未删除；1：已删除；）" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">操作人姓名</th>
+					<th class="formTitle">座位描述</th>
 					<td class="formValue">
-				   					<input id="CreatorName" name="CreatorName" type="text" class="form-control required" placeholder="请输入操作人姓名" />
+				   					<input id="SeatTexts" name="SeatTexts" type="text" class="form-control required" placeholder="请输入座位描述" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">操作人ID</th>
+					<th class="formTitle">星期几中文描述</th>
 					<td class="formValue">
-				   					<input id="OperatorID" name="OperatorID" type="text" class="form-control required" placeholder="请输入操作人ID" />
-                           </td>
-    </tr>
-                   <tr>
-					<th class="formTitle">操作人姓名</th>
-					<td class="formValue">
-				   					<input id="OperatorName" name="OperatorName" type="text" class="form-control required" placeholder="请输入操作人姓名" />
-                           </td>
-    </tr>
-                   <tr>
-					<th class="formTitle">是否已经预约看房：0表示未预约；1表示已预约；</th>
-					<td class="formValue">
-				   					<input id="IsBooking" name="IsBooking" type="text" class="form-control required" placeholder="请输入是否已经预约看房：0表示未预约；1表示已预约；" />
-                           </td>
-    </tr>
-                   <tr>
-					<th class="formTitle">是否已经出价：0代表未出价；1代表已出价；</th>
-					<td class="formValue">
-				   					<input id="IsPriced" name="IsPriced" type="text" class="form-control required" placeholder="请输入是否已经出价：0代表未出价；1代表已出价；" />
-                           </td>
-    </tr>
-                   <tr>
-					<th class="formTitle">是否已经生成合同：0代表未生成合同；1代表已生成合同；</th>
-					<td class="formValue">
-				   					<input id="IsGenerateContract" name="IsGenerateContract" type="text" class="form-control required" placeholder="请输入是否已经生成合同：0代表未生成合同；1代表已生成合同；" />
+				   					<input id="WeekTextCn" name="WeekTextCn" type="text" class="form-control required" placeholder="请输入星期几中文描述" />
                            </td>
     </tr>
          </table>
@@ -732,15 +660,15 @@
 }
 <script>
     var modulelUrl = "";//区域的路径
-    var orderNo = $.request("orderNo");
+    var userId = $.request("userId");
     $(function () {
 		 $('.wrapper').height($(window).height() - 60);
         $('.tab-content').height($(window).height() - 120);
         initControl();
-        if (!!orderNo) {
+        if (!!userId) {
             $.ajax({
                 url: modulelUrl + "GetFormJson",
-                data: { orderNo: orderNo },
+                data: { userId: userId },
                 dataType: "json",
                 async: false,
                 success: function (data) {
@@ -781,118 +709,99 @@
         <div id="a" class="tab-pane active" style="padding: 15px;">
             <ul class="pop-list">
 							                    <li>
-				   <label>主键自增ID号</label>
+				   <label>订单主键ID</label>
 				   				 </li>
 				  				                    <li>
 				   <label>订单号</label>
 				   					<input id="OrderNo" name="OrderNo" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>订单状态：0代表已创建意向单；1代表预约看房中；2代表释放订单；3代表正式订单；4代表已出价；5代表已成交；6代表合同生成；7代表成功签约；</label>
-				   					<input id="OrderStatus" name="OrderStatus" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>用户ID</label>
+				   					<input id="UserId" name="UserId" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>订单生成时间</label>
-				   					<input id="AddTime" name="AddTime" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>车牌号</label>
+				   					<input id="CarNumber" name="CarNumber" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>订单更新时间</label>
-				   					<input id="LastUpdateTime" name="LastUpdateTime" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>出发地</label>
+				   					<input id="FromPosition" name="FromPosition" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>订单金额</label>
-				   					<input id="OrderAmount" name="OrderAmount" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>终点地</label>
+				   					<input id="ToPosition" name="ToPosition" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>租赁客户ID号</label>
-				   					<input id="LeaseCustomerId" name="LeaseCustomerId" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>座位（以逗号隔开，@Z@作为标识）</label>
+				   					<input id="SeatIds" name="SeatIds" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>租赁客户的姓名</label>
-				   					<input id="LeasingCustomerName" name="LeasingCustomerName" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>发车时间</label>
+				   					<input id="DepartureTime" name="DepartureTime" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>租赁客户手机号</label>
-				   					<input id="LeasingCustomerMobile" name="LeasingCustomerMobile" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>订单总金额（单位元）</label>
+				   					<input id="TotalAmount" name="TotalAmount" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>房屋ID号</label>
-				   					<input id="HouseID" name="HouseID" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>用户账号</label>
+				   					<input id="UserName" name="UserName" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>房源小区ID</label>
-				   					<input id="HouseVillageId" name="HouseVillageId" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>用户姓名</label>
+				   					<input id="UserNickName" name="UserNickName" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>房屋全称（小区名称+楼栋号+室号）</label>
-				   					<input id="HouseName" name="HouseName" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>手机号</label>
+				   					<input id="Mobile" name="Mobile" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>房屋名称</label>
-				   					<input id="HouseTitle" name="HouseTitle" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>是否单程（0：是；1：否）</label>
+				   					<input id="IsOneWay" name="IsOneWay" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>房屋所在省</label>
-				   					<input id="HProvince" name="HProvince" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>是否接送（0：是；1：否）</label>
+				   					<input id="IsShuttle" name="IsShuttle" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>房屋所在市</label>
-				   					<input id="HCity" name="HCity" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>接的地点</label>
+				   					<input id="MeetPosition" name="MeetPosition" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>房屋所在区</label>
-				   					<input id="HDistrict" name="HDistrict" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>送的地点</label>
+				   					<input id="SendPosition" name="SendPosition" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>房东ID号</label>
-				   					<input id="LandlordId" name="LandlordId" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>创建时间</label>
+				   					<input id="CreateTime" name="CreateTime" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>房东名称</label>
-				   					<input id="LandlordName" name="LandlordName" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>更新时间</label>
+				   					<input id="UpdateTime" name="UpdateTime" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>房东手机号</label>
-				   					<input id="LandlordMobileNo" name="LandlordMobileNo" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>支付状态（0：待支付；1：支付成功；2：支付失败；）</label>
+				   					<input id="PayState" name="PayState" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>订单备注</label>
-				   					<input id="OrderRemark" name="OrderRemark" type="text" class="form-control" placeholder="暂未填写" />
-          				 </li>
-				  				  				   <li>
-                        <label>是否被删除</label>
-                        <select id="IsDel" name="IsDel" class="form-control">
-                            <option value="0">未删除</option>
-                            <option value="1">已删除</option>
-                        </select>
-                   </li>
-				   				                    <li>
-				   <label>创建人ID</label>
-				   					<input id="CreatorID" name="CreatorID" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>星期几</label>
+				   					<input id="Week" name="Week" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>操作人姓名</label>
-				   					<input id="CreatorName" name="CreatorName" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>区域</label>
+				   					<input id="Area" name="Area" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>操作人ID</label>
-				   					<input id="OperatorID" name="OperatorID" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>是否已删除（0：未删除；1：已删除；）</label>
+				   					<input id="IsDel" name="IsDel" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>操作人姓名</label>
-				   					<input id="OperatorName" name="OperatorName" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>座位描述</label>
+				   					<input id="SeatTexts" name="SeatTexts" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>是否已经预约看房：0表示未预约；1表示已预约；</label>
-				   					<input id="IsBooking" name="IsBooking" type="text" class="form-control" placeholder="暂未填写" />
-          				 </li>
-				  				                    <li>
-				   <label>是否已经出价：0代表未出价；1代表已出价；</label>
-				   					<input id="IsPriced" name="IsPriced" type="text" class="form-control" placeholder="暂未填写" />
-          				 </li>
-				  				                    <li>
-				   <label>是否已经生成合同：0代表未生成合同；1代表已生成合同；</label>
-				   					<input id="IsGenerateContract" name="IsGenerateContract" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>星期几中文描述</label>
+				   					<input id="WeekTextCn" name="WeekTextCn" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				   <li>
  <div style="padding-left: 115px;">

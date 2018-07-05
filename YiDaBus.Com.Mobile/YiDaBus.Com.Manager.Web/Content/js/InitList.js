@@ -16,10 +16,12 @@ function SearchHandler() {
 //显示更多查询条件
 function ShowMoreSearchHandler(obj) {
     $('#TbMoreSeach').show();
+    $('.topPanel').height(heightShowMore);
     $(obj).attr('onclick', 'HideMoreSearchHandler(this)');
 }
 //隐藏查询条件
 function HideMoreSearchHandler(obj) {
     $('#TbMoreSeach').hide();
+    $('.topPanel').height(inithHeight);
     $(obj).attr('onclick', 'ShowMoreSearchHandler(this)');
 }

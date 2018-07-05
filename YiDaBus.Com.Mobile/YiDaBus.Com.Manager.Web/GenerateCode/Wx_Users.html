@@ -1,17 +1,4 @@
-﻿<#@ template debug="false" hostspecific="true" language="C#" #>
-<#@ include file="$(ProjectDir)Entity/hp.ttinclude"#>
-<#@ include file="$(ProjectDir)Entity/ma.ttinclude"#> 
-<#
-    var manager = Manager.Create(Host, GenerationEnvironment);
-    var list = DbHelper.GetDbTables(config.ConnectionString_Manager, config.DbDatabase_Manager);
-    foreach (var table in list)
-    {
-        var cList = DbHelper.GetDbColumns(config.ConnectionString_Manager, config.DbDatabase_Manager, table);
-        table.ColumnList = cList;
-    }
-	foreach(var t in list){
-	manager.StartNewFile(t.ClassName+".html");
-#>	
+	
 <!--=======================Index表单START====================================-->
 @{
     ViewBag.Title = "Index";
@@ -29,15 +16,16 @@
             url: modulelUrl + "GetGridJson",
             height: $(window).height() - 128,
             colModel: [
-		<#foreach(DbColumn column in t.ColumnList){
-			int index = t.ColumnList.IndexOf(column); //index 为索引值
-			if(index==0){ #>
-				{ label: "主键", name: "<#=column.Field#>", hidden: true, key: true },
-			<#}else{#>
-				{ label: '<#=column.Comment.ToString().Replace("\r\n",";")#>', name: '<#=column.Field#>', width: 150, align: 'left' },
-			<#}#>
-<#}#>
-],
+						{ label: "主键", name: "Id", hidden: true, key: true },
+							{ label: '用户账号', name: 'UserName', width: 150, align: 'left' },
+							{ label: '用户姓名', name: 'UserNickName', width: 150, align: 'left' },
+							{ label: '手机号', name: 'Mobile', width: 150, align: 'left' },
+							{ label: '性别：帅哥；美女；', name: 'Gender', width: 150, align: 'left' },
+							{ label: '微信用户唯一标识', name: 'OpenId', width: 150, align: 'left' },
+							{ label: '是否已删除（0：未删除；1：已删除；）', name: 'IsDel', width: 150, align: 'left' },
+							{ label: '创建时间', name: 'CreateTime', width: 150, align: 'left' },
+							{ label: '更新时间', name: 'UpdateTime', width: 150, align: 'left' },
+			],
             pager: "#gridPager",
             viewrecords: true
         });
@@ -50,7 +38,7 @@
     function btn_add() {
         $.modalOpen({
             id: "Form",
-            title: "新增<#=t.Comment.TrimEnd('表')#>",
+            title: "新增",
             url: modulelUrl + "Form",
             width: "800px",
             height: "600px",
@@ -67,7 +55,7 @@
         }
         $.modalOpen({
             id: "Form",
-            title: "修改<#=t.Comment.TrimEnd('表')#>",
+            title: "修改",
             url: modulelUrl + "Form?keyValue=" + keyValue,
             width: "800px",
             height: "600px",
@@ -98,7 +86,7 @@
         }
         $.modalOpen({
             id: "Details",
-            title: "查看<#=t.Comment.TrimEnd('表')#>",
+            title: "查看",
             url: modulelUrl + "Form?action=Details&keyValue=" + keyValue,
             width: "800px",
             height: "600px",
@@ -127,20 +115,106 @@
 	<form id="SearchForm">
             <table>
                 <tr>
-				<#foreach(DbColumn column in t.ColumnList){#>
-				<!--<#=column.Comment.ToString().Replace("\r\n",";")#>-->
+								<!--用户ID-->
 					<td>
                         <div class="input-group">
-                            <strong><#=column.Comment.ToString().Replace("\r\n",";")#>：</strong>
+                            <strong>用户ID：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="<#=column.Field#>" name="<#=column.Field#>" type="text" class="form-control" placeholder="<#=column.Comment.ToString().Replace("\r\n",";")#>" >
+                            <input id="Id" name="Id" type="text" class="form-control" placeholder="用户ID" >
                         </div>
                     </td>
-				<#}#>
+								<!--用户账号-->
 					<td>
+                        <div class="input-group">
+                            <strong>用户账号：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="UserName" name="UserName" type="text" class="form-control" placeholder="用户账号" >
+                        </div>
+                    </td>
+								<!--用户姓名-->
+					<td>
+                        <div class="input-group">
+                            <strong>用户姓名：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="UserNickName" name="UserNickName" type="text" class="form-control" placeholder="用户姓名" >
+                        </div>
+                    </td>
+								<!--手机号-->
+					<td>
+                        <div class="input-group">
+                            <strong>手机号：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="Mobile" name="Mobile" type="text" class="form-control" placeholder="手机号" >
+                        </div>
+                    </td>
+								<!--性别：帅哥；美女；-->
+					<td>
+                        <div class="input-group">
+                            <strong>性别：帅哥；美女；：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="Gender" name="Gender" type="text" class="form-control" placeholder="性别：帅哥；美女；" >
+                        </div>
+                    </td>
+								<!--微信用户唯一标识-->
+					<td>
+                        <div class="input-group">
+                            <strong>微信用户唯一标识：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="OpenId" name="OpenId" type="text" class="form-control" placeholder="微信用户唯一标识" >
+                        </div>
+                    </td>
+								<!--是否已删除（0：未删除；1：已删除；）-->
+					<td>
+                        <div class="input-group">
+                            <strong>是否已删除（0：未删除；1：已删除；）：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="IsDel" name="IsDel" type="text" class="form-control" placeholder="是否已删除（0：未删除；1：已删除；）" >
+                        </div>
+                    </td>
+								<!--创建时间-->
+					<td>
+                        <div class="input-group">
+                            <strong>创建时间：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="CreateTime" name="CreateTime" type="text" class="form-control" placeholder="创建时间" >
+                        </div>
+                    </td>
+								<!--更新时间-->
+					<td>
+                        <div class="input-group">
+                            <strong>更新时间：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="UpdateTime" name="UpdateTime" type="text" class="form-control" placeholder="更新时间" >
+                        </div>
+                    </td>
+									<td>
                         <div class="input-group">
                             <span class="input-group-btn">
                                 <button id="btn_search" type="button" class="btn  btn-primary" onclick="SearchHandler()"><i class="fa fa-search"></i></button>
@@ -171,13 +245,13 @@
 		<table>
 			<tr>
 				<td>
-					<a id="NF-edit" class="btn btn-default" authorize="yes" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>修改<#=t.Comment.TrimEnd('表')#></a>
+					<a id="NF-edit" class="btn btn-default" authorize="yes" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>修改</a>
 				</td>
 				<td>
-					<a id="NF-delete" class="btn btn-default" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除<#=t.Comment.TrimEnd('表')#></a>
+					<a id="NF-delete" class="btn btn-default" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除</a>
 				</td>
 				<td>
-					<a id="NF-Details" class="btn btn-default" authorize="yes" onclick="btn_details()"><i class="fa fa-search-plus"></i>查看<#=t.Comment.TrimEnd('表')#></a>
+					<a id="NF-Details" class="btn btn-default" authorize="yes" onclick="btn_details()"><i class="fa fa-search-plus"></i>查看</a>
 				</td>
 			</tr>
 		</table>
@@ -252,24 +326,60 @@
 <form id="form1">
     <div style="padding-top: 20px; margin-right: 20px;">
         <table class="form">
-<#
-            string Description = string.Empty;
-            string ColumnName  = string.Empty;
-			foreach(DbColumn column in t.ColumnList)
-            {
-                Description  =  column.Comment.ToString().Replace("\r\n",";");
-                ColumnName = column.Field;#>
                   <tr>
-					<th class="formTitle"><#=Description#></th>
+					<th class="formTitle">用户ID</th>
 					<td class="formValue">
-				   <# if(ColumnName.ToLower()!="id"&&ColumnName.ToLower()!="IsDel"&&ColumnName.ToLower()!="AddTime"){
-		#>
-					<input id="<#=                        ColumnName#>" name="<#=                        ColumnName#>" type="text" class="form-control required" placeholder="请输入<#=                        Description.Replace("\r\n",";")#>" />
-          <# }#>
-                 </td>
+				                    </td>
     </tr>
- <#}#>
-        </table>
+                   <tr>
+					<th class="formTitle">用户账号</th>
+					<td class="formValue">
+				   					<input id="UserName" name="UserName" type="text" class="form-control required" placeholder="请输入用户账号" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">用户姓名</th>
+					<td class="formValue">
+				   					<input id="UserNickName" name="UserNickName" type="text" class="form-control required" placeholder="请输入用户姓名" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">手机号</th>
+					<td class="formValue">
+				   					<input id="Mobile" name="Mobile" type="text" class="form-control required" placeholder="请输入手机号" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">性别：帅哥；美女；</th>
+					<td class="formValue">
+				   					<input id="Gender" name="Gender" type="text" class="form-control required" placeholder="请输入性别：帅哥；美女；" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">微信用户唯一标识</th>
+					<td class="formValue">
+				   					<input id="OpenId" name="OpenId" type="text" class="form-control required" placeholder="请输入微信用户唯一标识" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">是否已删除（0：未删除；1：已删除；）</th>
+					<td class="formValue">
+				   					<input id="IsDel" name="IsDel" type="text" class="form-control required" placeholder="请输入是否已删除（0：未删除；1：已删除；）" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">创建时间</th>
+					<td class="formValue">
+				   					<input id="CreateTime" name="CreateTime" type="text" class="form-control required" placeholder="请输入创建时间" />
+                           </td>
+    </tr>
+                   <tr>
+					<th class="formTitle">更新时间</th>
+					<td class="formValue">
+				   					<input id="UpdateTime" name="UpdateTime" type="text" class="form-control required" placeholder="请输入更新时间" />
+                           </td>
+    </tr>
+         </table>
     </div>
 </form>
  <!--=======================FORM表单END====================================-->
@@ -328,30 +438,42 @@
     <div class="tab-content" style="padding: 5px;overflow:auto;">
         <div id="a" class="tab-pane active" style="padding: 15px;">
             <ul class="pop-list">
-			<#
-			foreach(DbColumn column in t.ColumnList)
-            {
-                Description  =  column.Comment.ToString().Replace("\r\n",";");
-                ColumnName = column.Field;#>
-				  <#if(Description.Contains("软删除")){#>
+							                    <li>
+				   <label>用户ID</label>
+				   				 </li>
+				  				                    <li>
+				   <label>用户账号</label>
+				   					<input id="UserName" name="UserName" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>用户姓名</label>
+				   					<input id="UserNickName" name="UserNickName" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>手机号</label>
+				   					<input id="Mobile" name="Mobile" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>性别：帅哥；美女；</label>
+				   					<input id="Gender" name="Gender" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>微信用户唯一标识</label>
+				   					<input id="OpenId" name="OpenId" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>是否已删除（0：未删除；1：已删除；）</label>
+				   					<input id="IsDel" name="IsDel" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>创建时间</label>
+				   					<input id="CreateTime" name="CreateTime" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>更新时间</label>
+				   					<input id="UpdateTime" name="UpdateTime" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
 				   <li>
-                        <label>是否被删除</label>
-                        <select id="IsDel" name="IsDel" class="form-control">
-                            <option value="0">未删除</option>
-                            <option value="1">已删除</option>
-                        </select>
-                   </li>
-				  <#}else{#>
-                  <li>
-				   <label><#=Description#></label>
-				   <# if(ColumnName.ToLower()!="id"&&ColumnName.ToLower()!="IsDel"&&ColumnName.ToLower()!="AddTime"){
-		#>
-					<input id="<#=ColumnName#>" name="<#=ColumnName#>" type="text" class="form-control" placeholder="暂未填写" />
-          <# }#>
-				 </li>
-				 <#}#>
- <#}#>
- <li>
  <div style="padding-left: 115px;">
                             <a class="btn btn-primary" href="javascript:void(0);" onclick="history.go(-1)"><i class="fa fa-backward" style="margin-right:5px;"></i>返回</a>
                         </div>
@@ -362,8 +484,3 @@
 </div>
 </form>
  <!--=======================Detail表单END====================================-->
-<#
-	manager.EndBlock();  
-}
-    manager.Process(true);  
-#>

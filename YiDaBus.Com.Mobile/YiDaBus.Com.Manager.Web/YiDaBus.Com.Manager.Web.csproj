@@ -217,13 +217,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Areas\ExampleManage\Controllers\BarCodeController.cs" />
-    <Compile Include="Areas\ExampleManage\Controllers\DemoUIPController.cs" />
     <Compile Include="Areas\ExampleManage\Controllers\PrintController.cs" />
-    <Compile Include="Areas\ExampleManage\Controllers\SendMailController.cs" />
-    <Compile Include="Areas\ExampleManage\Controllers\SendMessagesController.cs" />
     <Compile Include="Areas\ExampleManage\Controllers\SignetController.cs" />
     <Compile Include="Areas\ExampleManage\ExampleManageAreaRegistration.cs" />
+    <Compile Include="Areas\OrderManage\Controllers\OrderController.cs" />
+    <Compile Include="Areas\OrderManage\OrderManageAreaRegistration.cs" />
     <Compile Include="Areas\SystemManage\Controllers\AreaController.cs" />
     <Compile Include="Areas\SystemManage\Controllers\DutyController.cs" />
     <Compile Include="Areas\SystemManage\Controllers\ItemsDataController.cs" />
@@ -240,31 +238,18 @@
     <Compile Include="Areas\SystemSecurity\Controllers\LogController.cs" />
     <Compile Include="Areas\SystemSecurity\Controllers\ServerMonitoringController.cs" />
     <Compile Include="Areas\SystemSecurity\SystemSecurityAreaRegistration.cs" />
+    <Compile Include="Areas\UserManage\Controllers\UserController.cs" />
+    <Compile Include="Areas\UserManage\UserManageAreaRegistration.cs" />
     <Compile Include="Controllers\ClientsDataController.cs" />
     <Compile Include="Controllers\DownController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\WeixinController.cs" />
     <Compile Include="GenerateCode\DbHelper.cs" />
-    <Compile Include="GenerateCode\GenerateHtml_House.cs">
+    <Compile Include="GenerateCode\GenerateHtml.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GenerateHtml_House.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GenerateCode\GenerateHtml_Manager.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GenerateCode\GenerateHtml_Order.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GenerateHtml_Order.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GenerateCode\GenerateHtml_User.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
+      <DependentUpon>GenerateHtml.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -763,195 +748,48 @@
     <Content Include="Content\js\zsign\signet.gif" />
     <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
-    <Content Include="GenerateCode\activity.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\activityqrcode.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\apimanager.html">
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\banners.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\bookinghouse.html">
-      <DependentUpon>GenerateHtml_Order.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\bookviewhouse.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\captchalog.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\coupon.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\demand.html">
-      <DependentUpon>GenerateHtml_Order.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\depositlog.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\depositrecharge.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\depositrefund.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\GenerateHtml_House.tt">
+    <Content Include="GenerateCode\GenerateHtml.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GenerateHtml_House.cs</LastGenOutput>
+      <LastGenOutput>GenerateHtml.cs</LastGenOutput>
     </Content>
-    <Content Include="GenerateCode\GenerateHtml_Manager.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GenerateHtml_Manager.cs</LastGenOutput>
+    <Content Include="GenerateCode\Orders.html">
+      <DependentUpon>GenerateHtml.tt</DependentUpon>
     </Content>
-    <Content Include="GenerateCode\GenerateHtml_Order.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GenerateHtml_Order.cs</LastGenOutput>
+    <Content Include="GenerateCode\Sys_Filterip.html">
+      <DependentUpon>GenerateHtml.tt</DependentUpon>
     </Content>
-    <Content Include="GenerateCode\GenerateHtml_User.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GenerateHtml_User.cs</LastGenOutput>
+    <Content Include="GenerateCode\Sys_Items.html">
+      <DependentUpon>GenerateHtml.tt</DependentUpon>
     </Content>
-    <Content Include="GenerateCode\helpcenter.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
+    <Content Include="GenerateCode\Sys_ItemsDetail.html">
+      <DependentUpon>GenerateHtml.tt</DependentUpon>
     </Content>
-    <Content Include="GenerateCode\house.html">
-      <DependentUpon>GenerateHtml_House.tt</DependentUpon>
+    <Content Include="GenerateCode\Sys_Log.html">
+      <DependentUpon>GenerateHtml.tt</DependentUpon>
     </Content>
-    <Content Include="GenerateCode\houseauditlog.html">
-      <DependentUpon>GenerateHtml_House.tt</DependentUpon>
+    <Content Include="GenerateCode\Sys_Module.html">
+      <DependentUpon>GenerateHtml.tt</DependentUpon>
     </Content>
-    <Content Include="GenerateCode\housecollectlog.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
+    <Content Include="GenerateCode\Sys_ModuleButton.html">
+      <DependentUpon>GenerateHtml.tt</DependentUpon>
     </Content>
-    <Content Include="GenerateCode\houseexpand.html">
-      <DependentUpon>GenerateHtml_House.tt</DependentUpon>
+    <Content Include="GenerateCode\Sys_Organize.html">
+      <DependentUpon>GenerateHtml.tt</DependentUpon>
     </Content>
-    <Content Include="GenerateCode\housepic.html">
-      <DependentUpon>GenerateHtml_House.tt</DependentUpon>
+    <Content Include="GenerateCode\Sys_Role.html">
+      <DependentUpon>GenerateHtml.tt</DependentUpon>
     </Content>
-    <Content Include="GenerateCode\houserefreshlog.html">
-      <DependentUpon>GenerateHtml_House.tt</DependentUpon>
+    <Content Include="GenerateCode\Sys_RoleAuthorize.html">
+      <DependentUpon>GenerateHtml.tt</DependentUpon>
     </Content>
-    <Content Include="GenerateCode\houseviewlog.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
+    <Content Include="GenerateCode\Sys_User.html">
+      <DependentUpon>GenerateHtml.tt</DependentUpon>
     </Content>
-    <Content Include="GenerateCode\housevillage.html">
-      <DependentUpon>GenerateHtml_House.tt</DependentUpon>
+    <Content Include="GenerateCode\Sys_UserLogOn.html">
+      <DependentUpon>GenerateHtml.tt</DependentUpon>
     </Content>
-    <Content Include="GenerateCode\housevillageauditlog.html">
-      <DependentUpon>GenerateHtml_House.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\housevillagepic.html">
-      <DependentUpon>GenerateHtml_House.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\leaseoffer.html">
-      <DependentUpon>GenerateHtml_Order.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\loginlog.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\msgsendlog.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\msgtemplate.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\orderleasecontract.html">
-      <DependentUpon>GenerateHtml_Order.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\orderpic.html">
-      <DependentUpon>GenerateHtml_Order.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\orders.html">
-      <DependentUpon>GenerateHtml_Order.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\ordertracklog.html">
-      <DependentUpon>GenerateHtml_Order.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\paylog.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\sendlistlog.html">
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\sys_area.html">
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\sys_dbbackup.html">
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\sys_filterip.html">
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\sys_groups.html">
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\sys_items.html">
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\sys_itemsdetail.html">
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\sys_log.html">
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\sys_module.html">
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\sys_modulebutton.html">
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\sys_moduleform.html">
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\sys_moduleforminstance.html">
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\sys_organize.html">
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\sys_role.html">
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\sys_roleauthorize.html">
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\sys_subway.html">
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\sys_user.html">
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\sys_userlogon.html">
-      <DependentUpon>GenerateHtml_Manager.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\usercalllog.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\usercomplaint.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\usercoupon.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\userfeedback.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\userinfoexpand.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\userinfotracklog.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\users.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
-    </Content>
-    <Content Include="GenerateCode\usersacn.html">
-      <DependentUpon>GenerateHtml_User.tt</DependentUpon>
+    <Content Include="GenerateCode\Wx_Users.html">
+      <DependentUpon>GenerateHtml.tt</DependentUpon>
     </Content>
     <Content Include="Global.asax" />
     <Content Include="Areas\ExampleManage\Views\BarCode\Index.cshtml" />
@@ -1023,6 +861,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\OrderManage\Models\" />
+    <Folder Include="Areas\OrderManage\Views\Shared\" />
+    <Folder Include="Areas\UserManage\Models\" />
+    <Folder Include="Areas\UserManage\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1048,6 +890,12 @@
     <Content Include="Content\js\simditor\css\simditor.scss" />
     <Content Include="Entity\hp.ttinclude" />
     <Content Include="Entity\ma.ttinclude" />
+    <Content Include="Areas\OrderManage\Views\web.config" />
+    <Content Include="Areas\OrderManage\Views\Order\Index.cshtml" />
+    <Content Include="Areas\OrderManage\Views\Order\Form.cshtml" />
+    <Content Include="Areas\UserManage\Views\web.config" />
+    <Content Include="Areas\UserManage\Views\User\Index.cshtml" />
+    <Content Include="Areas\UserManage\Views\User\Form.cshtml" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>

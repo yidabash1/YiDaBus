@@ -14,16 +14,8 @@
 
 	public class config
     {
-        public static readonly string ConnectionString_Users = "Server=192.168.1.44;Database=zfx365_userdb;Uid=dev;Pwd=123;";
-        public static readonly string DbDatabase_Users = "zfx365_userdb";
-
-		public static readonly string ConnectionString_Orders = "Server=192.168.1.44;Database=zfx365_orderdb;Uid=dev;Pwd=123;";
-        public static readonly string DbDatabase_Orders = "zfx365_orderdb";
-			public static readonly string ConnectionString_Houses = "Server=192.168.1.44;Database=zfx365_housedb;Uid=dev;Pwd=123;";
-        public static readonly string DbDatabase_Houses = "zfx365_housedb";
-
-		public static readonly string ConnectionString_Manager = "Server=192.168.1.44;Database=zfx365_managerdb;Uid=dev;Pwd=123;";
-        public static readonly string DbDatabase_Manager = "zfx365_managerdb";
+        public static readonly string ConnectionString = "Server=10.138.30.191;Database=YiDaBus;Uid=root;Pwd=wqf123;";
+        public static readonly string DbDatabase = "YiDaBus";
     }
 
 	public class MysqlDbTypeMap

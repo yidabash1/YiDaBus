@@ -3,10 +3,10 @@
 <#@ include file="$(ProjectDir)Entity/ma.ttinclude"#> 
 <#
     var manager = Manager.Create(Host, GenerationEnvironment);
-    var list = DbHelper.GetDbTables(config.ConnectionString_Houses, config.DbDatabase_Houses);
+    var list = DbHelper.GetDbTables(config.ConnectionString, config.DbDatabase);
     foreach (var table in list)
     {
-        var cList = DbHelper.GetDbColumns(config.ConnectionString_Houses, config.DbDatabase_Houses, table);
+        var cList = DbHelper.GetDbColumns(config.ConnectionString, config.DbDatabase, table);
         table.ColumnList = cList;
     }
 	foreach(var t in list){
@@ -234,7 +234,7 @@
         }
     });
     function initControl() {
-       
+        
     }
     function submitForm() {
         if (!$('#form1').formValid()) {
@@ -280,15 +280,15 @@
 }
 <script>
     var modulelUrl = "";//区域的路径
-    var houseId = $.request("houseId");
+    var userId = $.request("userId");
     $(function () {
 		 $('.wrapper').height($(window).height() - 60);
         $('.tab-content').height($(window).height() - 120);
         initControl();
-        if (!!houseId) {
+        if (!!userId) {
             $.ajax({
                 url: modulelUrl + "GetFormJson",
-                data: { houseId: houseId },
+                data: { userId: userId },
                 dataType: "json",
                 async: false,
                 success: function (data) {
