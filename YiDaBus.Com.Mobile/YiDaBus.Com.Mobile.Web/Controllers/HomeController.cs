@@ -71,56 +71,5 @@ namespace YiDaBus.Com.Mobile.Web.Controllers
 
 
         #endregion
-
-        
-        public ActionResult Login()
-        {
-
-            return View();
-        }
-        public ActionResult LayFormDemo()
-        {
-            ViewBag.Title = "layer表单例子";
-            return View();
-        }
-        public ActionResult LayModalDemo()
-        {
-            ViewBag.Title = "layer模态窗口例子";
-            return View();
-        }
-        public ActionResult LaytplDemo()
-        {
-            ViewBag.Title = "layer模板引擎文档";
-            return View();
-        }
-        public ActionResult TestVideo()
-        {
-            ViewBag.Title = "测试视频播放";
-            return View();
-        }
-        public ActionResult Activities()
-        {
-            ViewBag.Title = "活动专题";
-            return View();
-        }
-        public ActionResult Lucene4NetDemo()
-        {
-            ViewBag.Title = "分词例子";
-            return View();
-        }
-
-        /// <summary>
-        /// TOTO：4月份活动临时使用
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult TempActivity()
-        {
-            if (!HttpContext.Request.IsAuthenticated)
-            {
-                return Redirect("/Home/Login"); ;
-            }
-            return Redirect("/Home/Index");
-        }
-
     }
 }

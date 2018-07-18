@@ -14,6 +14,9 @@ using YiDaBus.Com.Mobile.Common;
 using YiDaBus.Com.Mobile.Web.App_Start;
 using Dos.ORM;
 using YiDaBus.Com.Mobile.Model.ResponseModel;
+using Senparc.Weixin.MP.AdvancedAPIs.TemplateMessage;
+using Senparc.Weixin.MP.AdvancedAPIs;
+using System.Configuration;
 
 namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
 {
@@ -66,6 +69,9 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
         [HttpPost]
         public ActionResult CreateOrdersInfo(Orders orders)
         {
+            string WeixinAppId = ConfigurationManager.AppSettings["WeixinAppId"] ?? "";
+            string WxDomain = ConfigurationManager.AppSettings["wxDomain"] ?? "";
+
             string ChooseSeats = Request["ChooseSeats"] ?? "";
             var ChooseSeatsArr = ChooseSeats.Split(',');
             if (ChooseSeatsArr.Length == 0) { return Error("请先选择座位！"); }
@@ -73,7 +79,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
             var userInfo = GetUserInfo();//获取用户信息
             if (userInfo == null) { return Error(ErrCode.用户信息失效请重新登录); }
             if (orders.Area == AreaType.shanghai.ToString() && orders.Week == null) { return Error("请选择班次"); }
-
+            var areaCn = string.Empty;
             //开始事务
             DbTrans trans = Db.MySqlContext.BeginTransaction();
             try
@@ -84,7 +90,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                 if (orders.Area == AreaType.shanghai.ToString())
                 {
                     int day = 0;
-                    DepartureTime = GetDateTimeByWeek(orders.Week.ToInt(),ref day);
+                    DepartureTime = GetDateTimeByWeek(orders.Week.ToInt(), ref day);
                     if (day < 0)
                     {
                         return Error("请选择当前以及当前日期之后的车次！");
@@ -105,7 +111,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                     SeatIds += YiDaBusConst.SeatSign + item + YiDaBusConst.SeatSign;
                     //判断座位是否已经被其他人下单
                     var isExist = Db.MySqlContext.Exists<Orders>(d => d.DepartureTime == orders.DepartureTime && d.IsDel == (int)IsDel.否 && d.SeatIds.Contains(SeatIds) && d.Area == orders.Area);
-                    var areaCn = string.Empty;
+
                     if (orders.Area == AreaType.shanghai.ToString()) { areaCn = "上海"; }
                     else if (orders.Area == AreaType.hangzhou.ToString()) { areaCn = "杭州"; }
                     if (isExist) { return Error($"车号：{orders.CarNumber}</br>前往：{areaCn}</br>时间：{orders.DepartureTime}</br>座位号：{item}</br>已被其他人购买，请选择其他座位。"); }
@@ -138,6 +144,23 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                 trans.Commit();
                 if (r > 0)
                 {
+                    if (!userInfo.OpenId.IsEmpty())
+                    {
+                        string ComplaintsHotline = CommonBLL.GetGlobalConstVariable(YiDaBusConst.投诉热线).FirstOrDefault()?.F_Description;
+                        //发送消息通知生成状态
+                        var TempleteData = new
+                        {
+                            first = new TemplateDataItem("您好，您已预约租车成功。"),
+                            productType = new TemplateDataItem("服务"),
+                            name = new TemplateDataItem($"前往：{areaCn}，时间：{orders.DepartureTime}，座位号：{ChooseSeats}，已预约成功"),
+                            time = new TemplateDataItem(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")),//时间
+                            result = new TemplateDataItem("已预约"),//结果
+                            remark = new TemplateDataItem($"如有疑问，请咨询{ComplaintsHotline}。")//结果
+                        };
+                        var tmResult = TemplateApi.SendTemplateMessage(WeixinAppId, userInfo.OpenId, "ugJ8nxawp2ZE53lrDMCpCVB0lI1iSKn2PSFK-rLrqP4",
+                                    (WxDomain + "/MemberManager/Member/MemberTicketDetail?orderId=" + r)
+                                    , TempleteData);
+                    }
                     return Sucess("下单成功");
                 }
                 else
@@ -172,7 +195,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                 wherebuilder.And(Orders._.CarNumber.In(YiDaBusConst.上海车牌号1, YiDaBusConst.上海车牌号2));
                 int day = 0;
                 DepartureTime = GetDateTimeByWeek(week.ToInt(), ref day).ToString("yyyy-MM-dd");
-                
+
             }
             else if (area == AreaType.hangzhou.ToString())
             {

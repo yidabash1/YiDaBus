@@ -29,7 +29,7 @@ namespace YiDaBus.Com.Mobile.Web.Controllers
         public ActionResult Index(string returnUrl)
         {
             string wxDomain = Configs.GetValue("wxDomain");
-            var state = "ZFX-" + DateTime.Now.Millisecond;//随机数，用于识别请求可靠性
+            var state = "YDBS-" + DateTime.Now.Millisecond;//随机数，用于识别请求可靠性
             Session["State"] = state;//储存随机数到Session
 
             ViewData["returnUrl"] = returnUrl;

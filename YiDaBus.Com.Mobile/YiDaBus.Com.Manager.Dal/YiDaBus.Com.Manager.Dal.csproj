@@ -72,16 +72,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\YiDaBus.Com.Manager.Common\YiDaBus.Com.Manager.Common.csproj">
-      <Project>{7B4462AF-CD37-49D6-ABAC-5015D753CD34}</Project>
-      <Name>YiDaBus.Com.Manager.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\YiDaBus.Com.Manager.Model\YiDaBus.Com.Manager.Model.csproj">
-      <Project>{58025f70-07bf-4cf1-8bd7-4e93a676c4da}</Project>
-      <Name>YiDaBus.Com.Manager.Model</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="ServicesExp\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

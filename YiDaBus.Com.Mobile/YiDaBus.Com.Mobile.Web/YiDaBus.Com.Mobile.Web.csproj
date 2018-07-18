@@ -165,11 +165,9 @@
     <Compile Include="Areas\ShangHaiManager\Controllers\ShangHaiController.cs" />
     <Compile Include="Areas\ShangHaiManager\ShangHaiManagerAreaRegistration.cs" />
     <Compile Include="Base\BaseController.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OAuth2Controller.cs" />
-    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\WeixinJSSDKController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -474,10 +472,6 @@
     <Content Include="Views\OAuth2\BaseCallback.cshtml" />
     <Content Include="Views\OAuth2\TestReturnUrl.cshtml" />
     <Content Include="Views\WeixinJSSDK\Index.cshtml" />
-    <Content Include="Template\房屋租赁合同模板.pdf" />
-    <Content Include="Template\房屋租赁合同模板（指方向1.10版）.pdf" />
-    <Content Include="Template\房屋租赁合同.doc" />
-    <Content Include="Template\房屋租赁合同模板.doc" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\html\hangzhou\index.cshtml" />
     <Content Include="Views\html\hangzhou\orderInfo.cshtml" />
@@ -499,7 +493,6 @@
     <Folder Include="Areas\MemberManager\Models\" />
     <Folder Include="Areas\MemberManager\Views\Shared\" />
     <Folder Include="Areas\OrderManager\Models\" />
-    <Folder Include="Areas\OrderManager\Views\Shared\" />
     <Folder Include="Areas\ShangHaiManager\Models\" />
     <Folder Include="Areas\ShangHaiManager\Views\Shared\" />
   </ItemGroup>

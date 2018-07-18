@@ -28,8 +28,8 @@ namespace YiDaBus.Com.Mobile.Web.Areas.MemberManager.Controllers
         /// <returns></returns>
         public ActionResult MemberInfo()
         {
-            WebHelper.WriteCookie("openid", "0oosadfjjhuyhwjenihkljsareuih");
-            WebHelper.WriteCookie("headimgurl", "~/Content/img/ad6.png");
+            //WebHelper.WriteCookie("openid", "0oosadfjjhuyhwjenihkljsareuih");
+            //WebHelper.WriteCookie("headimgurl", "~/Content/img/ad6.png");
 
             //判断是否是微信浏览器，如果是微信浏览器则进行微信授权
             //string agent = Request.Headers["User-Agent"];
@@ -46,7 +46,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.MemberManager.Controllers
             {
                 string wxDomain = Configs.GetValue("wxDomain");
                 string appId = Configs.GetValue("WeixinAppId");
-                var state = "ZFX-" + DateTime.Now.Millisecond;//随机数，用于识别请求可靠性
+                var state = "YDBS-" + DateTime.Now.Millisecond;//随机数，用于识别请求可靠性
                 Session["State"] = state;//储存随机数到Session
                 //此页面引导用户点击授权
                 string redirectURL = OAuthApi.GetAuthorizeUrl(appId,
