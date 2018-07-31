@@ -184,7 +184,7 @@ namespace YiDaBus.Com.Manager.Common
             {
                 cookie = new HttpCookie(strName);
             }
-            cookie.Value = strValue;
+            cookie.Value = HttpUtility.UrlEncode(strValue, UTF8Encoding.UTF8);
             HttpContext.Current.Response.AppendCookie(cookie);
         }
         /// <summary>
@@ -200,7 +200,7 @@ namespace YiDaBus.Com.Manager.Common
             {
                 cookie = new HttpCookie(strName);
             }
-            cookie.Value = strValue;
+            cookie.Value = HttpUtility.UrlEncode(strValue, UTF8Encoding.UTF8);
             cookie.Expires = DateTime.Now.AddMinutes(expires);
             HttpContext.Current.Response.AppendCookie(cookie);
         }
@@ -213,7 +213,7 @@ namespace YiDaBus.Com.Manager.Common
         {
             if (HttpContext.Current.Request.Cookies != null && HttpContext.Current.Request.Cookies[strName] != null)
             {
-                return HttpContext.Current.Request.Cookies[strName].Value.ToString();
+                return HttpUtility.UrlDecode(HttpContext.Current.Request.Cookies[strName].Value.ToString(), UTF8Encoding.UTF8);
             }
             return "";
         }
@@ -279,7 +279,7 @@ namespace YiDaBus.Com.Manager.Common
         {
             return HttpWebRequest(url, string.Empty, Encoding.GetEncoding("utf-8"));
         }
-        
+
         /// <summary>
         /// 请求网络资源,返回响应的文本
         /// </summary>

@@ -170,7 +170,7 @@
     <script>
         var seatList = [];
         var chooseList = [];
-        
+
 
         $(function () {
             
@@ -180,4 +180,15 @@
             Init();
         });
     </script>
+@if (ViewBag.IsExipre == true)
+{
+    <script>
+        $.modalMsg({
+            content: "请选择当前以及当前日期之后的车次!", success: function () {
+                window.location.href = "/Home/Index";
+                return;
+            }
+        });
+    </script>
+}
 }

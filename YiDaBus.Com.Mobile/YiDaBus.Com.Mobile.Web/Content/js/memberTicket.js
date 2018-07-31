@@ -9,6 +9,6 @@ function GetMyOrder() {
       , url: '/OrderManager/Orders/GetMyOrderList'
       , type: 'post'
       , data: {}//参数
-      , NoMsg: '<p>异步加载数据....</p>'
+      , NoMsg: '<p>无订单</p>'
     });
 }

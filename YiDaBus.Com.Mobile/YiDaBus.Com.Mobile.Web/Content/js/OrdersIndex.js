@@ -39,7 +39,7 @@ function SeatClickHandler() {
         chooseList.push(curSelect);
         //将当前的作为设置为选中状态
         $this.addClass("seat-select");
-        $.toast(msg, 'text');
+        //$.toast(msg, 'text');
     }
     console.log(chooseList);
 }

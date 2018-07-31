@@ -143,6 +143,20 @@ namespace YiDaBus.Com.Model
                 
             }
         }
+        private string _WxNickName = string.Empty;
+	    /// <summary>
+        /// 用户微信昵称
+        /// </summary>
+        public string WxNickName
+        {
+            get { return _WxNickName; }
+            set
+            {
+                this.OnPropertyValueChange(_.WxNickName, _WxNickName, value);
+                this._WxNickName = value;
+                
+            }
+        }
 		#endregion
 
 		#region Method
@@ -165,7 +179,7 @@ namespace YiDaBus.Com.Model
         /// </summary>
         public override Field[] GetFields()
         {
-            return new Field[] {_.Id,_.UserName,_.UserNickName,_.Mobile,_.Gender,_.OpenId,_.IsDel,_.CreateTime,_.UpdateTime };
+            return new Field[] {_.Id,_.UserName,_.UserNickName,_.Mobile,_.Gender,_.OpenId,_.IsDel,_.CreateTime,_.UpdateTime,_.WxNickName };
         }
 
         /// <summary>
@@ -173,7 +187,7 @@ namespace YiDaBus.Com.Model
         /// </summary>
         public override object[] GetValues()
         {
-            return new object[] {this._Id,this._UserName,this._UserNickName,this._Mobile,this._Gender,this._OpenId,this._IsDel,this._CreateTime,this._UpdateTime };
+            return new object[] {this._Id,this._UserName,this._UserNickName,this._Mobile,this._Gender,this._OpenId,this._IsDel,this._CreateTime,this._UpdateTime,this._WxNickName };
         }
 		#endregion
 		
@@ -232,6 +246,11 @@ namespace YiDaBus.Com.Model
             /// 更新时间
             /// </summary>
             public readonly static Field UpdateTime = new Field("UpdateTime", "Wx_Users", "更新时间");
+
+			/// <summary>
+            /// 用户微信昵称
+            /// </summary>
+            public readonly static Field WxNickName = new Field("WxNickName", "Wx_Users", "用户微信昵称");
 
 			
         }

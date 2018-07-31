@@ -36,8 +36,15 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
         /// 订票
         /// </summary>
         /// <returns></returns>
-        public ActionResult ShangHaiIndex()
+        public ActionResult ShangHaiIndex(string week)
         {
+            ViewBag.IsExipre = false;//是否已经过期
+            int day = 0;
+            var DepartureTime = GetDateTimeByWeek(week.ToInt(), ref day);
+            if (day < 0)
+            {
+                ViewBag.IsExipre = true;
+            }
             ViewBag.FriendlyReminder = CommonBLL.GetGlobalConstVariable(YiDaBusConst.友情提醒).FirstOrDefault()?.F_Description;
             return View();
         }
@@ -71,6 +78,8 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
         {
             string WeixinAppId = ConfigurationManager.AppSettings["WeixinAppId"] ?? "";
             string WxDomain = ConfigurationManager.AppSettings["wxDomain"] ?? "";
+           
+
 
             string ChooseSeats = Request["ChooseSeats"] ?? "";
             var ChooseSeatsArr = ChooseSeats.Split(',');
@@ -80,10 +89,38 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
             if (userInfo == null) { return Error(ErrCode.用户信息失效请重新登录); }
             if (orders.Area == AreaType.shanghai.ToString() && orders.Week == null) { return Error("请选择班次"); }
             var areaCn = string.Empty;
+
+            int totalCount = ChooseSeatsArr.Length;
             //开始事务
             DbTrans trans = Db.MySqlContext.BeginTransaction();
             try
             {
+                //一个用户某一周最多只能预定两张票
+                string startTime = string.Empty;
+                string endTime = string.Empty;
+                GetStartEndTimeByWeek(ref startTime, ref endTime);
+                //获取当周的星期一
+                string sql = string.Format(@"SELECT
+	                                SeatIds
+                                FROM
+	                                Orders 
+                                WHERE
+	                                UserId = {0} 
+	                                AND IsDel = {1} 
+	                                AND DepartureTime >= '{2}' 
+	                                AND DepartureTime <= '{3}'", userInfo.Id, (int)IsDel.否, startTime, endTime);
+                var SeatIdsList = Db.MySqlContext.FromSql(sql).ToList<string>();
+                
+                foreach (var item in SeatIdsList)
+                {
+                    if (string.IsNullOrEmpty(item)) continue;
+                    if (item.Contains(","))
+                        totalCount += 2;
+                    else
+                        totalCount++;
+                }
+                if (totalCount > 2) { return Error("一周最多只能预定两张票！"); }
+
                 //获取发车时间
                 DateTime DepartureTime = DateTime.Now;
                 string orderHeader = string.Empty;
@@ -95,6 +132,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                     {
                         return Error("请选择当前以及当前日期之后的车次！");
                     }
+
                     orderHeader = "SH";
                 }
                 else
@@ -139,6 +177,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                 orders.IsDel = 0;
                 orders.PayState = 0;
                 orders.WeekTextCn = Enum.GetName(typeof(WeekCn), orders.Week.ToInt());
+                orders.WxNickName = userInfo.WxNickName;
                 int r = Db.MySqlContext.Insert(trans, orders);
 
                 trans.Commit();
@@ -150,7 +189,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                         //发送消息通知生成状态
                         var TempleteData = new
                         {
-                            first = new TemplateDataItem("您好，您已预约租车成功。"),
+                            first = new TemplateDataItem($"尊敬的{userInfo.WxNickName}您好，您已预约租车成功。"),
                             productType = new TemplateDataItem("服务"),
                             name = new TemplateDataItem($"前往：{areaCn}，时间：{orders.DepartureTime}，座位号：{ChooseSeats}，已预约成功"),
                             time = new TemplateDataItem(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")),//时间

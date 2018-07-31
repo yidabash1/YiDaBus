@@ -95,6 +95,7 @@ namespace YiDaBus.Com.Mobile.Web.Controllers
                 OAuthUserInfo userInfo = OAuthApi.GetUserInfo(result.access_token, result.openid);
                 //Session["userInfo"] = userInfo;
                 WebHelper.WriteCookie("openid", userInfo.openid);
+                WebHelper.WriteCookie("nickname", userInfo.nickname);
                 WebHelper.WriteCookie("headimgurl", userInfo.headimgurl);
 
                 if (!string.IsNullOrEmpty(returnUrl))

@@ -378,7 +378,7 @@ $.LayPage = function (options) {
                         else {
                             if (data.code == 201 && data.msg == '查询成功无数据') {
                                 if ($(options.elem).find('.search_null').length == 0) {
-                                    $(options.elem).append('<div class="search_null"><dl style="border-width: 0px;background: ' + options.NullColor + ';"><dt style="float: none;width:100%;text-align: center;"><img width="75" src="/Content/img/tousu_nullicon.png"></dt><dd style="margin-left: 0px;position: relative;margin-top: 10px;text-align: center;">' + options.NoMsg + '</dd></dl></div>');
+                                    $(options.elem).append('<div class="search_null"><dl style="border-width: 0px;background: ' + options.NullColor + ';"><dt style="float: none;width:100%;text-align: center;"><img width="75" src="/Content/images/tousu_nullicon.png"></dt><dd style="margin-left: 0px;position: relative;margin-top: 10px;text-align: center;">' + options.NoMsg + '</dd></dl></div>');
                                 }
                                 next('', false);
                             } else {

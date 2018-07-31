@@ -28,8 +28,9 @@ namespace YiDaBus.Com.Mobile.Web.Areas.MemberManager.Controllers
         /// <returns></returns>
         public ActionResult MemberInfo()
         {
-            //WebHelper.WriteCookie("openid", "0oosadfjjhuyhwjenihkljsareuih");
-            //WebHelper.WriteCookie("headimgurl", "~/Content/img/ad6.png");
+            WebHelper.WriteCookie("openid", "0oosadfjjhuyhwjenihkljsareuih");
+            WebHelper.WriteCookie("nickname", "开启我亲爱的小耗子");
+            WebHelper.WriteCookie("headimgurl", "~/Content/img/ad6.png");
 
             //判断是否是微信浏览器，如果是微信浏览器则进行微信授权
             //string agent = Request.Headers["User-Agent"];
@@ -41,8 +42,9 @@ namespace YiDaBus.Com.Mobile.Web.Areas.MemberManager.Controllers
 
             #region 微信授权
             string openid = WebHelper.GetCookie("openid");
+            string nickname = WebHelper.GetCookie("nickname");
             string headimgurl = WebHelper.GetCookie("headimgurl");
-            if (string.IsNullOrEmpty(openid) || string.IsNullOrEmpty(headimgurl))
+            if (string.IsNullOrEmpty(openid) || string.IsNullOrEmpty(headimgurl) || string.IsNullOrEmpty(nickname))
             {
                 string wxDomain = Configs.GetValue("wxDomain");
                 string appId = Configs.GetValue("WeixinAppId");
@@ -89,11 +91,13 @@ namespace YiDaBus.Com.Mobile.Web.Areas.MemberManager.Controllers
         {
             //验证用户登录
             string openid = WebHelper.GetCookie("openid");
+            string nickname = WebHelper.GetCookie("nickname");
             wx_Users.UserName = wx_Users.Mobile;
             //去数据库中查询，如果有就更新，如果没有就新增
             var currentUser = GetUserByOpenId(openid);
             if (currentUser == null)//如果没有就新增
             {
+                wx_Users.WxNickName = nickname;
                 wx_Users.CreateTime = DateTime.Now;
                 wx_Users.UpdateTime = DateTime.Now;
                 wx_Users.IsDel = (int)IsDel.否;
@@ -109,6 +113,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.MemberManager.Controllers
             else//如果有就更新
             {
                 wx_Users.OpenId = openid;
+                currentUser.WxNickName = nickname;
                 currentUser.UserName = wx_Users.UserName;
                 currentUser.UserNickName = wx_Users.UserNickName;
                 currentUser.Gender = wx_Users.Gender;

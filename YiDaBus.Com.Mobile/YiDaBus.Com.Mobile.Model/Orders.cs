@@ -353,6 +353,20 @@ namespace YiDaBus.Com.Model
                 
             }
         }
+        private string _WxNickName = string.Empty;
+	    /// <summary>
+        /// 用户微信昵称
+        /// </summary>
+        public string WxNickName
+        {
+            get { return _WxNickName; }
+            set
+            {
+                this.OnPropertyValueChange(_.WxNickName, _WxNickName, value);
+                this._WxNickName = value;
+                
+            }
+        }
 		#endregion
 
 		#region Method
@@ -375,7 +389,7 @@ namespace YiDaBus.Com.Model
         /// </summary>
         public override Field[] GetFields()
         {
-            return new Field[] {_.Id,_.OrderNo,_.UserId,_.CarNumber,_.FromPosition,_.ToPosition,_.SeatIds,_.DepartureTime,_.TotalAmount,_.UserName,_.UserNickName,_.Mobile,_.IsOneWay,_.IsShuttle,_.MeetPosition,_.SendPosition,_.CreateTime,_.UpdateTime,_.PayState,_.Week,_.Area,_.IsDel,_.SeatTexts,_.WeekTextCn };
+            return new Field[] {_.Id,_.OrderNo,_.UserId,_.CarNumber,_.FromPosition,_.ToPosition,_.SeatIds,_.DepartureTime,_.TotalAmount,_.UserName,_.UserNickName,_.Mobile,_.IsOneWay,_.IsShuttle,_.MeetPosition,_.SendPosition,_.CreateTime,_.UpdateTime,_.PayState,_.Week,_.Area,_.IsDel,_.SeatTexts,_.WeekTextCn,_.WxNickName };
         }
 
         /// <summary>
@@ -383,7 +397,7 @@ namespace YiDaBus.Com.Model
         /// </summary>
         public override object[] GetValues()
         {
-            return new object[] {this._Id,this._OrderNo,this._UserId,this._CarNumber,this._FromPosition,this._ToPosition,this._SeatIds,this._DepartureTime,this._TotalAmount,this._UserName,this._UserNickName,this._Mobile,this._IsOneWay,this._IsShuttle,this._MeetPosition,this._SendPosition,this._CreateTime,this._UpdateTime,this._PayState,this._Week,this._Area,this._IsDel,this._SeatTexts,this._WeekTextCn };
+            return new object[] {this._Id,this._OrderNo,this._UserId,this._CarNumber,this._FromPosition,this._ToPosition,this._SeatIds,this._DepartureTime,this._TotalAmount,this._UserName,this._UserNickName,this._Mobile,this._IsOneWay,this._IsShuttle,this._MeetPosition,this._SendPosition,this._CreateTime,this._UpdateTime,this._PayState,this._Week,this._Area,this._IsDel,this._SeatTexts,this._WeekTextCn,this._WxNickName };
         }
 		#endregion
 		
@@ -517,6 +531,11 @@ namespace YiDaBus.Com.Model
             /// 星期几中文描述
             /// </summary>
             public readonly static Field WeekTextCn = new Field("WeekTextCn", "Orders", "星期几中文描述");
+
+			/// <summary>
+            /// 用户微信昵称
+            /// </summary>
+            public readonly static Field WxNickName = new Field("WxNickName", "Orders", "用户微信昵称");
 
 			
         }

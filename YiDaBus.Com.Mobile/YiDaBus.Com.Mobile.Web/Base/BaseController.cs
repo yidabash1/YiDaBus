@@ -113,7 +113,14 @@ namespace YiDaBus.Com.Mobile.Web.Base
             curDateTime = curDateTime.AddDays(day);
             return curDateTime;
         }
-
+        public void GetStartEndTimeByWeek(ref string startTime, ref string endTime)
+        {
+            var curDateTime = DateTime.Now;
+            string weekstr = curDateTime.DayOfWeek.ToString();
+            int curWeek = (int)((WeekEn)Enum.Parse(typeof(WeekEn), weekstr));//获取当前是星期几
+            startTime = curDateTime.AddDays(0 - curWeek).ToString("yyyy-MM-dd");
+            endTime = curDateTime.AddDays(7 - curWeek).ToString("yyyy-MM-dd");
+        }
         public int GetWeekByDateTime(DateTime DateTime)
         {
             string weekstr = DateTime.DayOfWeek.ToString();
