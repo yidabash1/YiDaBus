@@ -50,7 +50,7 @@
       <publishTime>07/31/2018 14:21:17</publishTime>
     </File>
     <File Include="Areas/OrderManager/Views/Orders/success.cshtml">
-      <publishTime>06/29/2018 10:41:44</publishTime>
+      <publishTime>07/31/2018 19:08:16</publishTime>
     </File>
     <File Include="Areas/OrderManager/Views/web.config">
       <publishTime>06/29/2018 10:41:13</publishTime>
@@ -71,10 +71,10 @@
       <publishTime>02/22/2013 08:43:40</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>07/31/2018 14:25:06</publishTime>
+      <publishTime>07/31/2018 19:09:20</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>07/31/2018 14:25:06</publishTime>
+      <publishTime>07/31/2018 19:09:20</publishTime>
     </File>
     <File Include="bin/Aspose.Words.dll">
       <publishTime>08/10/2016 09:50:50</publishTime>
@@ -191,7 +191,7 @@
       <publishTime>07/31/2018 14:23:33</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Mobile.Web.dll">
-      <publishTime>07/31/2018 14:24:52</publishTime>
+      <publishTime>07/31/2018 19:08:46</publishTime>
     </File>
     <File Include="bin/ZFX365.Com.Mobile.BLL.dll">
       <publishTime>03/22/2017 11:08:45</publishTime>
@@ -444,6 +444,9 @@
     </File>
     <File Include="Content/images/shibai_icon.png">
       <publishTime>01/22/2017 19:19:51</publishTime>
+    </File>
+    <File Include="Content/images/skm.png">
+      <publishTime>07/31/2018 19:03:19</publishTime>
     </File>
     <File Include="Content/images/Thumbs.db">
       <publishTime>01/19/2017 11:22:14</publishTime>
@@ -1361,7 +1364,7 @@
       <publishTime>02/15/2017 14:07:48</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>07/31/2018 14:25:01</publishTime>
+      <publishTime>07/31/2018 19:09:14</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>01/12/2017 13:58:14</publishTime>
