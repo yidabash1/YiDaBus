@@ -1,0 +1,286 @@
+﻿<!--=======================FORM表单START====================================-->
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<script>
+    var modulelUrl = "/OrderManage/Order/";//区域的路径
+    var keyValue = $.request("keyValue");
+    var action = $.request("action");
+    $(function () {
+        initControl();
+        if (!!keyValue) {
+            if (action == "Details" || action == "AuditPay") {
+                $.ajax({
+                    url: modulelUrl + "GetFormJson",
+                    data: { keyValue: keyValue },
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        $("#form1").formSerialize(data);
+                        $("#form1").find('.form-control,input').attr('readonly', 'readonly');
+                        $("#form1").find('select').attr('disabled', 'true');
+                        $("#form1").find('div.ckbox label').attr('for', '');
+                        //$('.upload-path').each(function (index, obj) {
+                        //    $(obj).after("<img height='100px' width='100px' src='" + $(obj).val() + "'></img>").hide();
+                        //});
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: modulelUrl + "GetFormJson",
+                    data: { keyValue: keyValue },
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        $("#form1").formSerialize(data);
+                        $(".upload-img").InitUploader({ swf: "~/Content/js/webuploader/uploader.swf" });
+                    }
+                });
+            }
+        }else {
+            $(".upload-img").InitUploader({ swf: "~/Content/js/webuploader/uploader.swf" });
+        }
+    });
+    function initControl() {
+
+    }
+    function submitForm() {
+        if (!$('#form1').formValid()) {
+            return false;
+        }
+        $.submitForm({
+            url: modulelUrl + "SubmitForm?keyValue=" + keyValue,
+            param: $("#form1").formSerialize(),
+            success: function () {
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
+            }
+        })
+    }
+    //满意
+    function AuditSuccess() {
+        if (!$('#form1').formValid()) {
+            return false;
+        }
+        $.modalConfirm('您确认要将该订单审核<span class="label label-success" style="margin:0px 5px;">通过</span>吗？', function (r) {
+            if (r) {
+                var postdata = $("#form1").formSerialize();
+                postdata["auditStatus"] = 1;
+                postdata["keyValue"] = keyValue;
+                $.submitForm({
+                    url: modulelUrl + "Audit",
+                    param: postdata,
+                    success: function () {
+                        $.currentWindow().$("#gridList").trigger("reloadGrid");
+                    }
+                })
+            }
+        });
+    }
+    //不满意
+    function AuditFailed() {
+        $.modalConfirm('您确认要将该订单审核<span class="label label-success" style="margin:0px 5px;">拒绝</span>吗？', function (r) {
+            if (r) {
+                var postdata = $("#form1").formSerialize();
+                postdata["auditStatus"] = 2;
+                postdata["keyValue"] = keyValue;
+                $.submitForm({
+                    url: modulelUrl + "Audit",
+                    param: postdata,
+                    success: function () {
+                        $.currentWindow().$("#gridList").trigger("reloadGrid");
+                    }
+                })
+            }
+        });
+    }
+
+    function Close() {
+        $.modalClose();
+    }
+</script>
+<form id="form1">
+    <div style="padding: 20px; margin-right: 20px;">
+        <table class="form">
+            <tr>
+                <th class="formTitle">订单号</th>
+                <td class="formValue">
+                    <input id="OrderNo" name="OrderNo" type="text" class="form-control required" placeholder="请输入订单号" />
+                </td>
+            </tr>
+            <tr hidden>
+                <th class="formTitle">用户ID</th>
+                <td class="formValue">
+                    <input id="UserId" name="UserId" type="text" class="form-control required" placeholder="请输入用户ID" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">车牌号</th>
+                <td class="formValue">
+                    <select id="CarNumber" name="CarNumber" class="form-control required ">
+                        <option value="">---请选择--</option>
+                        <option value="苏F25921">苏F25921</option>
+                        <option value="苏F36199">苏F36199</option>
+                        <option value="苏F56789">苏F56789</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">出发地</th>
+                <td class="formValue">
+                    <select id="FromPosition" name="FromPosition" class="form-control required ">
+                        <option value="">---请选择--</option>
+                        <option value="南通">南通</option>
+                        <option value="南通市区">南通市区</option>
+                        <option value="如东通州">如东通州</option>
+                        <option value="启东海门">启东海门</option>
+                        <option value="如皋海安">如皋海安</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">终点地</th>
+                <td class="formValue">
+                    <select id="ToPosition" name="ToPosition" class="form-control required ">
+                        <option value="">---请选择--</option>
+                        <option value="上海">上海</option>
+                        <option value="杭州">杭州</option>
+                    </select>
+                </td>
+            </tr>
+            <tr hidden>
+                <th class="formTitle">座位（以逗号隔开）</th>
+                <td class="formValue">
+                    <input id="SeatIds" name="SeatIds" type="text" class="form-control required" placeholder="请输入座位（以逗号隔开）" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">发车时间</th>
+                <td class="formValue">
+                    <input id="DepartureTime" name="DepartureTime" type="text" class="form-control required" placeholder="请输入发车时间" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">订单金额（元）</th>
+                <td class="formValue">
+                    <input id="TotalAmount" name="TotalAmount" type="text" class="form-control required" placeholder="请输入订单总金额（单位元）" />
+                </td>
+            </tr>
+            <tr hidden>
+                <th class="formTitle">用户账号</th>
+                <td class="formValue">
+                    <input id="UserName" name="UserName" type="text" class="form-control " placeholder="请输入用户账号" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">用户姓名</th>
+                <td class="formValue">
+                    <input id="UserNickName" name="UserNickName" type="text" class="form-control required" placeholder="请输入用户姓名" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">手机号</th>
+                <td class="formValue">
+                    <input id="Mobile" name="Mobile" type="text" class="form-control required" placeholder="请输入手机号" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">是否单程</th>
+                <td class="formValue">
+                    <select id="IsOneWay" name="IsOneWay" class="form-control required ">
+                        <option value="">---请选择--</option>
+                        <option value="0">是</option>
+                        <option value="1">否</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">是否接送</th>
+                <td class="formValue">
+                    <select id="IsShuttle" name="IsShuttle" class="form-control required ">
+                        <option value="">---请选择--</option>
+                        <option value="0">是</option>
+                        <option value="1">否</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">接的地点</th>
+                <td class="formValue">
+                    <input id="MeetPosition" name="MeetPosition" type="text" class="form-control " placeholder="请输入接的地点" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">送的地点</th>
+                <td class="formValue">
+                    <input id="SendPosition" name="SendPosition" type="text" class="form-control " placeholder="请输入送的地点" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">创建时间</th>
+                <td class="formValue">
+                    <input id="CreateTime" name="CreateTime" type="text" class="form-control required" placeholder="请输入创建时间" />
+                </td>
+            </tr>
+            <tr hidden>
+                <th class="formTitle">更新时间</th>
+                <td class="formValue">
+                    <input id="UpdateTime" name="UpdateTime" type="text" class="form-control required" placeholder="请输入更新时间" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">支付状态</th>
+                <td class="formValue">
+                    <select id="PayState" name="PayState" class="form-control required ">
+                        <option value="">---请选择--</option>
+                        <option value="0">待支付</option>
+                        <option value="1">支付成功</option>
+                        <option value="2">支付失败</option>
+                    </select>
+                </td>
+            </tr>
+            <tr hidden>
+                <th class="formTitle">星期几</th>
+                <td class="formValue">
+                    <input id="Week" name="Week" type="text" class="form-control " placeholder="请输入星期几" />
+                </td>
+            </tr>
+            <tr hidden>
+                <th class="formTitle">区域</th>
+                <td class="formValue">
+                    <input id="Area" name="Area" type="text" class="form-control " placeholder="请输入区域" />
+                </td>
+            </tr>
+            <tr hidden>
+                <th class="formTitle">是否已删除</th>
+                <td class="formValue">
+                    <select id="IsDel" name="IsDel" class="form-control  required">
+                        <option value="">---请选择--</option>
+                        <option value="0">未删除   </option>
+                        <option value="1">已删除 </option>
+                    </select>
+                </td>
+            </tr>
+            <tr >
+                <th class="formTitle">座位描述</th>
+                <td class="formValue">
+                    <input id="SeatTexts" name="SeatTexts" type="text" class="form-control required" placeholder="请输入座位描述" readonly/>
+                </td>
+            </tr>
+            <tr hidden>
+                <th class="formTitle">星期几中文描述</th>
+                <td class="formValue">
+                    <input id="WeekTextCn" name="WeekTextCn" type="text" class="form-control required" placeholder="请输入星期几中文描述" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="margin-right:20px;">
+        <div class="form-button" id="wizard-actions" style="position:fixed;">
+            <a href="javascript:void(0);" class="layui-layer-btn0 btn btn-default" onclick="Close()">关闭</a>
+            <a href="javascript:void(0);" class="layui-layer-btn0 btn btn-danger" onclick="AuditFailed()">支付失败</a>
+            <a href="javascript:void(0);" class="layui-layer-btn0 btn btn-primary" onclick="AuditSuccess()">支付成功</a>
+        </div>
+    </div>
+</form>
+<!--=======================FORM表单END====================================-->

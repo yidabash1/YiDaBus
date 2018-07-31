@@ -28,9 +28,9 @@ namespace YiDaBus.Com.Mobile.Web.Areas.MemberManager.Controllers
         /// <returns></returns>
         public ActionResult MemberInfo()
         {
-            WebHelper.WriteCookie("openid", "0oosadfjjhuyhwjenihkljsareuih");
-            WebHelper.WriteCookie("nickname", "开启我亲爱的小耗子");
-            WebHelper.WriteCookie("headimgurl", "~/Content/img/ad6.png");
+            //WebHelper.WriteCookie("openid", "0oosadfjjhuyhwjenihkljsareuih");
+            //WebHelper.WriteCookie("nickname", "开启我亲爱的小耗子");
+            //WebHelper.WriteCookie("headimgurl", "~/Content/img/ad6.png");
 
             //判断是否是微信浏览器，如果是微信浏览器则进行微信授权
             //string agent = Request.Headers["User-Agent"];

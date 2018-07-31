@@ -100,7 +100,7 @@ namespace YiDaBus.Com.Manager.Web.Controllers
                 logEntity.F_Account = username;
                 logEntity.F_NickName = username;
                 logEntity.F_Result = false;
-                logEntity.F_Description = "登录失败，" + ex.Message;
+                logEntity.F_Description = "登录失败，" + ex.InnerException.Message;
                 new LogApp().WriteDbLog(logEntity);
                 return Content(new AjaxResult { status = 0, msg = ex.Message }.ToJson());
             }

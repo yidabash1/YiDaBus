@@ -47,7 +47,7 @@
       <publishTime>07/02/2018 17:12:56</publishTime>
     </File>
     <File Include="Areas/OrderManager/Views/Orders/shanghaiIndex.cshtml">
-      <publishTime>07/02/2018 18:00:23</publishTime>
+      <publishTime>07/31/2018 14:21:17</publishTime>
     </File>
     <File Include="Areas/OrderManager/Views/Orders/success.cshtml">
       <publishTime>06/29/2018 10:41:44</publishTime>
@@ -56,7 +56,7 @@
       <publishTime>06/29/2018 10:41:13</publishTime>
     </File>
     <File Include="Areas/ShangHaiManager/Views/ShangHai/index.cshtml">
-      <publishTime>06/29/2018 13:33:14</publishTime>
+      <publishTime>07/31/2018 14:21:14</publishTime>
     </File>
     <File Include="Areas/ShangHaiManager/Views/ShangHai/orderInfo.cshtml">
       <publishTime>06/29/2018 09:59:56</publishTime>
@@ -71,10 +71,10 @@
       <publishTime>02/22/2013 08:43:40</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>07/17/2018 11:07:44</publishTime>
+      <publishTime>07/31/2018 14:25:06</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>07/17/2018 11:07:44</publishTime>
+      <publishTime>07/31/2018 14:25:06</publishTime>
     </File>
     <File Include="bin/Aspose.Words.dll">
       <publishTime>08/10/2016 09:50:50</publishTime>
@@ -179,19 +179,19 @@
       <publishTime>01/12/2017 14:16:42</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Manager.Dal.dll">
-      <publishTime>07/05/2018 10:16:27</publishTime>
+      <publishTime>07/17/2018 11:11:46</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Mobile.BLL.dll">
-      <publishTime>07/05/2018 10:16:27</publishTime>
+      <publishTime>07/31/2018 14:23:34</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Mobile.Common.dll">
-      <publishTime>07/05/2018 10:16:27</publishTime>
+      <publishTime>07/31/2018 14:23:33</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Mobile.Model.dll">
-      <publishTime>07/05/2018 10:16:27</publishTime>
+      <publishTime>07/31/2018 14:23:33</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Mobile.Web.dll">
-      <publishTime>07/17/2018 11:07:30</publishTime>
+      <publishTime>07/31/2018 14:24:52</publishTime>
     </File>
     <File Include="bin/ZFX365.Com.Mobile.BLL.dll">
       <publishTime>03/22/2017 11:08:45</publishTime>
@@ -227,16 +227,16 @@
       <publishTime>01/28/2015 04:04:32</publishTime>
     </File>
     <File Include="Configs/appSettings.config">
-      <publishTime>07/17/2018 10:33:12</publishTime>
+      <publishTime>07/31/2018 13:25:07</publishTime>
     </File>
     <File Include="Configs/log4net.config">
       <publishTime>02/13/2017 14:51:36</publishTime>
     </File>
     <File Include="Content/bus/bus.css">
-      <publishTime>06/28/2018 09:38:53</publishTime>
+      <publishTime>07/30/2018 10:06:46</publishTime>
     </File>
     <File Include="Content/bus/bus2.css">
-      <publishTime>06/29/2018 13:58:50</publishTime>
+      <publishTime>07/30/2018 10:06:36</publishTime>
     </File>
     <File Include="Content/bus/demos.css">
       <publishTime>06/22/2018 10:30:11</publishTime>
@@ -452,7 +452,7 @@
       <publishTime>01/22/2017 19:19:51</publishTime>
     </File>
     <File Include="Content/images/tousu_nullicon.png">
-      <publishTime>01/22/2017 19:19:51</publishTime>
+      <publishTime>07/31/2018 13:21:52</publishTime>
     </File>
     <File Include="Content/images/userbg.png">
       <publishTime>01/22/2017 19:19:51</publishTime>
@@ -704,7 +704,7 @@
       <publishTime>02/28/2017 15:37:46</publishTime>
     </File>
     <File Include="Content/js/framework-ui.js">
-      <publishTime>07/02/2018 16:16:40</publishTime>
+      <publishTime>07/31/2018 13:23:07</publishTime>
     </File>
     <File Include="Content/js/h5uploader.js">
       <publishTime>01/22/2017 19:19:52</publishTime>
@@ -1082,7 +1082,7 @@
       <publishTime>03/20/2017 09:12:08</publishTime>
     </File>
     <File Include="Content/js/memberTicket.js">
-      <publishTime>07/02/2018 16:03:18</publishTime>
+      <publishTime>07/30/2018 10:05:27</publishTime>
     </File>
     <File Include="Content/js/memberTicketDetail.js">
       <publishTime>07/02/2018 17:54:01</publishTime>
@@ -1205,7 +1205,7 @@
       <publishTime>03/21/2017 14:05:57</publishTime>
     </File>
     <File Include="Content/js/OrdersIndex.js">
-      <publishTime>07/02/2018 14:55:26</publishTime>
+      <publishTime>07/31/2018 14:23:03</publishTime>
     </File>
     <File Include="Content/js/OrdersInfo.js">
       <publishTime>07/17/2018 11:04:02</publishTime>
@@ -1361,7 +1361,7 @@
       <publishTime>02/15/2017 14:07:48</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>07/17/2018 11:07:37</publishTime>
+      <publishTime>07/31/2018 14:25:01</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>01/12/2017 13:58:14</publishTime>
@@ -1799,7 +1799,7 @@
       <publishTime>01/12/2017 13:58:14</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/05/2018 10:17:09</publishTime>
+      <publishTime>07/31/2018 14:23:37</publishTime>
     </File>
   </ItemGroup>
 </Project>

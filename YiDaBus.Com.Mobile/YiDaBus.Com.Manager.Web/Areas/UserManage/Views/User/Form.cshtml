@@ -1,0 +1,123 @@
+﻿<!--=======================FORM表单START====================================-->
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<script>
+    var modulelUrl = "/UserManage/User/";//区域的路径
+    var keyValue = $.request("keyValue");
+    var action = $.request("action");
+    $(function () {
+        initControl();
+        if (!!keyValue) {
+            if (action == "Details") {
+                $.ajax({
+                    url: modulelUrl + "GetFormJson",
+                    data: { keyValue: keyValue },
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        $("#form1").formSerialize(data);
+                        $("#form1").find('.form-control,input').attr('readonly', 'readonly');
+                        $("#form1").find('select').attr('disabled', 'true');
+                        $("#form1").find('div.ckbox label').attr('for', '');
+                        $('.upload-path').each(function (index, obj) {
+                            $(obj).after("<img height='100px' width='100px' src='" + $(obj).val() + "'></img>").hide();
+                        });
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: modulelUrl + "GetFormJson",
+                    data: { keyValue: keyValue },
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        $("#form1").formSerialize(data);
+                        $(".upload-img").InitUploader({ swf: "~/Content/js/webuploader/uploader.swf" });
+                    }
+                });
+            }
+        }else {
+            $(".upload-img").InitUploader({ swf: "~/Content/js/webuploader/uploader.swf" });
+        }
+    });
+    function initControl() {
+
+    }
+    function submitForm() {
+        if (!$('#form1').formValid()) {
+            return false;
+        }
+        $.submitForm({
+            url: modulelUrl + "SubmitForm?keyValue=" + keyValue,
+            param: $("#form1").formSerialize(),
+            success: function () {
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
+            }
+        })
+    }
+</script>
+<form id="form1">
+    <div style="padding-top: 20px; margin-right: 20px;">
+        <table class="form">
+            <tr hidden>
+                <th class="formTitle">用户账号</th>
+                <td class="formValue">
+                    <input id="UserName" name="UserName" type="text" class="form-control required" placeholder="请输入用户账号" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">用户姓名</th>
+                <td class="formValue">
+                    <input id="UserNickName" name="UserNickName" type="text" class="form-control required" placeholder="请输入用户姓名" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">手机号</th>
+                <td class="formValue">
+                    <input id="Mobile" name="Mobile" type="text" class="form-control required" placeholder="请输入手机号" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">性别</th>
+                <td class="formValue">
+                    <select id="Gender" name="Gender" class="form-control  required">
+                        <option value="">---请选择--</option>
+                        <option value="帅哥">帅哥   </option>
+                        <option value="美女">美女 </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">微信OpenId</th>
+                <td class="formValue">
+                    <input id="OpenId" name="OpenId" type="text" class="form-control required" placeholder="请输入微信用户唯一标识" readonly />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">是否已删除</th>
+                <td class="formValue">
+                    <select id="IsDel" name="IsDel" class="form-control  required">
+                        <option value="">---请选择--</option>
+                        <option value="0">未删除   </option>
+                        <option value="1">已删除 </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">创建时间</th>
+                <td class="formValue">
+                    <input id="CreateTime" name="CreateTime" type="text" class="form-control required" placeholder="请输入创建时间" readonly />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">更新时间</th>
+                <td class="formValue">
+                    <input id="UpdateTime" name="UpdateTime" type="text" class="form-control required" placeholder="请输入更新时间" readonly />
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+<!--=======================FORM表单END====================================-->
