@@ -101,10 +101,11 @@ function GetAndSetSeatsByAare() {
         , success: function (data) {
             //设置已选择的样式
             var JsonData = data.data;
-            for (var i = 0; i < JsonData.length; i++) {
-                var seatcontainer = $(".bus-caption:contains(" + JsonData[i].CarNumber + ")").next().find('a');
-                for (var j = 0; j < JsonData[i].SeatIds.length; j++) {
-                    var seatId = JsonData[i].SeatIds[j];
+            var JsonDataOrders = JsonData.OrdersByGroupCarNumberList;
+            for (var i = 0; i < JsonDataOrders.length; i++) {
+                var seatcontainer = $(".bus-caption:contains(" + JsonDataOrders[i].CarNumber + ")").next().find('a');
+                for (var j = 0; j < JsonDataOrders[i].SeatIds.length; j++) {
+                    var seatId = JsonDataOrders[i].SeatIds[j];
                     for (var k = 0; k < seatcontainer.length; k++) {
                         if (seatcontainer[k].text == seatId) {
                             seatcontainer[k].classList.add('seat-sold');
@@ -119,6 +120,12 @@ function GetAndSetSeatsByAare() {
                 if (!allSeat[i].classList.contains('seat-unsold') && !allSeat[i].classList.contains('seat-sold')) {
                     allSeat[i].classList.add('seat-unsold');
                 }
+            }
+
+            //是否开放苏F56789
+            var JsonDataIsOpenF56789 = JsonData.IsOpenF56789;
+            if (JsonDataIsOpenF56789 == "否") {
+                $("#F56789BusContainer>a").removeClass('seat-unsold');
             }
 
             //对未选择的添加点击事件

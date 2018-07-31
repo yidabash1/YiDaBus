@@ -78,7 +78,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
         {
             string WeixinAppId = ConfigurationManager.AppSettings["WeixinAppId"] ?? "";
             string WxDomain = ConfigurationManager.AppSettings["wxDomain"] ?? "";
-           
+
 
 
             string ChooseSeats = Request["ChooseSeats"] ?? "";
@@ -110,7 +110,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
 	                                AND DepartureTime >= '{2}' 
 	                                AND DepartureTime <= '{3}'", userInfo.Id, (int)IsDel.否, startTime, endTime);
                 var SeatIdsList = Db.MySqlContext.FromSql(sql).ToList<string>();
-                
+
                 foreach (var item in SeatIdsList)
                 {
                     if (string.IsNullOrEmpty(item)) continue;
@@ -229,12 +229,13 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
             WhereClipBuilder wherebuilder = new WhereClipBuilder();
             wherebuilder.And(Orders._.IsDel == IsDel.否);
             var DepartureTime = string.Empty;
+            string IsOpenF56789 = "是";
             if (area == AreaType.shanghai.ToString())
             {
                 wherebuilder.And(Orders._.CarNumber.In(YiDaBusConst.上海车牌号1, YiDaBusConst.上海车牌号2));
                 int day = 0;
                 DepartureTime = GetDateTimeByWeek(week.ToInt(), ref day).ToString("yyyy-MM-dd");
-
+                IsOpenF56789 = CommonBLL.GetGlobalConstVariable(YiDaBusConst.是否开启苏F56789).FirstOrDefault()?.F_Description;
             }
             else if (area == AreaType.hangzhou.ToString())
             {
@@ -246,23 +247,27 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
             var data = Db.MySqlContext.From<Orders>().Where(wherebuilder.ToWhereClip()).ToList();
             var groupData = data.GroupBy(d => d.CarNumber);
 
+            SeatsDetails seatsDetails = new SeatsDetails();
             List<OrdersByGroupCarNumber> ordersByGroupCarNumberList = new List<OrdersByGroupCarNumber>();
             foreach (var groupitem in groupData)
             {
                 List<string> seatsList = new List<string>();
+                List<string> unSelectList = new List<string>();
+
                 foreach (var item in groupitem)
                 {
                     seatsList = seatsList.Concat(item.SeatIds.Replace(YiDaBusConst.SeatSign, "").Split(',').ToList()).ToList();
                 }
-
+                
                 ordersByGroupCarNumberList.Add(new OrdersByGroupCarNumber()
                 {
                     CarNumber = groupitem.Key,
-                    //OrdersList = orderList
                     SeatIds = seatsList
                 });
             }
-            return base.Sucess("操作成功", 200, ordersByGroupCarNumberList);
+            seatsDetails.OrdersByGroupCarNumberList = ordersByGroupCarNumberList;
+            seatsDetails.IsOpenF56789 = IsOpenF56789;
+            return base.Sucess("操作成功", 200, seatsDetails);
         }
 
         [HttpPost]
@@ -360,8 +365,18 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
         protected class OrdersByGroupCarNumber
         {
             public string CarNumber { get; set; }
-            //public List<Orders> OrdersList { get; set; }
+            /// <summary>
+            /// 已选中的座位号
+            /// </summary>
             public List<string> SeatIds { get; set; }
+        }
+        protected class SeatsDetails
+        {
+            public List<OrdersByGroupCarNumber> OrdersByGroupCarNumberList { get; set; }
+            /// <summary>
+            /// 不可以被选择的座位号
+            /// </summary>
+            public string IsOpenF56789 { get; set; }
         }
 
         protected class OrdersExt : Orders
