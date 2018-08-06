@@ -17,7 +17,7 @@
       <publishTime>06/28/2018 09:23:12</publishTime>
     </File>
     <File Include="Areas/HangZhouManager/Views/HangZhou/success.cshtml">
-      <publishTime>06/28/2018 09:23:49</publishTime>
+      <publishTime>07/31/2018 20:01:03</publishTime>
     </File>
     <File Include="Areas/HangZhouManager/Views/web.config">
       <publishTime>06/28/2018 09:08:29</publishTime>
@@ -62,7 +62,7 @@
       <publishTime>06/29/2018 09:59:56</publishTime>
     </File>
     <File Include="Areas/ShangHaiManager/Views/ShangHai/success.cshtml">
-      <publishTime>06/28/2018 09:19:49</publishTime>
+      <publishTime>07/31/2018 20:01:19</publishTime>
     </File>
     <File Include="Areas/ShangHaiManager/Views/web.config">
       <publishTime>06/28/2018 09:08:16</publishTime>
@@ -71,10 +71,10 @@
       <publishTime>02/22/2013 08:43:40</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>07/31/2018 19:09:20</publishTime>
+      <publishTime>07/31/2018 20:01:49</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>07/31/2018 19:09:20</publishTime>
+      <publishTime>07/31/2018 20:01:49</publishTime>
     </File>
     <File Include="bin/Aspose.Words.dll">
       <publishTime>08/10/2016 09:50:50</publishTime>
@@ -1364,7 +1364,7 @@
       <publishTime>02/15/2017 14:07:48</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>07/31/2018 19:09:14</publishTime>
+      <publishTime>07/31/2018 20:01:45</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>01/12/2017 13:58:14</publishTime>
@@ -1682,7 +1682,7 @@
       <publishTime>06/22/2018 09:41:57</publishTime>
     </File>
     <File Include="Views/html/hangzhou/success.cshtml">
-      <publishTime>06/22/2018 09:41:57</publishTime>
+      <publishTime>07/31/2018 20:01:23</publishTime>
     </File>
     <File Include="Views/html/member/memberComplaint.cshtml">
       <publishTime>06/22/2018 09:41:57</publishTime>
@@ -1706,7 +1706,7 @@
       <publishTime>06/22/2018 09:41:57</publishTime>
     </File>
     <File Include="Views/html/shanghai/success.cshtml">
-      <publishTime>06/22/2018 09:41:57</publishTime>
+      <publishTime>07/31/2018 20:01:27</publishTime>
     </File>
     <File Include="Views/OAuth2/BaseCallback.cshtml">
       <publishTime>01/16/2017 13:48:46</publishTime>

@@ -1,0 +1,89 @@
+﻿ <!--=======================FORM表单START====================================-->
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
+}
+<script>
+    var modulelUrl = "";//区域的路径
+    var keyValue = $.request("keyValue");
+    var action = $.request("action");
+    $(function () {
+        initControl();
+        if (!!keyValue) {
+            if (action == "Details") {
+                $.ajax({
+                    url: modulelUrl + "GetFormJson",
+                    data: { keyValue: keyValue },
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        $("#form1").formSerialize(data);
+                        $("#form1").find('.form-control,input').attr('readonly', 'readonly');
+                        $("#form1").find('select').attr('disabled', 'true');
+                        $("#form1").find('div.ckbox label').attr('for', '');
+                        $('.upload-path').each(function (index, obj) {
+                            $(obj).after("<img height='100px' width='100px' src='" + $(obj).val() + "'></img>").hide();
+                        });
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: modulelUrl + "GetFormJson",
+                    data: { keyValue: keyValue },
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        $("#form1").formSerialize(data);
+                        $("#Week").val(FormmatWeek(parseInt($("#Week").val())));
+                    }
+                });
+            }
+        }else {
+            $(".upload-img").InitUploader({ swf: "~/Content/js/webuploader/uploader.swf" });
+        }
+    });
+    function initControl() {
+        
+    }
+    function submitForm() {
+        if (!$('#form1').formValid()) {
+            return false;
+        }
+        $.submitForm({
+            url: modulelUrl + "SubmitForm?keyValue=" + keyValue,
+            param: $("#form1").formSerialize(),
+            success: function () {
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
+            }
+        })
+    }
+   
+</script>
+<form id="form1">
+    <div style="padding-top: 20px; margin-right: 20px;">
+        <table class="form">
+            @*<tr>
+                <th class="formTitle">主键ID</th>
+                <td class="formValue"></td>
+            </tr>*@
+            <tr>
+                <th class="formTitle">区域</th>
+                <td class="formValue">
+                    <input id="Area" name="Area" type="text" class="form-control required" placeholder="请输入区域" readonly />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">星期</th>
+                <td class="formValue">
+                    <input id="Week" name="Week" type="text" class="form-control required" placeholder="请输入星期" readonly />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">结束时间</th>
+                <td class="formValue">
+                    <input id="EndTime" name="EndTime" type="text" placeholder="请输入结束时间" class="form-control input-wdatepicker required" onfocus="WdatePicker({dateFmt:'HH:mm:ss'})" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>

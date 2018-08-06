@@ -103,6 +103,12 @@
     <Compile Include="Sys_User.cs">
       <DependentUpon>GenerateEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Sys_UserLogOn.cs">
+      <DependentUpon>GenerateEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TimeEndConfig.cs">
+      <DependentUpon>GenerateEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Wx_Users.cs">
       <DependentUpon>GenerateEntity.tt</DependentUpon>
     </Compile>

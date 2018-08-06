@@ -1,0 +1,206 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+<script>
+    var modulelUrl = "/SystemManage/TimeEndConfig/";//区域的路径
+    $(function () {
+        gridList();
+    })
+    
+    var $gridList;
+    function gridList() {
+        $gridList = $("#gridList");
+        $gridList.dataGrid({
+            url: modulelUrl + "GetGridJson",
+            height: $(window).height() - 128,
+            colModel: [
+						{ label: "主键", name: "Id", hidden: true, key: true },
+							{ label: '区域', name: 'Area', width: 150, align: 'left' },
+							{
+							    label: '星期', name: 'Week', width: 150, align: 'left'
+							},
+							{
+							    label: '结束时间', name: 'EndTime', width: 150, align: 'left'
+							},
+			],
+            pager: "#gridPager",
+            viewrecords: true
+        });
+        $("#btn_search").click(function () {
+            $gridList.jqGrid('setGridParam', {
+                postData: { keyword: $("#txt_keyword").val() },
+            }).trigger('reloadGrid');
+        });
+    }
+    function btn_add() {
+        $.modalOpen({
+            id: "Form",
+            title: "新增",
+            url: modulelUrl + "Form",
+            width: "800px",
+            height: "300px",
+            callBack: function (iframeId) {
+                top.frames[iframeId].submitForm();
+            }
+        });
+    }
+    function btn_edit() {
+        var keyValue = $("#gridList").jqGridRowValue().Id;
+        if (keyValue == undefined) {
+            $.modalAlert("请选择要操作的行！", 2);
+            return;
+        }
+        $.modalOpen({
+            id: "Form",
+            title: "修改",
+            url: modulelUrl + "Form?keyValue=" + keyValue,
+            width: "500px",
+            height: "400px",
+            callBack: function (iframeId) {
+                top.frames[iframeId].submitForm();
+            }
+        });
+    }
+    function btn_delete() {
+        var keyValue = $("#gridList").jqGridRowValue().Id;
+        if (keyValue == undefined) {
+            $.modalAlert("请选择要操作的行！", 2);
+            return;
+        }
+        $.deleteForm({
+            url: modulelUrl + "DeleteForm",
+            param: { keyValue: keyValue },
+            success: function () {
+                $.currentWindow().$("#gridList").trigger("reloadGrid");
+            }
+        })
+    }
+    function btn_details() {
+        var keyValue = $("#gridList").jqGridRowValue().Id;
+        if (keyValue == undefined) {
+            $.modalAlert("请选择要操作的行！", 2);
+            return;
+        }
+        $.modalOpen({
+            id: "Details",
+            title: "查看",
+            url: modulelUrl + "Form?action=Details&keyValue=" + keyValue,
+            width: "800px",
+            height: "600px",
+            btn: null,
+        });
+    }
+</script>
+<style>
+    dl {
+        margin: 5px !important;
+    }
+
+    a:hover {
+        color: #ff6a00;
+    }
+
+    #SearchForm table tr {
+    }
+
+        #SearchForm table tr td {
+            padding-right: 10px;
+        }
+</style>
+<div class="topPanel" style="height: 50px;">
+    <div class="search" style="float: inherit;">
+        @*<form id="SearchForm">
+            <table>
+                <tr>
+                    <!--主键ID-->
+                    <td>
+                        <div class="input-group">
+                            <strong>主键ID：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="Id" name="Id" type="text" class="form-control" placeholder="主键ID">
+                        </div>
+                    </td>
+                    <!--区域-->
+                    <td>
+                        <div class="input-group">
+                            <strong>区域：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="Area" name="Area" type="text" class="form-control" placeholder="区域">
+                        </div>
+                    </td>
+                    <!--星期-->
+                    <td>
+                        <div class="input-group">
+                            <strong>星期：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="Week" name="Week" type="text" class="form-control" placeholder="星期">
+                        </div>
+                    </td>
+                    <!--结束时间-->
+                    <td>
+                        <div class="input-group">
+                            <strong>结束时间：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="EndTime" name="EndTime" type="text" class="form-control" placeholder="结束时间">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button id="btn_search" type="button" class="btn  btn-primary" onclick="SearchHandler()"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn  btn-primary" onclick="ShowMoreSearchHandler(this)" style="padding:0px 10px;"><i class="fa fa-expand"></i>更多</button>
+                            </span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <table id="TbMoreSeach" style="display:none;">
+                <tr></tr>
+            </table>
+        </form>*@
+    </div>
+    <div id="toolbar" style="padding:0px 10px;">
+        <table>
+            <tr>
+                <td>
+                    <a id="NF-edit" class="btn btn-default" authorize="yes" onclick="btn_edit()"><i class="fa fa-pencil-square-o"></i>修改</a>
+                </td>
+                <td>
+                    <a id="NF-delete" class="btn btn-default" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除</a>
+                </td>
+                <td>
+                    <a id="NF-Details" class="btn btn-default" authorize="yes" onclick="btn_details()"><i class="fa fa-search-plus"></i>查看</a>
+                </td>
+            </tr>
+        </table>
+        <script>$('#toolbar').authorizeButton()</script>
+    </div>
+</div>
+<div class="gridPanel">
+    <table id="gridList"></table>
+    <div id="gridPager"></div>
+</div>

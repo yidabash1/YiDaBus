@@ -231,6 +231,7 @@
     <Compile Include="Areas\SystemManage\Controllers\OrganizeController.cs" />
     <Compile Include="Areas\SystemManage\Controllers\RoleAuthorizeController.cs" />
     <Compile Include="Areas\SystemManage\Controllers\RoleController.cs" />
+    <Compile Include="Areas\SystemManage\Controllers\TimeEndConfigController.cs" />
     <Compile Include="Areas\SystemManage\Controllers\UserController.cs" />
     <Compile Include="Areas\SystemManage\SystemManageAreaRegistration.cs" />
     <Compile Include="Areas\SystemSecurity\Controllers\DbBackupController.cs" />
@@ -788,6 +789,9 @@
     <Content Include="GenerateCode\Sys_UserLogOn.html">
       <DependentUpon>GenerateHtml.tt</DependentUpon>
     </Content>
+    <Content Include="GenerateCode\TimeEndConfig.html">
+      <DependentUpon>GenerateHtml.tt</DependentUpon>
+    </Content>
     <Content Include="GenerateCode\Wx_Users.html">
       <DependentUpon>GenerateHtml.tt</DependentUpon>
     </Content>
@@ -896,6 +900,9 @@
     <Content Include="Areas\UserManage\Views\web.config" />
     <Content Include="Areas\UserManage\Views\User\Index.cshtml" />
     <Content Include="Areas\UserManage\Views\User\Form.cshtml" />
+    <Content Include="Areas\SystemManage\Views\TimeEndConfig\Index.cshtml" />
+    <Content Include="Areas\SystemManage\Views\TimeEndConfig\Form.cshtml" />
+    <Content Include="Areas\OrderManage\Views\Order\GroupMsg.cshtml" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>

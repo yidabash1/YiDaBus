@@ -433,7 +433,14 @@ namespace YiDaBus.Com.Model
         {
             return _.F_Birthday;
         }
-						 /// <summary>
+				        /// <summary>
+        /// 获取实体中的主键列
+        /// </summary>
+        public override Field[] GetPrimaryKeyFields()
+        {
+            return new Field[] {_.F_Id };
+        }
+				 /// <summary>
         /// 获取列信息
         /// </summary>
         public override Field[] GetFields()

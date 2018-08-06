@@ -165,6 +165,24 @@
         //});
         $.download(modulelUrl + "Export", $("#SearchForm").serialize(), "POST")
     }
+    function btn_groupmsg() {
+        var keyValue = $("#gridList").jqGridRowValue().Id;
+        if (keyValue == undefined) {
+            $.modalAlert("请选择要操作的行！", 2);
+            return;
+        }
+        $.modalOpen({
+            id: "Form",
+            title: "修改",
+            url: modulelUrl + "GroupMsg?keyValue=" + keyValue,
+            width: "800px",
+            height: "600px",
+            callBack: function (iframeId) {
+                top.frames[iframeId].submitForm();
+            }
+        });
+    }
+    
 </script>
 <style>
     dl {
@@ -461,6 +479,9 @@
                 </td>
                 <td>
                     <a id="NF-export" class="btn btn-default" authorize="yes" onclick="btn_export()"><i class="fa fa-pencil-square-o"></i>导出</a>
+                </td>
+                <td>
+                    <a id="NF-groupmsg" class="btn btn-default" authorize="yes" onclick="btn_groupmsg()"><i class="fa fa-pencil-square-o"></i>群发消息</a>
                 </td>
                 <td>
                     <a id="NF-delete" class="btn btn-default" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除</a>

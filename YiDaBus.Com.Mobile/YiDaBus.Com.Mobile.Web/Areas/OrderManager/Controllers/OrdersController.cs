@@ -38,13 +38,57 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
         /// <returns></returns>
         public ActionResult ShangHaiIndex(string week)
         {
+            //上海订座，需要在后台增加每天停止订座的时间，如：19:00。这样，到周一19:00，只能订周二至五的票，以此类推……，周五19:00后（包含周六周日）只能订下周1-5的票。
             ViewBag.IsExipre = false;//是否已经过期
             int day = 0;
-            var DepartureTime = GetDateTimeByWeek(week.ToInt(), ref day);
-            if (day < 0)
+            var curDateTime = DateTime.Now;
+            int curWeek = (int)curDateTime.DayOfWeek;
+            int selectWeek = week.ToInt();
+            //如果当前不是星期六并且不是星期天，则判断是否过期
+            if (curWeek != 0 && curWeek != 6)
             {
-                ViewBag.IsExipre = true;
+                string endTime = string.Empty;
+                var endConfigList = Db.MySqlContext.From<TimeEndConfig>().Where(d => d.Area == "上海").ToList<TimeEndConfigExt>();
+                foreach (var item in endConfigList)
+                {
+                    switch (item.Week)
+                    {
+                        case "星期一":
+                            item.IntWeek = 1;
+                            break;
+                        case "星期二":
+                            item.IntWeek = 2;
+                            break;
+                        case "星期三":
+                            item.IntWeek = 3;
+                            break;
+                        case "星期四":
+                            item.IntWeek = 4;
+                            break;
+                        case "星期五":
+                            item.IntWeek = 5;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                var endConfig = endConfigList.Where(d => d.IntWeek == curWeek).FirstOrDefault();
+                if (endConfig != null) { endTime = endConfig.EndTime; }
+                DateTime endDateTime = string.Format("{0} {1}", curDateTime.ToString("yyyy-MM-dd"), endTime).ToDate();
+                var DepartureTime = GetDateTimeByWeek(selectWeek, ref day);
+                if (DepartureTime < endDateTime)
+                {
+                    ViewBag.IsExipre = true;
+                    return View();
+                }
+                if (day < 0)
+                {
+                    ViewBag.IsExipre = true;
+                    return View();
+                }
             }
+
             ViewBag.FriendlyReminder = CommonBLL.GetGlobalConstVariable(YiDaBusConst.友情提醒).FirstOrDefault()?.F_Description;
             return View();
         }
@@ -258,7 +302,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                 {
                     seatsList = seatsList.Concat(item.SeatIds.Replace(YiDaBusConst.SeatSign, "").Split(',').ToList()).ToList();
                 }
-                
+
                 ordersByGroupCarNumberList.Add(new OrdersByGroupCarNumber()
                 {
                     CarNumber = groupitem.Key,
@@ -387,6 +431,14 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
             public int IsExpir { get; set; }
             //public string WeekText { get; set; }
         }
+        protected class TimeEndConfigExt : TimeEndConfig
+        {
+            /// <summary>
+            /// 星期几
+            /// </summary>
+            public int IntWeek { get; set; }
+        }
+
         #endregion
     }
 }

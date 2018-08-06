@@ -40,6 +40,7 @@
 							{ label: '是否已删除（0：未删除；1：已删除；）', name: 'IsDel', width: 150, align: 'left' },
 							{ label: '座位描述', name: 'SeatTexts', width: 150, align: 'left' },
 							{ label: '星期几中文描述', name: 'WeekTextCn', width: 150, align: 'left' },
+							{ label: '用户微信昵称', name: 'WxNickName', width: 150, align: 'left' },
 			],
             pager: "#gridPager",
             viewrecords: true
@@ -394,6 +395,17 @@
                             <input id="WeekTextCn" name="WeekTextCn" type="text" class="form-control" placeholder="星期几中文描述" >
                         </div>
                     </td>
+								<!--用户微信昵称-->
+					<td>
+                        <div class="input-group">
+                            <strong>用户微信昵称：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="WxNickName" name="WxNickName" type="text" class="form-control" placeholder="用户微信昵称" >
+                        </div>
+                    </td>
 									<td>
                         <div class="input-group">
                             <span class="input-group-btn">
@@ -649,6 +661,12 @@
 				   					<input id="WeekTextCn" name="WeekTextCn" type="text" class="form-control required" placeholder="请输入星期几中文描述" />
                            </td>
     </tr>
+                   <tr>
+					<th class="formTitle">用户微信昵称</th>
+					<td class="formValue">
+				   					<input id="WxNickName" name="WxNickName" type="text" class="form-control required" placeholder="请输入用户微信昵称" />
+                           </td>
+    </tr>
          </table>
     </div>
 </form>
@@ -802,6 +820,10 @@
 				  				                    <li>
 				   <label>星期几中文描述</label>
 				   					<input id="WeekTextCn" name="WeekTextCn" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>用户微信昵称</label>
+				   					<input id="WxNickName" name="WxNickName" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				   <li>
  <div style="padding-left: 115px;">

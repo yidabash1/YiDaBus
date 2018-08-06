@@ -17,15 +17,9 @@
             height: $(window).height() - 128,
             colModel: [
 						{ label: "主键", name: "Id", hidden: true, key: true },
-							{ label: '用户账号', name: 'UserName', width: 150, align: 'left' },
-							{ label: '用户姓名', name: 'UserNickName', width: 150, align: 'left' },
-							{ label: '手机号', name: 'Mobile', width: 150, align: 'left' },
-							{ label: '性别：帅哥；美女；', name: 'Gender', width: 150, align: 'left' },
-							{ label: '微信用户唯一标识', name: 'OpenId', width: 150, align: 'left' },
-							{ label: '是否已删除（0：未删除；1：已删除；）', name: 'IsDel', width: 150, align: 'left' },
-							{ label: '创建时间', name: 'CreateTime', width: 150, align: 'left' },
-							{ label: '更新时间', name: 'UpdateTime', width: 150, align: 'left' },
-							{ label: '用户微信昵称', name: 'WxNickName', width: 150, align: 'left' },
+							{ label: '区域', name: 'Area', width: 150, align: 'left' },
+							{ label: '星期', name: 'Week', width: 150, align: 'left' },
+							{ label: '结束时间', name: 'EndTime', width: 150, align: 'left' },
 			],
             pager: "#gridPager",
             viewrecords: true
@@ -116,114 +110,48 @@
 	<form id="SearchForm">
             <table>
                 <tr>
-								<!--用户ID-->
+								<!--主键ID-->
 					<td>
                         <div class="input-group">
-                            <strong>用户ID：</strong>
+                            <strong>主键ID：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="Id" name="Id" type="text" class="form-control" placeholder="用户ID" >
+                            <input id="Id" name="Id" type="text" class="form-control" placeholder="主键ID" >
                         </div>
                     </td>
-								<!--用户账号-->
+								<!--区域-->
 					<td>
                         <div class="input-group">
-                            <strong>用户账号：</strong>
+                            <strong>区域：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="UserName" name="UserName" type="text" class="form-control" placeholder="用户账号" >
+                            <input id="Area" name="Area" type="text" class="form-control" placeholder="区域" >
                         </div>
                     </td>
-								<!--用户姓名-->
+								<!--星期-->
 					<td>
                         <div class="input-group">
-                            <strong>用户姓名：</strong>
+                            <strong>星期：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="UserNickName" name="UserNickName" type="text" class="form-control" placeholder="用户姓名" >
+                            <input id="Week" name="Week" type="text" class="form-control" placeholder="星期" >
                         </div>
                     </td>
-								<!--手机号-->
+								<!--结束时间-->
 					<td>
                         <div class="input-group">
-                            <strong>手机号：</strong>
+                            <strong>结束时间：</strong>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input id="Mobile" name="Mobile" type="text" class="form-control" placeholder="手机号" >
-                        </div>
-                    </td>
-								<!--性别：帅哥；美女；-->
-					<td>
-                        <div class="input-group">
-                            <strong>性别：帅哥；美女；：</strong>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input id="Gender" name="Gender" type="text" class="form-control" placeholder="性别：帅哥；美女；" >
-                        </div>
-                    </td>
-								<!--微信用户唯一标识-->
-					<td>
-                        <div class="input-group">
-                            <strong>微信用户唯一标识：</strong>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input id="OpenId" name="OpenId" type="text" class="form-control" placeholder="微信用户唯一标识" >
-                        </div>
-                    </td>
-								<!--是否已删除（0：未删除；1：已删除；）-->
-					<td>
-                        <div class="input-group">
-                            <strong>是否已删除（0：未删除；1：已删除；）：</strong>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input id="IsDel" name="IsDel" type="text" class="form-control" placeholder="是否已删除（0：未删除；1：已删除；）" >
-                        </div>
-                    </td>
-								<!--创建时间-->
-					<td>
-                        <div class="input-group">
-                            <strong>创建时间：</strong>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input id="CreateTime" name="CreateTime" type="text" class="form-control" placeholder="创建时间" >
-                        </div>
-                    </td>
-								<!--更新时间-->
-					<td>
-                        <div class="input-group">
-                            <strong>更新时间：</strong>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input id="UpdateTime" name="UpdateTime" type="text" class="form-control" placeholder="更新时间" >
-                        </div>
-                    </td>
-								<!--用户微信昵称-->
-					<td>
-                        <div class="input-group">
-                            <strong>用户微信昵称：</strong>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input id="WxNickName" name="WxNickName" type="text" class="form-control" placeholder="用户微信昵称" >
+                            <input id="EndTime" name="EndTime" type="text" class="form-control" placeholder="结束时间" >
                         </div>
                     </td>
 									<td>
@@ -339,62 +267,26 @@
     <div style="padding-top: 20px; margin-right: 20px;">
         <table class="form">
                   <tr>
-					<th class="formTitle">用户ID</th>
+					<th class="formTitle">主键ID</th>
 					<td class="formValue">
 				                    </td>
     </tr>
                    <tr>
-					<th class="formTitle">用户账号</th>
+					<th class="formTitle">区域</th>
 					<td class="formValue">
-				   					<input id="UserName" name="UserName" type="text" class="form-control required" placeholder="请输入用户账号" />
+				   					<input id="Area" name="Area" type="text" class="form-control required" placeholder="请输入区域" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">用户姓名</th>
+					<th class="formTitle">星期</th>
 					<td class="formValue">
-				   					<input id="UserNickName" name="UserNickName" type="text" class="form-control required" placeholder="请输入用户姓名" />
+				   					<input id="Week" name="Week" type="text" class="form-control required" placeholder="请输入星期" />
                            </td>
     </tr>
                    <tr>
-					<th class="formTitle">手机号</th>
+					<th class="formTitle">结束时间</th>
 					<td class="formValue">
-				   					<input id="Mobile" name="Mobile" type="text" class="form-control required" placeholder="请输入手机号" />
-                           </td>
-    </tr>
-                   <tr>
-					<th class="formTitle">性别：帅哥；美女；</th>
-					<td class="formValue">
-				   					<input id="Gender" name="Gender" type="text" class="form-control required" placeholder="请输入性别：帅哥；美女；" />
-                           </td>
-    </tr>
-                   <tr>
-					<th class="formTitle">微信用户唯一标识</th>
-					<td class="formValue">
-				   					<input id="OpenId" name="OpenId" type="text" class="form-control required" placeholder="请输入微信用户唯一标识" />
-                           </td>
-    </tr>
-                   <tr>
-					<th class="formTitle">是否已删除（0：未删除；1：已删除；）</th>
-					<td class="formValue">
-				   					<input id="IsDel" name="IsDel" type="text" class="form-control required" placeholder="请输入是否已删除（0：未删除；1：已删除；）" />
-                           </td>
-    </tr>
-                   <tr>
-					<th class="formTitle">创建时间</th>
-					<td class="formValue">
-				   					<input id="CreateTime" name="CreateTime" type="text" class="form-control required" placeholder="请输入创建时间" />
-                           </td>
-    </tr>
-                   <tr>
-					<th class="formTitle">更新时间</th>
-					<td class="formValue">
-				   					<input id="UpdateTime" name="UpdateTime" type="text" class="form-control required" placeholder="请输入更新时间" />
-                           </td>
-    </tr>
-                   <tr>
-					<th class="formTitle">用户微信昵称</th>
-					<td class="formValue">
-				   					<input id="WxNickName" name="WxNickName" type="text" class="form-control required" placeholder="请输入用户微信昵称" />
+				   					<input id="EndTime" name="EndTime" type="text" class="form-control required" placeholder="请输入结束时间" />
                            </td>
     </tr>
          </table>
@@ -457,43 +349,19 @@
         <div id="a" class="tab-pane active" style="padding: 15px;">
             <ul class="pop-list">
 							                    <li>
-				   <label>用户ID</label>
+				   <label>主键ID</label>
 				   				 </li>
 				  				                    <li>
-				   <label>用户账号</label>
-				   					<input id="UserName" name="UserName" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>区域</label>
+				   					<input id="Area" name="Area" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>用户姓名</label>
-				   					<input id="UserNickName" name="UserNickName" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>星期</label>
+				   					<input id="Week" name="Week" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				  				                    <li>
-				   <label>手机号</label>
-				   					<input id="Mobile" name="Mobile" type="text" class="form-control" placeholder="暂未填写" />
-          				 </li>
-				  				                    <li>
-				   <label>性别：帅哥；美女；</label>
-				   					<input id="Gender" name="Gender" type="text" class="form-control" placeholder="暂未填写" />
-          				 </li>
-				  				                    <li>
-				   <label>微信用户唯一标识</label>
-				   					<input id="OpenId" name="OpenId" type="text" class="form-control" placeholder="暂未填写" />
-          				 </li>
-				  				                    <li>
-				   <label>是否已删除（0：未删除；1：已删除；）</label>
-				   					<input id="IsDel" name="IsDel" type="text" class="form-control" placeholder="暂未填写" />
-          				 </li>
-				  				                    <li>
-				   <label>创建时间</label>
-				   					<input id="CreateTime" name="CreateTime" type="text" class="form-control" placeholder="暂未填写" />
-          				 </li>
-				  				                    <li>
-				   <label>更新时间</label>
-				   					<input id="UpdateTime" name="UpdateTime" type="text" class="form-control" placeholder="暂未填写" />
-          				 </li>
-				  				                    <li>
-				   <label>用户微信昵称</label>
-				   					<input id="WxNickName" name="WxNickName" type="text" class="form-control" placeholder="暂未填写" />
+				   <label>结束时间</label>
+				   					<input id="EndTime" name="EndTime" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				   <li>
  <div style="padding-left: 115px;">
