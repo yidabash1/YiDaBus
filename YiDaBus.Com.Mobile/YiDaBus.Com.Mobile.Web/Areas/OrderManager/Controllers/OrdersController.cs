@@ -77,15 +77,42 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                 if (endConfig != null) { endTime = endConfig.EndTime; }
                 DateTime endDateTime = string.Format("{0} {1}", curDateTime.ToString("yyyy-MM-dd"), endTime).ToDate();
                 var DepartureTime = GetDateTimeByWeek(selectWeek, ref day);
-                if (DepartureTime < endDateTime)
+                if (curWeek == 5)
                 {
-                    ViewBag.IsExipre = true;
-                    return View();
+                    //当前时间比结束时间大，直接可以任意选择下周的车票
+                    if (curDateTime > endDateTime)
+                    {
+                        ViewBag.IsExipre = false;
+                    }
+                    else
+                    {
+                        //当前时间比结束时间小，只能选择当天的车票了
+                        if (day < 0)
+                        {
+                            ViewBag.IsExipre = true;
+                            return View();
+                        }
+                    }
                 }
-                if (day < 0)
+                else
                 {
-                    ViewBag.IsExipre = true;
-                    return View();
+                    //当前时间比结束时间大，只能选择当天之后的票
+                    if (curDateTime > endDateTime)
+                    {
+                        if (day <= 0)
+                        {
+                            ViewBag.IsExipre = true;
+                            return View();
+                        }
+                    }
+                    else {
+                        //当前时间比结束时间小，只能选择当天以及当天以后的票
+                        if (day < 0)
+                        {
+                            ViewBag.IsExipre = true;
+                            return View();
+                        }
+                    }
                 }
             }
 
@@ -105,7 +132,9 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
         public ActionResult OrderInfo()
         {
             string Area = Request["area"] ?? "";
-            GetOrderBaseInfoByArea(Area);//根据区域获取订单的一些基础信息
+            string week = Request["week"] ?? "";
+            GetOrderBaseInfoByArea(Area, week);//根据区域获取订单的一些基础信息
+
             return View();
         }
 
@@ -152,7 +181,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
 	                                UserId = {0} 
 	                                AND IsDel = {1} 
 	                                AND DepartureTime >= '{2}' 
-	                                AND DepartureTime <= '{3}'", userInfo.Id, (int)IsDel.否, startTime, endTime);
+	                                AND DepartureTime <= '{3}' ", userInfo.Id, (int)IsDel.否, startTime, endTime);
                 var SeatIdsList = Db.MySqlContext.FromSql(sql).ToList<string>();
 
                 foreach (var item in SeatIdsList)
@@ -206,8 +235,8 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                 orders.UserName = userInfo.UserName;
                 //生成订单号
                 orders.OrderNo = orderHeader + DateTime.Now.ToString("yyyyMMddHHmmss") + RandomHelper.GenetatorNumbers();
-                string Area = Request["Area"] ?? "";
-                GetOrderBaseInfoByArea(Area);
+                //string Area = Request["Area"] ?? "";
+                //GetOrderBaseInfoByArea(Area);
                 //var IsOneWay = (Request["IsOneWay"] ?? "0").ToInt();//是否单程
                 //var IsShuttle = (Request["IsShuttle"] ?? "0").ToInt();//是否接送
                 var seatCount = ChooseSeatsArr.Length;
@@ -385,15 +414,18 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
         /// <summary>
         /// 根据区域获取订单的一些基础信息
         /// </summary>
-        private void GetOrderBaseInfoByArea(string area)
+        private void GetOrderBaseInfoByArea(string area, string week)
         {
             List<Sys_ItemsDetail> Sys_ItemsDetailList = CommonBLL.GetGlobalConstVariable();
+            DateTime DepartureTime = DateTime.Now;
 
             string F_ItemCode = string.Empty;
             if (area == YiDaBusConst.上海)
             {
                 F_ItemCode = YiDaBusConst.上海票价不含接送;
                 DeliveryFee = Sys_ItemsDetailList.Where(d => d.F_ItemCode == YiDaBusConst.上海接送费).FirstOrDefault().F_Description.ToDecimal();
+                int day = 0;
+                DepartureTime = GetDateTimeByWeek(week.ToInt(), ref day);
             }
             else if (area == YiDaBusConst.杭州)
             {
@@ -402,6 +434,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
             TicketPrice = Sys_ItemsDetailList.Where(d => d.F_ItemCode == F_ItemCode).FirstOrDefault().F_Description.ToDecimal();
             ViewBag.TicketPrice = TicketPrice;
             ViewBag.DeliveryFee = DeliveryFee;
+            ViewBag.DepartureTime = DepartureTime;
         }
         #endregion
 

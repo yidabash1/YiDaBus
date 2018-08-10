@@ -1,17 +1,63 @@
-﻿
+﻿<!--=======================FORM表单START====================================-->
 @{
-    Layout = null;
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Form.cshtml";
 }
+<script>
+    var modulelUrl = "/OrderManage/Order/";//区域的路径
+    var ids = $.request("Ids");
+    $(function () {
+        initControl();
+    });
+    function initControl() {
 
-<!DOCTYPE html>
+    }
+    function submitForm() {
+        if (!$('#form1').formValid()) {
+            return false;
+        }
+        $.modalConfirm('您确认要发送消息吗？', function (r) {
+            if (r) {
+                debugger;
+                var postdata = $("#form1").formSerialize();
+                postdata["ids"] = ids;
+                $.submitForm({
+                    url: modulelUrl + "SendMsg",
+                    param: postdata,
+                    success: function () {
+                        $.currentWindow().$("#gridList").trigger("reloadGrid");
+                    }
+                })
+            }
+        });
+    }
+   
+   
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>GroupMsg</title>
-</head>
-<body>
-    <div> 
+    function Close() {
+        $.modalClose();
+    }
+</script>
+<form id="form1">
+    <div style="padding: 20px; margin-right: 20px;">
+        <table class="form">
+            @*<tr>
+                <th class="formTitle" valign="top" style="padding-top: 5px;">
+                    接受用户
+                </th>
+                <td class="formValue" colspan="3">
+                    <textarea id="ReceiveMsger" name="ReceiveMsger" class="form-control required" style="height: 60px;"></textarea>
+                </td>
+            </tr>*@
+            <tr>
+                <th class="formTitle" valign="top" style="padding-top: 5px;">
+                    消息模板
+                </th>
+                <td class="formValue" colspan="3">
+                    <textarea id="MsgTemplate" name="MsgTemplate" class="form-control required" style="height: 60px;"></textarea>
+                </td>
+            </tr>
+        </table>
     </div>
-</body>
-</html>
+</form>
+<!--=======================FORM表单END====================================-->

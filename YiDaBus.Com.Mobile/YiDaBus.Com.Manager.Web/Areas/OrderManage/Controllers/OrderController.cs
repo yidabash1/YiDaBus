@@ -1,6 +1,9 @@
 ﻿using NFine.Application;
+using Senparc.Weixin.MP.AdvancedAPIs;
+using Senparc.Weixin.MP.AdvancedAPIs.TemplateMessage;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +12,8 @@ using System.Web.Mvc;
 using YiDaBus.Com.Dal.Base;
 using YiDaBus.Com.Manager.Common;
 using YiDaBus.Com.Manager.Common.Excel;
+using YiDaBus.Com.Mobile.BLL;
+using YiDaBus.Com.Mobile.Model.Const;
 using YiDaBus.Com.Mobile.Model.Enum;
 using YiDaBus.Com.Model;
 
@@ -19,6 +24,15 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
         public override string tableName { get; set; } = "Orders";//表名
         public override string f_ModuleName { get; set; } = "订单信息";//表名
 
+        #region 视图
+        [HttpGet]
+        [HandlerAuthorize]
+        public virtual ActionResult GroupMsg()
+        {
+           
+            return View();
+        }
+        #endregion
         #region 获取数据
         public async Task<ActionResult> GetGridJson(Pagination pagination)
         {
@@ -250,6 +264,58 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
                 LogApp(f_ModuleName, DbLogType.Exception, ex.Message);
             }
         }
+
+
+        /// <summary>
+        /// 发送消息
+        /// </summary>
+        /// <param name="keyValue"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [HandlerAjaxOnly]
+        [HandlerAuthorize]
+        public ActionResult SendMsg(string ids,string MsgTemplate)
+        {
+            string WeixinAppId = ConfigurationManager.AppSettings["WeixinAppId"] ?? "";
+            string WxDomain = ConfigurationManager.AppSettings["wxDomain"] ?? "";
+            try
+            {
+                string sql = string.Format(@"select t1.*,t2.OpenId,t2.WxNickName from Orders as t1
+                            INNER join Wx_Users as t2 on t1.UserId =  t2.Id
+                            where t1.Id in ({0})", ids);
+                var orders = Db.MySqlContext.FromSql(sql).ToList<OrderExt1>();
+                foreach (var item in orders)
+                {
+                    string ComplaintsHotline = CommonBLL.GetGlobalConstVariable(YiDaBusConst.投诉热线).FirstOrDefault()?.F_Description;
+                    //发送消息通知生成状态
+                    var TempleteData = new
+                    {
+                        first = new TemplateDataItem($"尊敬的{item.WxNickName}您好，您已预约租车成功。"),
+                        productType = new TemplateDataItem("服务"),
+                        name = new TemplateDataItem($"前往：{item.ToPosition}，时间：{item.DepartureTime}，座位号：{item.SeatTexts}，已预约成功"),
+                        time = new TemplateDataItem(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")),//时间
+                        result = new TemplateDataItem("已预约"),//结果
+                        remark = new TemplateDataItem($"{MsgTemplate}如有疑问，请咨询{ComplaintsHotline}。")//结果
+                    };
+                    var tmResult = TemplateApi.SendTemplateMessage(WeixinAppId, item.OpenId, "ugJ8nxawp2ZE53lrDMCpCVB0lI1iSKn2PSFK-rLrqP4",
+                                (WxDomain + "/MemberManager/Member/MemberTicketDetail?orderId=" + item.Id)
+                                , TempleteData);
+                }
+                return Success("发送成功");
+            }
+            catch (Exception ex)
+            {
+                LogApp(f_ModuleName, DbLogType.Exception, ex.Message);
+                return Error("发送消息失败");
+            }
+        }
         #endregion
+
+        public class OrderExt1 : Orders
+        {
+            public string OpenId { get; set; }
+            public string WxNickName { get; set; }
+            
+        }
     }
 }

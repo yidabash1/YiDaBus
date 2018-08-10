@@ -53,7 +53,7 @@
 							    formatter: function (cellvalue) {
 							        if (cellvalue == 0) { return "是"; }
 							        else if (cellvalue == 1) { return "否"; }
-							        else { return "未知";}
+							        else { return "未知"; }
 							    }
 							},
 							{
@@ -64,7 +64,7 @@
 							        else { return "未知"; }
 							    }
 							},
-                            
+
                             { label: '区域', name: 'Area', width: 80, align: 'left' },
 							{ label: '接的地点', name: 'MeetPosition', width: 150, align: 'left' },
 							{ label: '送的地点', name: 'SendPosition', width: 150, align: 'left' },
@@ -72,8 +72,9 @@
 							{ label: '更新时间', name: 'UpdateTime', width: 100, align: 'left' },
 							{ label: '星期几', name: 'Week', width: 150, align: 'left', hidden: true },
 							{ label: '星期几中文描述', name: 'WeekTextCn', width: 150, align: 'left', hidden: true },
-			],
+            ],
             pager: "#gridPager",
+            multiselect: true,//复选框
             viewrecords: true
         });
         $("#btn_search").click(function () {
@@ -95,66 +96,58 @@
         });
     }
     function btn_edit() {
-        var keyValue = $("#gridList").jqGridRowValue().Id;
-        if (keyValue == undefined) {
-            $.modalAlert("请选择要操作的行！", 2);
-            return;
+        var row = getSingleRow();
+        if (row) {
+            $.modalOpen({
+                id: "Form",
+                title: "修改",
+                url: modulelUrl + "Form?keyValue=" + row.Id,
+                width: "800px",
+                height: "600px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
         }
-        $.modalOpen({
-            id: "Form",
-            title: "修改",
-            url: modulelUrl + "Form?keyValue=" + keyValue,
-            width: "800px",
-            height: "600px",
-            callBack: function (iframeId) {
-                top.frames[iframeId].submitForm();
-            }
-        });
     }
     function btn_auditpay() {
-        var keyValue = $("#gridList").jqGridRowValue().Id;
-        if (keyValue == undefined) {
-            $.modalAlert("请选择要操作的行！", 2);
-            return;
+        var row = getSingleRow();
+        if (row) {
+            $.modalOpen({
+                id: "AuditPay",
+                title: "审核支付",
+                url: modulelUrl + "Form?action=AuditPay&keyValue=" + row.Id,
+                width: "800px",
+                height: "600px",
+                btn: null,
+            });
         }
-        $.modalOpen({
-            id: "AuditPay",
-            title: "审核支付",
-            url: modulelUrl + "Form?action=AuditPay&keyValue=" + keyValue,
-            width: "800px",
-            height: "600px",
-            btn: null,
-        });
     }
-    
+
     function btn_delete() {
-        var keyValue = $("#gridList").jqGridRowValue().Id;
-        if (keyValue == undefined) {
-            $.modalAlert("请选择要操作的行！", 2);
-            return;
+        var row = getSingleRow();
+        if (row) {
+            $.deleteForm({
+                url: modulelUrl + "DeleteForm",
+                param: { keyValue: row.Id },
+                success: function () {
+                    $.currentWindow().$("#gridList").trigger("reloadGrid");
+                }
+            })
         }
-        $.deleteForm({
-            url: modulelUrl + "DeleteForm",
-            param: { keyValue: keyValue },
-            success: function () {
-                $.currentWindow().$("#gridList").trigger("reloadGrid");
-            }
-        })
     }
     function btn_details() {
-        var keyValue = $("#gridList").jqGridRowValue().Id;
-        if (keyValue == undefined) {
-            $.modalAlert("请选择要操作的行！", 2);
-            return;
+        var row = getSingleRow();
+        if (row) {
+            $.modalOpen({
+                id: "Details",
+                title: "查看",
+                url: modulelUrl + "Form?action=Details&keyValue=" + row.Id,
+                width: "800px",
+                height: "600px",
+                btn: null,
+            });
         }
-        $.modalOpen({
-            id: "Details",
-            title: "查看",
-            url: modulelUrl + "Form?action=Details&keyValue=" + keyValue,
-            width: "800px",
-            height: "600px",
-            btn: null,
-        });
     }
 
     function btn_export() {
@@ -166,23 +159,42 @@
         $.download(modulelUrl + "Export", $("#SearchForm").serialize(), "POST")
     }
     function btn_groupmsg() {
-        var keyValue = $("#gridList").jqGridRowValue().Id;
-        if (keyValue == undefined) {
-            $.modalAlert("请选择要操作的行！", 2);
-            return;
+        var Ids = getMultipleRow();
+        if (Ids) {
+            $.modalOpen({
+                id: "Form",
+                title: "群发消息",
+                url: modulelUrl + "GroupMsg?Ids=" + Ids.toString(),
+                width: "800px",
+                height: "600px",
+                callBack: function (iframeId) {
+                    top.frames[iframeId].submitForm();
+                }
+            });
         }
-        $.modalOpen({
-            id: "Form",
-            title: "修改",
-            url: modulelUrl + "GroupMsg?keyValue=" + keyValue,
-            width: "800px",
-            height: "600px",
-            callBack: function (iframeId) {
-                top.frames[iframeId].submitForm();
-            }
-        });
     }
-    
+    //获取多行数据
+    function getMultipleRow() {
+        var ids = $("#gridList").jqGrid('getGridParam', 'selarrrow');
+        if (ids.length == 0) {
+            $.modalAlert('请先选择数据行！', 2);
+            return false;
+        }
+        return ids;
+    }
+    //获取单行数据
+    function getSingleRow() {
+        var ids = $("#gridList").jqGrid('getGridParam', 'selarrrow');
+        if (ids.length == 0) {
+            $.modalAlert('请先选择数据行！', 2);
+            return false;
+        }
+        if (ids.length > 1) {
+            $.modalAlert('只能选择一行记录！', 2);
+            return false;
+        }
+        return $("#gridList").jqGrid('getRowData', ids[0]);
+    }
 </script>
 <style>
     dl {
@@ -200,8 +212,8 @@
             padding-right: 10px;
         }
 </style>
-<div class="topPanel" >
-    <div class="search" >
+<div class="topPanel">
+    <div class="search">
         <form id="SearchForm">
             <table>
                 <tr>
@@ -260,93 +272,93 @@
                     </td>
                     <!--订单总金额（单位元）-->
                     @*<td>
-                        <div class="input-group">
-                            <strong>订单总金额（单位元）：</strong>
-                            <div class="input-box">
-                                <input id="TotalAmount" name="TotalAmount" type="text" class="form-control" placeholder="订单总金额（单位元）">
+                            <div class="input-group">
+                                <strong>订单总金额（单位元）：</strong>
+                                <div class="input-box">
+                                    <input id="TotalAmount" name="TotalAmount" type="text" class="form-control" placeholder="订单总金额（单位元）">
+                                </div>
                             </div>
-                        </div>
-                    </td>*@
+                        </td>*@
                     <!--用户账号-->
                     @*<td>
-                        <div class="input-group">
-                            <strong>用户账号：</strong>
-                            <div class="input-box">
-                                <input id="UserName" name="UserName" type="text" class="form-control" placeholder="用户账号">
+                            <div class="input-group">
+                                <strong>用户账号：</strong>
+                                <div class="input-box">
+                                    <input id="UserName" name="UserName" type="text" class="form-control" placeholder="用户账号">
+                                </div>
                             </div>
-                        </div>
-                    </td>*@
-                    
-                    
-                    
+                        </td>*@
+
+
+
                     @*<!--接的地点-->
-                    <td>
-                        <div class="input-group">
-                            <strong>接的地点：</strong>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input id="MeetPosition" name="MeetPosition" type="text" class="form-control" placeholder="接的地点">
-                        </div>
-                    </td>
-                    <!--送的地点-->
-                    <td>
-                        <div class="input-group">
-                            <strong>送的地点：</strong>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input id="SendPosition" name="SendPosition" type="text" class="form-control" placeholder="送的地点">
-                        </div>
-                    </td>*@
+                        <td>
+                            <div class="input-group">
+                                <strong>接的地点：</strong>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input id="MeetPosition" name="MeetPosition" type="text" class="form-control" placeholder="接的地点">
+                            </div>
+                        </td>
+                        <!--送的地点-->
+                        <td>
+                            <div class="input-group">
+                                <strong>送的地点：</strong>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input id="SendPosition" name="SendPosition" type="text" class="form-control" placeholder="送的地点">
+                            </div>
+                        </td>*@
                     <!--创建时间-->
                     @*<td>
-                        <div class="input-group">
-                            <strong>创建时间：</strong>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input id="CreateTime" name="CreateTime" type="text" class="form-control" placeholder="创建时间">
-                        </div>
-                    </td>*@
+                            <div class="input-group">
+                                <strong>创建时间：</strong>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input id="CreateTime" name="CreateTime" type="text" class="form-control" placeholder="创建时间">
+                            </div>
+                        </td>*@
                     <!--更新时间-->
                     @*<td>
-                        <div class="input-group">
-                            <strong>更新时间：</strong>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input id="UpdateTime" name="UpdateTime" type="text" class="form-control" placeholder="更新时间">
-                        </div>
-                    </td>*@
-                    
-                    
+                            <div class="input-group">
+                                <strong>更新时间：</strong>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input id="UpdateTime" name="UpdateTime" type="text" class="form-control" placeholder="更新时间">
+                            </div>
+                        </td>*@
+
+
                     <!--座位描述-->
                     @*<td>
-                        <div class="input-group">
-                            <strong>座位描述：</strong>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input id="SeatTexts" name="SeatTexts" type="text" class="form-control" placeholder="座位描述">
-                        </div>
-                    </td>*@
+                            <div class="input-group">
+                                <strong>座位描述：</strong>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input id="SeatTexts" name="SeatTexts" type="text" class="form-control" placeholder="座位描述">
+                            </div>
+                        </td>*@
                     <!--星期几中文描述-->
                     @*<td>
-                        <div class="input-group">
-                            <strong>星期几中文描述：</strong>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <input id="WeekTextCn" name="WeekTextCn" type="text" class="form-control" placeholder="星期几中文描述">
-                        </div>
-                    </td>*@
+                            <div class="input-group">
+                                <strong>星期几中文描述：</strong>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input id="WeekTextCn" name="WeekTextCn" type="text" class="form-control" placeholder="星期几中文描述">
+                            </div>
+                        </td>*@
                     <td>
                         <div class="input-group">
                             <span class="input-group-btn">
@@ -362,10 +374,10 @@
                         </div>
                     </td>
                     @*<td>
-                        <div class="btn-group">
-                            <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
-                        </div>
-                    </td>*@
+                            <div class="btn-group">
+                                <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+                            </div>
+                        </td>*@
                 </tr>
             </table>
             <table id="TbMoreSeach" style="display:none;">
@@ -439,17 +451,17 @@
                     </td>
                     <!--区域-->
                     @*<td>
-                        <div class="input-group">
-                            <strong>区域：</strong>
-                            <div class="input-box">
-                                <select id="Area" name="Area" class="form-control width90 ">
-                                    <option value="">---请选择--</option>
-                                    <option value="shanghai">上海</option>
-                                    <option value="hangzhou">杭州 </option>
-                                </select>
+                            <div class="input-group">
+                                <strong>区域：</strong>
+                                <div class="input-box">
+                                    <select id="Area" name="Area" class="form-control width90 ">
+                                        <option value="">---请选择--</option>
+                                        <option value="shanghai">上海</option>
+                                        <option value="hangzhou">杭州 </option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                    </td>*@
+                        </td>*@
 
                     <!--是否已删除（0：未删除；1：已删除；）-->
                     <td>
@@ -487,8 +499,8 @@
                     <a id="NF-delete" class="btn btn-default" authorize="yes" onclick="btn_delete()"><i class="fa fa-trash-o"></i>删除</a>
                 </td>
                 @*<td>
-                    <a id="NF-Details" class="btn btn-default" authorize="yes" onclick="btn_details()"><i class="fa fa-search-plus"></i>查看</a>
-                </td>*@
+                        <a id="NF-Details" class="btn btn-default" authorize="yes" onclick="btn_details()"><i class="fa fa-search-plus"></i>查看</a>
+                    </td>*@
             </tr>
         </table>
         <script>$('#toolbar').authorizeButton()</script>
@@ -501,10 +513,11 @@
 
 <style>
     .width90 {
-        width:60px;
+        width: 60px;
     }
+
     .input-box {
-    width:100px !important
+        width: 100px !important;
     }
 </style>
 <!--=======================Index表单END====================================-->

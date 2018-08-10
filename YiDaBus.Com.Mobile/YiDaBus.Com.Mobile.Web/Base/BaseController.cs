@@ -109,7 +109,28 @@ namespace YiDaBus.Com.Mobile.Web.Base
             var curDateTime = DateTime.Now;
             string weekstr = curDateTime.DayOfWeek.ToString();
             int curWeek = (int)((WeekEn)Enum.Parse(typeof(WeekEn), weekstr));//获取当前是星期几
-            day = week - curWeek;
+            if (curWeek == 6 || curWeek == 7)
+            {
+                day = week - curWeek + 7;
+            }
+            else if (curWeek == 5)
+            {
+                var endConfigList = Db.MySqlContext.From<TimeEndConfig>().Where(d => d.Area == "上海" && d.Week == "星期五").ToFirst();
+                DateTime endDateTime = string.Format("{0} {1}", curDateTime.ToString("yyyy-MM-dd"), endConfigList.EndTime).ToDate();
+                if (curDateTime > endDateTime)
+                {
+                    day = week - curWeek + 7;
+                }
+                else
+                {
+                    day = week - curWeek;
+                }
+            }
+            else
+            {
+                day = week - curWeek;
+            }
+
             curDateTime = curDateTime.AddDays(day);
             return curDateTime;
         }
@@ -118,8 +139,35 @@ namespace YiDaBus.Com.Mobile.Web.Base
             var curDateTime = DateTime.Now;
             string weekstr = curDateTime.DayOfWeek.ToString();
             int curWeek = (int)((WeekEn)Enum.Parse(typeof(WeekEn), weekstr));//获取当前是星期几
-            startTime = curDateTime.AddDays(0 - curWeek).ToString("yyyy-MM-dd");
-            endTime = curDateTime.AddDays(7 - curWeek).ToString("yyyy-MM-dd");
+            int startday = 0;
+            int endday = 0;
+            if (curWeek == 6 || curWeek == 7)
+            {
+                startday = 0 - curWeek + 7;
+                endday = 7 - curWeek + 7;
+            }
+            else if (curWeek == 5)
+            {
+                var endConfigList = Db.MySqlContext.From<TimeEndConfig>().Where(d => d.Area == "上海" && d.Week == "星期五").ToFirst();
+                DateTime endDateTime = string.Format("{0} {1}", curDateTime.ToString("yyyy-MM-dd"), endConfigList.EndTime).ToDate();
+                if (curDateTime > endDateTime)
+                {
+                    startday = 0 - curWeek + 7;
+                    endday = 7 - curWeek + 7;
+                }
+                else
+                {
+                    startday = 0 - curWeek;
+                    endday = 7 - curWeek;
+                }
+            }
+            else
+            {
+                startday = 0 - curWeek;
+                endday = 7 - curWeek;
+            }
+            startTime = curDateTime.AddDays(startday).ToString("yyyy-MM-dd");
+            endTime = curDateTime.AddDays(endday).ToString("yyyy-MM-dd");
         }
         public int GetWeekByDateTime(DateTime DateTime)
         {

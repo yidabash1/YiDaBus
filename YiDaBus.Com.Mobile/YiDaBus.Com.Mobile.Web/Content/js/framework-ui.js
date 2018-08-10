@@ -66,7 +66,8 @@ $.modalMsg = function (options) {
         content: '',
         btn: '确认',
         success: null,
-        alwaysClose: true
+        alwaysClose: true,
+        shadeClose: true
     };
     var options = $.extend(defaults, options);
     var index = mlayer.open({
@@ -77,6 +78,7 @@ $.modalMsg = function (options) {
           if (options.success != null) options.success();
           if (options.alwaysClose) mlayer.close(index);
       }
+      , shadeClose: options.shadeClose
     });
 }
 //询问框
