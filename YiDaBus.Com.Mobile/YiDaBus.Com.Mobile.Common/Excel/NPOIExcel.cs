@@ -7,6 +7,7 @@
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
+using System;
 using System.Data;
 using System.IO;
 
@@ -23,7 +24,7 @@ namespace YiDaBus.Com.Manager.Common.Excel
         /// </summary>
         /// <param name="table"></param>
         /// <returns></returns>
-        public bool ToExcel(DataTable table)
+        public bool ToExcel(DataTable table, Func<IWorkbook,ISheet, int> customRowHandler,bool isShowHeader)
         {
             FileStream fs = new FileStream(this._filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
             IWorkbook workBook = new HSSFWorkbook();
@@ -31,22 +32,31 @@ namespace YiDaBus.Com.Manager.Common.Excel
             ISheet sheet = workBook.CreateSheet(this._sheetName);
 
             //处理表格标题
-            IRow row = sheet.CreateRow(0);
-            row.CreateCell(0).SetCellValue(this._title);
-            sheet.AddMergedRegion(new CellRangeAddress(0, 0, 0, table.Columns.Count - 1));
-            row.Height = 500;
+            if (isShowHeader)
+            {
+                IRow rowheader = sheet.CreateRow(0);
+                rowheader.CreateCell(0).SetCellValue(this._title);
+                sheet.AddMergedRegion(new CellRangeAddress(0, 0, 0, table.Columns.Count - 1));
+                rowheader.Height = 500;
 
-            ICellStyle cellStyle = workBook.CreateCellStyle();
-            IFont font = workBook.CreateFont();
-            font.FontName = "微软雅黑";
-            font.FontHeightInPoints = 17;
-            cellStyle.SetFont(font);
-            cellStyle.VerticalAlignment = VerticalAlignment.Center;
-            cellStyle.Alignment = HorizontalAlignment.Center;
-            row.Cells[0].CellStyle = cellStyle;
+                ICellStyle cellStyle = workBook.CreateCellStyle();
+                IFont font = workBook.CreateFont();
+                font.FontName = "微软雅黑";
+                font.FontHeightInPoints = 17;
+                cellStyle.SetFont(font);
+                cellStyle.VerticalAlignment = VerticalAlignment.Center;
+                cellStyle.Alignment = HorizontalAlignment.Center;
+                rowheader.Cells[0].CellStyle = cellStyle;
+            }
+            
 
+            int customRowCount = 0;
+            if (customRowHandler != null)
+            {
+                customRowCount = customRowHandler(workBook,sheet);
+            }
             //处理表格列头
-            row = sheet.CreateRow(1);
+            IRow row = sheet.CreateRow(customRowCount);
             for (int i = 0; i < table.Columns.Count; i++)
             {
                 row.CreateCell(i).SetCellValue(table.Columns[i].ColumnName);
@@ -57,7 +67,7 @@ namespace YiDaBus.Com.Manager.Common.Excel
             //处理数据内容
             for (int i = 0; i < table.Rows.Count; i++)
             {
-                row = sheet.CreateRow(2 + i);
+                row = sheet.CreateRow(customRowCount + i+1);
                 row.Height = 250;
                 for (int j = 0; j < table.Columns.Count; j++)
                 {
@@ -81,12 +91,12 @@ namespace YiDaBus.Com.Manager.Common.Excel
         /// <param name="title"></param>
         /// <param name="sheetName"></param>
         /// <returns></returns>
-        public bool ToExcel(DataTable table, string title, string sheetName, string filePath)
+        public bool ToExcel(DataTable table, string title, string sheetName, string filePath, Func<IWorkbook,ISheet, int> customRowHandler, bool isShowHeader = false)
         {
             this._title = title;
             this._sheetName = sheetName;
             this._filePath = filePath;
-            return ToExcel(table);
+            return ToExcel(table, customRowHandler, isShowHeader);
         }
     }
 }

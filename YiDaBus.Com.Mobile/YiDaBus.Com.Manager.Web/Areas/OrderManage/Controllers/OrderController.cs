@@ -1,4 +1,6 @@
 ﻿using NFine.Application;
+using NPOI.SS.UserModel;
+using NPOI.SS.Util;
 using Senparc.Weixin.MP.AdvancedAPIs;
 using Senparc.Weixin.MP.AdvancedAPIs.TemplateMessage;
 using System;
@@ -301,8 +303,27 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
                 string fileName = "订单列表" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xls";
 
                 string excelFilePath = baseDictioneryPath + "\\" + fileName;
+                string CarNumber = HttpUtility.UrlDecode(Request["CarNumber"]);
+                string DepartureTimeStart = Request["DepartureTimeStart"];
+                string DepartureTimeEnd = Request["DepartureTimeEnd"];
+                bool r = nPOIExcel.ToExcel(dataTable, "订单列表", "订单列表", excelFilePath,(workBook,sheet) => {
+                    //自定义行
+                    object TotalAmountSum = dataTable.Compute("sum(TotalAmount)", "TRUE");
+                    IRow row = sheet.CreateRow(0);
+                    row.CreateCell(0).SetCellValue($"车号：{CarNumber}      日期：{DepartureTimeStart}-{DepartureTimeEnd}   合计:{TotalAmountSum}");
+                    sheet.AddMergedRegion(new CellRangeAddress(0, 0, 0, dataTable.Columns.Count - 1));
+                    row.Height = 500;
+                    ICellStyle cellStyle = workBook.CreateCellStyle();
+                    IFont font = workBook.CreateFont();
+                    font.FontName = "微软雅黑";
+                    font.FontHeightInPoints = 17;
+                    cellStyle.SetFont(font);
+                    cellStyle.VerticalAlignment = VerticalAlignment.Center;
+                    cellStyle.Alignment = HorizontalAlignment.Left;
+                    row.Cells[0].CellStyle = cellStyle;
 
-                bool r = nPOIExcel.ToExcel(dataTable, "订单列表", "订单列表", excelFilePath);
+                    return 1;
+                });
 
                 FileDownHelper.DownLoadold(excelFilePath, fileName);
             }
