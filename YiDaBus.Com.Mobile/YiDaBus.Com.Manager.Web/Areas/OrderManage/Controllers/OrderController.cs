@@ -117,10 +117,23 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
                 sqlOrder = $" ORDER BY t1.UpdateTime DESC,t1.CreateTime DESC ";
             }
 
-
-
-            string sql = string.Format(@"SELECT t1.*,t2.Gender FROM Orders AS t1
+            string sql = string.Empty;
+            if (string.IsNullOrEmpty(ToPosition))
+            {
+                sql = string.Format(@"SELECT t1.*,t2.Gender FROM Orders AS t1
 							LEFT JOIN Wx_Users AS t2 ON t1.UserId=t2.Id {0} {1} ", sqlWhere, sqlOrder);
+            }
+            else if (ToPosition == "上海")
+            {
+                sql = string.Format(@"SELECT SeatTexts as '座位号',t1.UserNickName as '真实姓名',t1.Mobile as '电话号码',t1.MeetPosition AS '接客地点',t1.SendPosition AS '送客地点',case IsOneWay when 0 then '否' when 1 then '是' else '' end as '单程',TotalAmount as '车费' FROM Orders AS t1
+							{0} {1} ", sqlWhere, sqlOrder);
+            }
+            else if (ToPosition == "杭州")
+            {
+                sql = string.Format(@"SELECT SeatTexts as '座位号',t1.UserNickName as '真实姓名',t1.Mobile as '电话号码',case IsOneWay when 0 then '否' when 1 then '是' else '' end as '单程',TotalAmount as '车费' FROM Orders AS t1
+							{0} {1} ", sqlWhere, sqlOrder);
+            }
+
             return sql;
         }
 
@@ -186,7 +199,7 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
                 string SeatIds = string.Empty;
                 string SeatTexts = string.Empty;
                 string areaCn = string.Empty;
-                var seatPrice = CommonBLL.GetGlobalConstVariable(MoneyConst).FirstOrDefault().F_Description.ToDecimal(); 
+                var seatPrice = CommonBLL.GetGlobalConstVariable(MoneyConst).FirstOrDefault().F_Description.ToDecimal();
                 var seatCount = ChooseSeatsArr.Length;
                 var selectWeek = (int)Convert.ToDateTime(orders.DepartureTime).DayOfWeek;
                 if (selectWeek == 0) { selectWeek = 7; }
@@ -292,6 +305,7 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
         {
             try
             {
+                var ToPosition = HttpUtility.UrlDecode(Request["ToPosition"]);
                 string sql = GetGridOrderSql(null);
                 var dataTable = Db.MySqlContext.FromSql(sql).ToDataTable();
                 NPOIExcel nPOIExcel = new NPOIExcel();
@@ -306,11 +320,22 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
                 string CarNumber = HttpUtility.UrlDecode(Request["CarNumber"]);
                 string DepartureTimeStart = Request["DepartureTimeStart"];
                 string DepartureTimeEnd = Request["DepartureTimeEnd"];
-                bool r = nPOIExcel.ToExcel(dataTable, "订单列表", "订单列表", excelFilePath,(workBook,sheet) => {
+                bool r = nPOIExcel.ToExcel(dataTable, "订单列表", "订单列表", excelFilePath, (workBook, sheet) =>
+                {
                     //自定义行
-                    object TotalAmountSum = dataTable.Compute("sum(TotalAmount)", "TRUE");
+                    object TotalAmountSum = dataTable.Compute("sum(车费)", "TRUE");
                     IRow row = sheet.CreateRow(0);
-                    row.CreateCell(0).SetCellValue($"车号：{CarNumber}      日期：{DepartureTimeStart}-{DepartureTimeEnd}   合计:{TotalAmountSum}");
+                    var _DepartureTimeStart = DepartureTimeStart.ToDate().ToString("yyyy年MM月dd日");
+                    var _DepartureTimeEnd = DepartureTimeEnd.ToDate().ToString("yyyy年MM月dd日");
+                    var DepartureTimeStr = string.Empty;
+                    if (_DepartureTimeStart == _DepartureTimeEnd)
+                    {
+                        DepartureTimeStr = _DepartureTimeStart;
+                    }
+                    else {
+                        DepartureTimeStr = $"{ _DepartureTimeStart}-{ _DepartureTimeEnd}";
+                    }
+                    row.CreateCell(0).SetCellValue($"目的地：{ToPosition}     车号：{CarNumber}      发车时间：{DepartureTimeStr}   合计:{TotalAmountSum}");
                     sheet.AddMergedRegion(new CellRangeAddress(0, 0, 0, dataTable.Columns.Count - 1));
                     row.Height = 500;
                     ICellStyle cellStyle = workBook.CreateCellStyle();

@@ -151,12 +151,29 @@
     }
 
     function btn_export() {
-        debugger;
         //$.downFile({
         //    url: "/FICOManage/BOM/DownFile",
         //    data:""
         //});
-        $.download(modulelUrl + "Export", $("#SearchForm").serialize(), "POST")
+        
+        if (!$("#CarNumber").val()) {
+            $.modalAlert('请先选择车牌号！', 2);
+            return false;
+        }
+        if (!$("#ToPosition").val()) {
+            $.modalAlert('请先选择终点地！', 2);
+            return false;
+        }
+        if (!$("#DepartureTimeStart").val()) {
+            $.modalAlert('请先选择发车开始时间！', 2);
+            return false;
+        }
+        if (!$("#DepartureTimeEnd").val()) {
+            $.modalAlert('请先选择发车结束时间！', 2);
+            return false;
+        }
+        var searchJson = $("#SearchForm").serialize();
+        $.download(modulelUrl + "Export", searchJson, "POST")
     }
     function btn_groupmsg() {
         var Ids = getMultipleRow();
