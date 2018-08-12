@@ -26,11 +26,19 @@ namespace YiDaBus.Com.Mobile.Web.Areas.MemberManager.Controllers
         /// 个人信息
         /// </summary>
         /// <returns></returns>
+        public ActionResult ClearCache()
+        {
+            return View();
+        }
+        /// <summary>
+        /// 个人信息
+        /// </summary>
+        /// <returns></returns>
         public ActionResult MemberInfo()
         {
-            WebHelper.WriteCookie("openid", "0oosadfjjhuyhwjenihkljsareuih");
-            WebHelper.WriteCookie("nickname", "开启我亲爱的小耗子");
-            WebHelper.WriteCookie("headimgurl", "~/Content/img/ad6.png");
+            //WebHelper.WriteCookie("openid", "0oosadfjjhuyhwjenihkljsareuih");
+            //WebHelper.WriteCookie("nickname", "开启我亲爱的小耗子");
+            //WebHelper.WriteCookie("headimgurl", "~/Content/img/ad6.png");
 
             //判断是否是微信浏览器，如果是微信浏览器则进行微信授权
             //string agent = Request.Headers["User-Agent"];
@@ -38,8 +46,6 @@ namespace YiDaBus.Com.Mobile.Web.Areas.MemberManager.Controllers
             //{
             //    return View();
             //}
-
-
             #region 微信授权
             string openid = WebHelper.GetCookie("openid");
             string nickname = WebHelper.GetCookie("nickname");
@@ -192,6 +198,22 @@ namespace YiDaBus.Com.Mobile.Web.Areas.MemberManager.Controllers
                 code = 200,
                 msg = "登录成功",
                 data = currentUser,
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult ClearCaches(Wx_Users wx_Users)
+        {
+            //验证用户登录
+            WebHelper.RemoveCookie("openid");
+            WebHelper.RemoveCookie("nickname");
+            WebHelper.RemoveCookie("headimgurl");
+            WebHelper.RemoveCookie(".ASPXAUTH");
+            return Json(new
+            {
+                code = 200,
+                msg = "清除成功",
+                data = "",
             }, JsonRequestBehavior.AllowGet);
         }
         #endregion

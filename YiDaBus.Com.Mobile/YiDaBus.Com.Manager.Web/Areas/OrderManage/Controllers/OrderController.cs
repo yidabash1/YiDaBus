@@ -29,7 +29,7 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
         [HandlerAuthorize]
         public virtual ActionResult GroupMsg()
         {
-           
+
             return View();
         }
         #endregion
@@ -43,7 +43,7 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
 
         private string GetGridOrderSql(Pagination pagination)
         {
-            string sqlWhere = " WHERE 1=1  ";
+            string sqlWhere = " WHERE 1=1 And t1.Isdel=0";
             string OrderNo = Request["OrderNo"];
             if (!string.IsNullOrEmpty(OrderNo))
             {
@@ -153,20 +153,67 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult SubmitForm(string keyValue, Orders model)
+        public ActionResult SubmitForm(string keyValue, Orders orders)
         {
             OperatorModel op = OperatorProvider.Provider.GetCurrent();
             if (string.IsNullOrEmpty(keyValue))
             {
-                model.CreateTime = DateTime.Now;
-                model.UpdateTime = DateTime.Now;
+                orders.CreateTime = DateTime.Now;
+                orders.UpdateTime = DateTime.Now;
             }
             else
             {
-                model.Id = keyValue.ToInt();
-                model.UpdateTime = DateTime.Now;
+                orders.Id = keyValue.ToInt();
+                orders.UpdateTime = DateTime.Now;
+
+
+                string MoneyConst = string.Empty;
+                decimal DeliveryFee = 0;
+                if (orders.Area == AreaType.shanghai.ToString())
+                {
+                    MoneyConst = YiDaBusConst.上海票价不含接送;
+                    DeliveryFee = CommonBLL.GetGlobalConstVariable(YiDaBusConst.上海接送费).FirstOrDefault().F_Description.ToDecimal();
+                }
+                else
+                {
+                    MoneyConst = YiDaBusConst.杭州票价;
+                }
+                //修改座位
+                var ChooseSeatsArr = orders.SeatTexts.Replace("座", "").Split('、');
+                if (ChooseSeatsArr.Length == 0) { return Error("请先选择座位！"); }
+                string SeatIds = string.Empty;
+                string SeatTexts = string.Empty;
+                string areaCn = string.Empty;
+                var seatPrice = CommonBLL.GetGlobalConstVariable(MoneyConst).FirstOrDefault().F_Description.ToDecimal(); 
+                var seatCount = ChooseSeatsArr.Length;
+                var selectWeek = (int)Convert.ToDateTime(orders.DepartureTime).DayOfWeek;
+                if (selectWeek == 0) { selectWeek = 7; }
+                orders.Week = selectWeek;
+                foreach (var item in ChooseSeatsArr)
+                {
+                    SeatIds += YiDaBusConst.SeatSign + item + YiDaBusConst.SeatSign;
+                    //判断座位是否已经被其他人下单
+                    var isExist = Db.MySqlContext.Exists<Orders>(d => d.DepartureTime == orders.DepartureTime && d.IsDel == (int)IsDel.否 && d.SeatIds.Contains(SeatIds) && d.Area == orders.Area && d.UserId != orders.UserId);
+
+                    if (orders.Area == AreaType.shanghai.ToString()) { areaCn = "上海"; }
+                    else if (orders.Area == AreaType.hangzhou.ToString()) { areaCn = "杭州"; }
+                    if (isExist)
+                    {
+                        return Error($"车号：{orders.CarNumber}</br>前往：{areaCn}</br>时间：{orders.DepartureTime}</br>座位号：{item}</br>已被其他人购买，请选择其他座位。");
+                    }
+                    SeatIds += ",";
+                    SeatTexts += item + "座、";
+                }
+                orders.SeatIds = SeatIds.TrimEnd(',');
+                orders.SeatTexts = SeatTexts.TrimEnd('、');
+                orders.WeekTextCn = Enum.GetName(typeof(WeekCn), orders.Week.ToInt());
+
+                var shuttlePrice = orders.IsShuttle == 1 ? DeliveryFee : 0;
+                var way = orders.IsOneWay == 1 ? 1 : 2;
+                var totalMoney = (seatCount * (seatPrice + shuttlePrice) * way).ToDecimal(2);
+                orders.TotalAmount = totalMoney;
             }
-            return SubmitForms(Db.MySqlContext, model, keyValue);
+            return SubmitForms(Db.MySqlContext, orders, keyValue);
         }
 
         [HttpPost]
@@ -175,7 +222,7 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(string keyValue)
         {
-            return DeleteFormBySql(Db.MySqlContext, keyValue, "Orders", true);
+            return MultiDeleteFormBySql(Db.MySqlContext, keyValue, "Orders", true);
         }
 
         /// <summary>
@@ -274,7 +321,7 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [HandlerAuthorize]
-        public ActionResult SendMsg(string ids,string MsgTemplate)
+        public ActionResult SendMsg(string ids, string MsgTemplate)
         {
             string WeixinAppId = ConfigurationManager.AppSettings["WeixinAppId"] ?? "";
             string WxDomain = ConfigurationManager.AppSettings["wxDomain"] ?? "";
@@ -315,7 +362,7 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
         {
             public string OpenId { get; set; }
             public string WxNickName { get; set; }
-            
+
         }
     }
 }

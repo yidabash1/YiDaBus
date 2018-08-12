@@ -187,7 +187,7 @@ namespace YiDaBus.Com.Model
         }
         private int? _IsOneWay = int.MinValue;
 	    /// <summary>
-        /// 是否单程（0：是；1：否）
+        /// 是否单程（0：否；1：是）
         /// </summary>
         public int? IsOneWay
         {
@@ -201,7 +201,7 @@ namespace YiDaBus.Com.Model
         }
         private int? _IsShuttle = int.MinValue;
 	    /// <summary>
-        /// 是否接送（0：是；1：否）
+        /// 是否接送（0：否；1：是）
         /// </summary>
         public int? IsShuttle
         {
@@ -473,14 +473,14 @@ namespace YiDaBus.Com.Model
             public readonly static Field Mobile = new Field("Mobile", "Orders", "手机号");
 
 			/// <summary>
-            /// 是否单程（0：是；1：否）
+            /// 是否单程（0：否；1：是）
             /// </summary>
-            public readonly static Field IsOneWay = new Field("IsOneWay", "Orders", "是否单程（0：是；1：否）");
+            public readonly static Field IsOneWay = new Field("IsOneWay", "Orders", "是否单程（0：否；1：是）");
 
 			/// <summary>
-            /// 是否接送（0：是；1：否）
+            /// 是否接送（0：否；1：是）
             /// </summary>
-            public readonly static Field IsShuttle = new Field("IsShuttle", "Orders", "是否接送（0：是；1：否）");
+            public readonly static Field IsShuttle = new Field("IsShuttle", "Orders", "是否接送（0：否；1：是）");
 
 			/// <summary>
             /// 接的地点

@@ -27,6 +27,7 @@
                     }
                 });
             } else {
+                $("#btnGroup").hide();
                 $.ajax({
                     url: modulelUrl + "GetFormJson",
                     data: { keyValue: keyValue },
@@ -115,6 +116,18 @@
                 </td>
             </tr>
             <tr>
+                <th class="formTitle">用户姓名</th>
+                <td class="formValue">
+                    <input id="UserNickName" name="UserNickName" type="text" class="form-control required" placeholder="请输入用户姓名" />
+                </td>
+            </tr>
+            <tr>
+                <th class="formTitle">手机号</th>
+                <td class="formValue">
+                    <input id="Mobile" name="Mobile" type="text" class="form-control required" placeholder="请输入手机号" />
+                </td>
+            </tr>
+            <tr>
                 <th class="formTitle">车牌号</th>
                 <td class="formValue">
                     <select id="CarNumber" name="CarNumber" class="form-control required ">
@@ -148,6 +161,13 @@
                     </select>
                 </td>
             </tr>
+            <tr>
+                <th class="formTitle">座位</th>
+                <td class="formValue">
+                    <input id="SeatTexts" name="SeatTexts" type="text" class="form-control required" placeholder="请输入座位（多个座位以、隔开）" style="width:70%;float:left" />
+                    <strong style="line-height: 30px;height: 30px;margin-left: 20px;color: red;">*多个座位以、隔开</strong>
+                </td>
+            </tr>
             <tr hidden>
                 <th class="formTitle">座位（以逗号隔开）</th>
                 <td class="formValue">
@@ -157,13 +177,13 @@
             <tr>
                 <th class="formTitle">发车时间</th>
                 <td class="formValue">
-                    <input id="DepartureTime" name="DepartureTime" type="text" class="form-control required" placeholder="请输入发车时间" />
+                    <input id="DepartureTime" name="DepartureTime" type="text" placeholder="请输入发车时间"  class="form-control input-wdatepicker required" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" />
                 </td>
             </tr>
             <tr>
                 <th class="formTitle">订单金额（元）</th>
                 <td class="formValue">
-                    <input id="TotalAmount" name="TotalAmount" type="text" class="form-control required" placeholder="请输入订单总金额（单位元）" />
+                    <input id="TotalAmount" name="TotalAmount" type="text" class="form-control required" placeholder="请输入订单总金额（单位元）"  readonly/>
                 </td>
             </tr>
             <tr hidden>
@@ -173,24 +193,12 @@
                 </td>
             </tr>
             <tr>
-                <th class="formTitle">用户姓名</th>
-                <td class="formValue">
-                    <input id="UserNickName" name="UserNickName" type="text" class="form-control required" placeholder="请输入用户姓名" />
-                </td>
-            </tr>
-            <tr>
-                <th class="formTitle">手机号</th>
-                <td class="formValue">
-                    <input id="Mobile" name="Mobile" type="text" class="form-control required" placeholder="请输入手机号" />
-                </td>
-            </tr>
-            <tr>
                 <th class="formTitle">是否单程</th>
                 <td class="formValue">
                     <select id="IsOneWay" name="IsOneWay" class="form-control required ">
                         <option value="">---请选择--</option>
-                        <option value="0">是</option>
-                        <option value="1">否</option>
+                        <option value="0">否</option>
+                        <option value="1">是</option>
                     </select>
                 </td>
             </tr>
@@ -199,8 +207,8 @@
                 <td class="formValue">
                     <select id="IsShuttle" name="IsShuttle" class="form-control required ">
                         <option value="">---请选择--</option>
-                        <option value="0">是</option>
-                        <option value="1">否</option>
+                        <option value="0">否</option>
+                        <option value="1">是</option>
                     </select>
                 </td>
             </tr>
@@ -261,12 +269,6 @@
                     </select>
                 </td>
             </tr>
-            <tr >
-                <th class="formTitle">座位描述</th>
-                <td class="formValue">
-                    <input id="SeatTexts" name="SeatTexts" type="text" class="form-control required" placeholder="请输入座位描述" readonly/>
-                </td>
-            </tr>
             <tr hidden>
                 <th class="formTitle">星期几中文描述</th>
                 <td class="formValue">
@@ -275,7 +277,7 @@
             </tr>
         </table>
     </div>
-    <div style="margin-right:20px;">
+    <div id="btnGroup" style="margin-right:20px;">
         <div class="form-button" id="wizard-actions" style="position:fixed;">
             <a href="javascript:void(0);" class="layui-layer-btn0 btn btn-default" onclick="Close()">关闭</a>
             <a href="javascript:void(0);" class="layui-layer-btn0 btn btn-danger" onclick="AuditFailed()">支付失败</a>

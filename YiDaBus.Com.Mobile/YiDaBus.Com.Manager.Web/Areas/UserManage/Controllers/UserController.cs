@@ -19,7 +19,7 @@ namespace YiDaBus.Com.Manager.Web.Areas.UserManage.Controllers
         #region 获取数据
         public async Task<ActionResult> GetGridJson(Pagination pagination)
         {
-            string sqlWhere = " WHERE 1=1  ";
+            string sqlWhere = " WHERE 1=1  AND Isdel = 0";
             string Mobile = Request["Mobile"];
             if (!string.IsNullOrEmpty(Mobile))
             {

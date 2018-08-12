@@ -402,6 +402,7 @@
     <Content Include="Areas\OrderManager\Views\Orders\orderInfo.cshtml" />
     <Content Include="Areas\OrderManager\Views\Orders\success.cshtml" />
     <Content Include="Areas\OrderManager\Views\Orders\hangzhouIndex.cshtml" />
+    <Content Include="Areas\MemberManager\Views\Member\ClearCache.cshtml" />
     <None Include="Properties\PublishProfiles\YiDaBus.Mobile.pubxml" />
     <None Include="Properties\PublishProfiles\YiDaBus.Mobile_gx.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

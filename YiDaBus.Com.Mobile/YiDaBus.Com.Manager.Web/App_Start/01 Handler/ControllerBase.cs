@@ -320,6 +320,55 @@ namespace YiDaBus.Com.Manager.Web
                 return Error(ex.Message);
             }
         }
+
+        /// <summary>
+        /// 删除数据行
+        /// </summary>
+        /// <param name="ds">操作对象</param>
+        /// <param name="keyValue">主键ID</param>
+        /// <param name="tableName">表名</param>
+        /// <param name="f_ModuleName">模块名称</param>
+        /// <param name="isSoftDel">是否软删除（默认为软删除）</param>
+        /// <returns></returns>
+        protected ActionResult MultiDeleteFormBySql(DbSession ds, string keyValue, string tableName, bool isSoftDel = true)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(keyValue))
+                {
+                    return Error("请选择要删除的记录！");
+                }
+                string sql = string.Empty;
+                if (isSoftDel)
+                {
+                    sql = string.Format(@"UPDATE  {0}
+                                SET     IsDel = 1
+                                WHERE   Id in ({1})", tableName, keyValue);
+                }
+                else
+                {
+                    sql = string.Format(@"DELETE  {0}
+                                    WHERE   Id in ({1})", tableName, keyValue);
+                }
+
+                int affectedId = ds.FromSql(sql).ExecuteNonQuery();
+                if (affectedId > 0)
+                {
+                    LogApp(f_ModuleName, DbLogType.Create, "删除对象【" + f_ModuleName + "】；主键ID【" + keyValue + "】！");
+                    return Success("删除" + f_ModuleName + "成功");
+                }
+                else
+                {
+                    LogApp(f_ModuleName, DbLogType.Fail, "删除对象【" + f_ModuleName + "】失败！");
+                    return Error("删除" + f_ModuleName + "失败");
+                }
+            }
+            catch (System.Exception ex)
+            {
+                LogApp(f_ModuleName, DbLogType.Exception, ex.Message);
+                return Error(ex.Message);
+            }
+        }
         #endregion
         #region 【5】uip调用方法
         /// <summary>

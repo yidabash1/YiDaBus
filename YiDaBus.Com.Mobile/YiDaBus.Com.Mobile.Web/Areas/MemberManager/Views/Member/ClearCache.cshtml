@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "易达快乐巴士 - 清除缓存";
+    Layout = "~/Views/Shared/master.cshtml";
+}
+
+<a href="javascript:void(0);" class="weui-btn weui-btn_primary" id="btnSave" lay-submit="" lay-filter="Submit" onclick="ClearCacheHandler()" style="margin-top:50px;">清除缓存</a>
+
+@section footContainer{
+    <script>
+        //初始化数据
+        function ClearCacheHandler() {
+            $.ar({
+                url: 'ClearCaches'
+               , data: null
+               , success: function (data) {
+                   $.modalMsg({
+                       content: data.msg, success: function () {
+                           window.location.href = "/";
+                       }
+                   });
+               }
+            });
+        }
+    </script>
+
+}

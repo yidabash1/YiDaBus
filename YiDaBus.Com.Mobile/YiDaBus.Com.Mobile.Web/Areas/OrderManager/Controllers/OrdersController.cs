@@ -151,7 +151,8 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
         {
             string WeixinAppId = ConfigurationManager.AppSettings["WeixinAppId"] ?? "";
             string WxDomain = ConfigurationManager.AppSettings["wxDomain"] ?? "";
-
+            string ManagerOpenId = ConfigurationManager.AppSettings["ManagerOpenId"] ?? "";
+            
 
 
             string ChooseSeats = Request["ChooseSeats"] ?? "";
@@ -173,30 +174,31 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                 string endTime = string.Empty;
                 GetStartEndTimeByWeek(ref startTime, ref endTime);
                 //获取当周的星期一
-                string sql = string.Format(@"SELECT
-	                                SeatIds
-                                FROM
-	                                Orders 
-                                WHERE
-	                                UserId = {0} 
-	                                AND IsDel = {1} 
-	                                AND DepartureTime >= '{2}' 
-	                                AND DepartureTime <= '{3}' ", userInfo.Id, (int)IsDel.否, startTime, endTime);
-                var SeatIdsList = Db.MySqlContext.FromSql(sql).ToList<string>();
+                //string sql = string.Format(@"SELECT
+	               //                 SeatIds
+                //                FROM
+	               //                 Orders 
+                //                WHERE
+	               //                 UserId = {0} 
+	               //                 AND IsDel = {1} 
+	               //                 AND DepartureTime >= '{2}' 
+	               //                 AND DepartureTime <= '{3}' ", userInfo.Id, (int)IsDel.否, startTime, endTime);
+                //var SeatIdsList = Db.MySqlContext.FromSql(sql).ToList<string>();
 
-                foreach (var item in SeatIdsList)
-                {
-                    if (string.IsNullOrEmpty(item)) continue;
-                    if (item.Contains(","))
-                        totalCount += 2;
-                    else
-                        totalCount++;
-                }
-                if (totalCount > 2) { return Error("一周最多只能预定两张票！"); }
+                //foreach (var item in SeatIdsList)
+                //{
+                //    if (string.IsNullOrEmpty(item)) continue;
+                //    if (item.Contains(","))
+                //        totalCount += 2;
+                //    else
+                //        totalCount++;
+                //}
+                //if (totalCount > 2) { return Error("一周最多只能预定两张票！"); }
 
                 //获取发车时间
                 DateTime DepartureTime = DateTime.Now;
                 string orderHeader = string.Empty;
+                string MoneyConst = string.Empty;
                 if (orders.Area == AreaType.shanghai.ToString())
                 {
                     int day = 0;
@@ -207,13 +209,18 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                     }
 
                     orderHeader = "SH";
+                    MoneyConst = YiDaBusConst.上海票价不含接送;
+                    DeliveryFee = CommonBLL.GetGlobalConstVariable(YiDaBusConst.上海接送费).FirstOrDefault().F_Description.ToDecimal();
                 }
                 else
                 {
                     orders.Week = GetWeekByDateTime(DepartureTime);
                     orderHeader = "HZ";
+                    MoneyConst = YiDaBusConst.杭州票价;
                 }
-
+               
+                TicketPrice = CommonBLL.GetGlobalConstVariable(MoneyConst).FirstOrDefault().F_Description.ToDecimal();
+                
                 orders.DepartureTime = DepartureTime.ToString("yyyy-MM-dd");
                 string SeatIds = string.Empty;
                 string SeatTexts = string.Empty;
@@ -269,7 +276,12 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                             result = new TemplateDataItem("已预约"),//结果
                             remark = new TemplateDataItem($"如有疑问，请咨询{ComplaintsHotline}。")//结果
                         };
+                        //给客户
                         var tmResult = TemplateApi.SendTemplateMessage(WeixinAppId, userInfo.OpenId, "ugJ8nxawp2ZE53lrDMCpCVB0lI1iSKn2PSFK-rLrqP4",
+                                    (WxDomain + "/MemberManager/Member/MemberTicketDetail?orderId=" + r)
+                                    , TempleteData);
+                        //给后台管理员
+                        var tmResult1 = TemplateApi.SendTemplateMessage(WeixinAppId, ManagerOpenId, "ugJ8nxawp2ZE53lrDMCpCVB0lI1iSKn2PSFK-rLrqP4",
                                     (WxDomain + "/MemberManager/Member/MemberTicketDetail?orderId=" + r)
                                     , TempleteData);
                     }
