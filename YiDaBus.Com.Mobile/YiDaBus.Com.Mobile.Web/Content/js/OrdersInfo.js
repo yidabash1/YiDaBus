@@ -5,14 +5,29 @@ var area = $.request("area");
 var address = $.request("address");
 var from = "", to = "";
 var busNum = $.request("busNum");
+var TicketPriceData = null;
 //初始化
 function InitInfo() {
+    GetTicketPriceDetails();
     calcTotalMoney();
     InitControl();//初始化控件
     InitForm()//初始化表单
     InitData();//初始化数据
 }
 
+function GetTicketPriceDetails() {
+    //ajax获取
+    $.ar({
+        url: 'GetTicketPriceDetails'
+        , async: false
+        , success: function (data) {
+            TicketPriceData = data.data;
+        }
+        , error: function (data) {
+
+        }
+    });
+}
 //初始化控件
 function InitControl() {
     $("#CarNumber").val(busNum);
@@ -47,16 +62,47 @@ function InitControl() {
 
 //计算票价总额
 function calcTotalMoney() {
-    var seatCount = chooseSeats.split(',').length;
-    if (seatCount === 0) {
+    var SingleTicketPrice = 0;//单程
+    var MutilTicketPrice = 0;//双程
+    var ShuttlePrice = 0;//接送费
+    var SeatPrice = 0;//票价
+    var IsShuttlePrice = $("#elemSwitchShuttle").is(":checked");
+    var IsOneWay = $("#elemSwitchOneway").is(":checked");
+    if (area == "shanghai") {
+        for (var i = 0; i < TicketPriceData.length; i++) {
+            //接送费
+            if (IsShuttlePrice && TicketPriceData[i]["F_ItemCode"] == "ShangHaiDeliveryFee") {
+                ShuttlePrice = parseFloat(TicketPriceData[i]["F_Description"]);
+            }
+            //单程
+            if (IsOneWay &&  TicketPriceData[i]["F_ItemCode"] == "ShangHaiTicketPrice") {
+                SingleTicketPrice = parseFloat(TicketPriceData[i]["F_Description"]);
+            }
+            //双程
+            if (!IsOneWay &&  TicketPriceData[i]["F_ItemCode"] == "ShangHaiMutilTicketPrice") {
+                MutilTicketPrice = parseFloat(TicketPriceData[i]["F_Description"]);
+            }
+        }
+    } else if (area == "hangzhou") {
+        for (var i = 0; i < TicketPriceData.length; i++) {
+            //单程
+            if (IsOneWay && TicketPriceData[i]["F_ItemCode"] == "HangZhouTicketPrice") {
+                SingleTicketPrice = parseFloat(TicketPriceData[i]["F_Description"]);
+            }
+            //双程
+            if (!IsOneWay && TicketPriceData[i]["F_ItemCode"] == "HangZhouMutilTicketPrice") {
+                MutilTicketPrice = parseFloat(TicketPriceData[i]["F_Description"]);
+            }
+        }
+    }
+    var SeatCount = chooseSeats.split(',').length;
+    if (SeatCount === 0) {
         $.toast("预订座位数量不能为0", "text");
         return;
     }
-    var seatPrice = Number($("#seatPrice").val());
-    var way = $("#elemSwitchOneway").is(":checked") ? 1 : 2;
-    //如果需要接送补接送价20元
-    var shuttlePrice = $("#elemSwitchShuttle").is(":checked") ? Number($("#shuttlePrice").val()) : 0;
-    var totalMoney = (seatCount * (seatPrice + shuttlePrice) * way).toFixed(2);
+    var SeatPrice = IsOneWay ? SingleTicketPrice : MutilTicketPrice;
+
+    var totalMoney = (SeatCount * (SeatPrice + ShuttlePrice)).toFixed(2);
 
     $("#totalMoney").val(totalMoney);
     $("#elemTotalMoney").text("¥" + totalMoney);

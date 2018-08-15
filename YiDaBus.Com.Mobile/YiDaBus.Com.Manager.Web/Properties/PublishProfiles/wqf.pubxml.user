@@ -538,10 +538,10 @@
       <publishTime>03/31/2017 18:22:28</publishTime>
     </File>
     <File Include="Areas/OrderManage/Views/Order/GroupMsg.cshtml">
-      <publishTime>08/09/2018 17:03:22</publishTime>
+      <publishTime>08/15/2018 13:27:43</publishTime>
     </File>
     <File Include="Areas/OrderManage/Views/Order/Index.cshtml">
-      <publishTime>08/09/2018 11:05:44</publishTime>
+      <publishTime>08/15/2018 13:32:06</publishTime>
     </File>
     <File Include="Areas/OrderManage/Views/Order/IntentForm.cshtml">
       <publishTime>04/07/2017 19:29:40</publishTime>
@@ -862,10 +862,10 @@
       <publishTime>02/22/2013 08:43:40</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>08/09/2018 17:19:22</publishTime>
+      <publishTime>08/15/2018 13:33:18</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>08/09/2018 17:19:22</publishTime>
+      <publishTime>08/15/2018 13:33:18</publishTime>
     </File>
     <File Include="bin/Common.Logging.Core.dll">
       <publishTime>01/18/2017 12:52:28</publishTime>
@@ -916,19 +916,19 @@
       <publishTime>01/12/2017 14:16:36</publishTime>
     </File>
     <File Include="bin/NFine.Application.dll">
-      <publishTime>08/09/2018 12:02:19</publishTime>
+      <publishTime>08/15/2018 13:33:05</publishTime>
     </File>
     <File Include="bin/NFine.Data.dll">
-      <publishTime>07/31/2018 14:27:12</publishTime>
+      <publishTime>08/15/2018 13:33:04</publishTime>
     </File>
     <File Include="bin/NFine.Domain.dll">
-      <publishTime>07/31/2018 14:27:12</publishTime>
+      <publishTime>08/15/2018 13:33:05</publishTime>
     </File>
     <File Include="bin/NFine.Mapping.dll">
-      <publishTime>07/31/2018 14:27:13</publishTime>
+      <publishTime>08/15/2018 13:33:05</publishTime>
     </File>
     <File Include="bin/NFine.Repository.dll">
-      <publishTime>07/31/2018 14:27:13</publishTime>
+      <publishTime>08/15/2018 13:33:05</publishTime>
     </File>
     <File Include="bin/NPOI.dll">
       <publishTime>12/26/2016 10:11:26</publishTime>
@@ -1027,16 +1027,16 @@
       <publishTime>07/17/2018 11:11:46</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Manager.Web.dll">
-      <publishTime>08/09/2018 17:19:12</publishTime>
+      <publishTime>08/15/2018 13:33:06</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Mobile.BLL.dll">
-      <publishTime>08/09/2018 12:00:30</publishTime>
+      <publishTime>08/15/2018 13:32:23</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Mobile.Common.dll">
-      <publishTime>07/31/2018 14:23:33</publishTime>
+      <publishTime>08/15/2018 13:32:20</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Mobile.Model.dll">
-      <publishTime>08/09/2018 12:00:29</publishTime>
+      <publishTime>08/15/2018 13:32:20</publishTime>
     </File>
     <File Include="bin/ZFX365.Com.Manager.BLL.dll">
       <publishTime>04/12/2017 15:21:07</publishTime>
@@ -2692,10 +2692,10 @@
       <publishTime>12/20/2016 17:05:36</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>03/06/2017 14:13:48</publishTime>
+      <publishTime>08/12/2018 11:55:46</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>08/09/2018 17:19:14</publishTime>
+      <publishTime>08/15/2018 13:33:09</publishTime>
     </File>
     <File Include="Utils/Entity/hp.ttinclude">
       <publishTime>06/27/2018 14:48:07</publishTime>
@@ -2731,7 +2731,7 @@
       <publishTime>12/20/2016 17:08:26</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/09/2018 12:02:21</publishTime>
+      <publishTime>08/15/2018 13:33:07</publishTime>
     </File>
     <File Include="xmlconfig/distict.json">
       <publishTime>02/23/2017 17:45:24</publishTime>

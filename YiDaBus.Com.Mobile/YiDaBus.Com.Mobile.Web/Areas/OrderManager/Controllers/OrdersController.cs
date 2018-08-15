@@ -49,6 +49,7 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
             {
                 string endTime = string.Empty;
                 var endConfigList = Db.MySqlContext.From<TimeEndConfig>().Where(d => d.Area == "上海").ToList<TimeEndConfigExt>();
+                ViewBag.ExipreEndTime = endConfigList.Where(d=>d.Week == "星期五").FirstOrDefault().EndTime;
                 foreach (var item in endConfigList)
                 {
                     switch (item.Week)
@@ -199,6 +200,14 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                 DateTime DepartureTime = DateTime.Now;
                 string orderHeader = string.Empty;
                 string MoneyConst = string.Empty;
+                //修改座位
+                decimal SingleTicketPrice = 0;//单程
+                decimal MutilTicketPrice = 0;//双程
+                decimal ShuttlePrice = 0;//接送费
+                decimal SeatPrice = 0;//票价
+                var IsShuttlePrice = orders.IsShuttle == 1;
+                var IsOneWay = orders.IsOneWay == 1;
+                var ticketPriceData = CommonBLL.GetGlobalConstVariable();
                 if (orders.Area == AreaType.shanghai.ToString())
                 {
                     int day = 0;
@@ -209,18 +218,39 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                     }
 
                     orderHeader = "SH";
-                    MoneyConst = YiDaBusConst.上海票价不含接送;
-                    DeliveryFee = CommonBLL.GetGlobalConstVariable(YiDaBusConst.上海接送费).FirstOrDefault().F_Description.ToDecimal();
+                    //接送费
+                    if (IsShuttlePrice)
+                    {
+                        ShuttlePrice = ticketPriceData.Where(d => d.F_ItemCode == YiDaBusConst.上海接送费).FirstOrDefault().F_Description.ToDecimal();
+                    }
+                    //单程
+                    if (IsOneWay)
+                    {
+                        SingleTicketPrice = ticketPriceData.Where(d => d.F_ItemCode == YiDaBusConst.上海单程票价不含接送).FirstOrDefault().F_Description.ToDecimal();
+                    }
+                    //双程
+                    if (!IsOneWay)
+                    {
+                        MutilTicketPrice = ticketPriceData.Where(d => d.F_ItemCode == YiDaBusConst.上海双程票价不含接送).FirstOrDefault().F_Description.ToDecimal();
+                    }
                 }
                 else
                 {
                     orders.Week = GetWeekByDateTime(DepartureTime);
                     orderHeader = "HZ";
-                    MoneyConst = YiDaBusConst.杭州票价;
+                    //单程
+                    if (IsOneWay)
+                    {
+                        SingleTicketPrice = ticketPriceData.Where(d => d.F_ItemCode == YiDaBusConst.杭州单程票价).FirstOrDefault().F_Description.ToDecimal();
+                    }
+                    //双程
+                    if (!IsOneWay)
+                    {
+                        MutilTicketPrice = ticketPriceData.Where(d => d.F_ItemCode == YiDaBusConst.杭州双程票价).FirstOrDefault().F_Description.ToDecimal();
+                    }
                 }
-               
-                TicketPrice = CommonBLL.GetGlobalConstVariable(MoneyConst).FirstOrDefault().F_Description.ToDecimal();
                 
+
                 orders.DepartureTime = DepartureTime.ToString("yyyy-MM-dd");
                 string SeatIds = string.Empty;
                 string SeatTexts = string.Empty;
@@ -246,11 +276,9 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                 //GetOrderBaseInfoByArea(Area);
                 //var IsOneWay = (Request["IsOneWay"] ?? "0").ToInt();//是否单程
                 //var IsShuttle = (Request["IsShuttle"] ?? "0").ToInt();//是否接送
-                var seatCount = ChooseSeatsArr.Length;
-                var seatPrice = TicketPrice;
-                var shuttlePrice = orders.IsShuttle == 1 ? DeliveryFee : 0;
-                var way = orders.IsOneWay == 1 ? 1 : 2;
-                var totalMoney = (seatCount * (seatPrice + shuttlePrice) * way).ToDecimal(2);
+                var SeatCount = ChooseSeatsArr.Length;
+                SeatPrice = IsOneWay ? SingleTicketPrice : MutilTicketPrice;
+                var totalMoney = (SeatCount * (SeatPrice + ShuttlePrice)).ToDecimal(2);
                 orders.TotalAmount = totalMoney;
                 orders.CreateTime = DateTime.Now;
                 orders.UpdateTime = DateTime.Now;
@@ -302,7 +330,12 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
                 trans.Close();
             }
         }
-
+        [HttpPost]
+        public ActionResult GetTicketPriceDetails(Orders orders)
+        {
+            var Details = CommonBLL.GetGlobalConstVariable();
+            return base.Sucess("操作成功", 200, Details);
+        }
         /// <summary>
         /// 根据区域获取已选中的座位号
         /// </summary>
@@ -434,18 +467,18 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
             string F_ItemCode = string.Empty;
             if (area == YiDaBusConst.上海)
             {
-                F_ItemCode = YiDaBusConst.上海票价不含接送;
-                DeliveryFee = Sys_ItemsDetailList.Where(d => d.F_ItemCode == YiDaBusConst.上海接送费).FirstOrDefault().F_Description.ToDecimal();
+                //F_ItemCode = YiDaBusConst.上海单程票价不含接送;
+                //DeliveryFee = Sys_ItemsDetailList.Where(d => d.F_ItemCode == YiDaBusConst.上海接送费).FirstOrDefault().F_Description.ToDecimal();
                 int day = 0;
                 DepartureTime = GetDateTimeByWeek(week.ToInt(), ref day);
             }
             else if (area == YiDaBusConst.杭州)
             {
-                F_ItemCode = YiDaBusConst.杭州票价;
+                //F_ItemCode = YiDaBusConst.杭州单程票价;
             }
-            TicketPrice = Sys_ItemsDetailList.Where(d => d.F_ItemCode == F_ItemCode).FirstOrDefault().F_Description.ToDecimal();
-            ViewBag.TicketPrice = TicketPrice;
-            ViewBag.DeliveryFee = DeliveryFee;
+            //TicketPrice = Sys_ItemsDetailList.Where(d => d.F_ItemCode == F_ItemCode).FirstOrDefault().F_Description.ToDecimal();
+            //ViewBag.TicketPrice = TicketPrice;
+            //ViewBag.DeliveryFee = DeliveryFee;
             ViewBag.DepartureTime = DepartureTime;
         }
         #endregion

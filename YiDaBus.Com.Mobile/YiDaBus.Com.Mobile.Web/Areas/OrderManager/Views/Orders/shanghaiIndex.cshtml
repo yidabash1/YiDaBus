@@ -184,7 +184,7 @@
 {
     <script>
         $.modalMsg({
-            content: "请选择当前以及当前日期之后的车次!", success: function () {
+            content: "请选择当前以及当前日期之后的车次!<br/><strong>注：周五 @ViewBag.ExipreEndTime 点之后，可选择下周的车次</strong>", success: function () {
                 window.location.href = "/Home/Index";
                 return;
             },shadeClose: false

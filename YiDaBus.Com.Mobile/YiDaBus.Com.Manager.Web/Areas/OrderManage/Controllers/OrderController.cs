@@ -43,7 +43,7 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
             return getListByPaging<OrderExt>(Db.MySqlContext, sql, pagination);
         }
 
-        private string GetGridOrderSql(Pagination pagination)
+        private string GetGridOrderSql(Pagination pagination, bool isChangeSelect = false)
         {
             string sqlWhere = " WHERE 1=1 And t1.Isdel=0";
             string OrderNo = Request["OrderNo"];
@@ -118,20 +118,28 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
             }
 
             string sql = string.Empty;
-            if (string.IsNullOrEmpty(ToPosition))
+            if (!isChangeSelect)
             {
                 sql = string.Format(@"SELECT t1.*,t2.Gender FROM Orders AS t1
 							LEFT JOIN Wx_Users AS t2 ON t1.UserId=t2.Id {0} {1} ", sqlWhere, sqlOrder);
             }
-            else if (ToPosition == "上海")
+            else
             {
-                sql = string.Format(@"SELECT SeatTexts as '座位号',t1.UserNickName as '真实姓名',t1.Mobile as '电话号码',t1.MeetPosition AS '接客地点',t1.SendPosition AS '送客地点',case IsOneWay when 0 then '否' when 1 then '是' else '' end as '单程',TotalAmount as '车费' FROM Orders AS t1
+                if (string.IsNullOrEmpty(ToPosition))
+                {
+                    sql = string.Format(@"SELECT t1.*,t2.Gender FROM Orders AS t1
+							LEFT JOIN Wx_Users AS t2 ON t1.UserId=t2.Id {0} {1} ", sqlWhere, sqlOrder);
+                }
+                else if (ToPosition == "上海")
+                {
+                    sql = string.Format(@"SELECT SeatTexts as '座位号',t1.UserNickName as '真实姓名',t1.Mobile as '电话号码',t1.MeetPosition AS '接客地点',t1.SendPosition AS '送客地点',case IsOneWay when 0 then '否' when 1 then '是' else '' end as '单程',TotalAmount as '车费' FROM Orders AS t1
 							{0} {1} ", sqlWhere, sqlOrder);
-            }
-            else if (ToPosition == "杭州")
-            {
-                sql = string.Format(@"SELECT SeatTexts as '座位号',t1.UserNickName as '真实姓名',t1.Mobile as '电话号码',case IsOneWay when 0 then '否' when 1 then '是' else '' end as '单程',TotalAmount as '车费' FROM Orders AS t1
+                }
+                else if (ToPosition == "杭州")
+                {
+                    sql = string.Format(@"SELECT SeatTexts as '座位号',t1.UserNickName as '真实姓名',t1.Mobile as '电话号码',case IsOneWay when 0 then '否' when 1 then '是' else '' end as '单程',TotalAmount as '车费' FROM Orders AS t1
 							{0} {1} ", sqlWhere, sqlOrder);
+                }
             }
 
             return sql;
@@ -181,26 +189,54 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
                 orders.Id = keyValue.ToInt();
                 orders.UpdateTime = DateTime.Now;
 
+                var ticketPriceData = CommonBLL.GetGlobalConstVariable();
 
-                string MoneyConst = string.Empty;
-                decimal DeliveryFee = 0;
+                //修改座位
+                decimal SingleTicketPrice = 0;//单程
+                decimal MutilTicketPrice = 0;//双程
+                decimal ShuttlePrice = 0;//接送费
+                decimal SeatPrice = 0;//票价
+                var IsShuttlePrice = orders.IsShuttle == 1;
+                var IsOneWay = orders.IsOneWay == 1;
                 if (orders.Area == AreaType.shanghai.ToString())
                 {
-                    MoneyConst = YiDaBusConst.上海票价不含接送;
-                    DeliveryFee = CommonBLL.GetGlobalConstVariable(YiDaBusConst.上海接送费).FirstOrDefault().F_Description.ToDecimal();
+                    //接送费
+                    if (IsShuttlePrice)
+                    {
+                        ShuttlePrice = ticketPriceData.Where(d => d.F_ItemCode == YiDaBusConst.上海接送费).FirstOrDefault().F_Description.ToDecimal();
+                    }
+                    //单程
+                    if (IsOneWay)
+                    {
+                        SingleTicketPrice = ticketPriceData.Where(d => d.F_ItemCode == YiDaBusConst.上海单程票价不含接送).FirstOrDefault().F_Description.ToDecimal();
+                    }
+                    //双程
+                    if (!IsOneWay)
+                    {
+                        MutilTicketPrice = ticketPriceData.Where(d => d.F_ItemCode == YiDaBusConst.上海双程票价不含接送).FirstOrDefault().F_Description.ToDecimal();
+                    }
                 }
                 else
                 {
-                    MoneyConst = YiDaBusConst.杭州票价;
+                    //单程
+                    if (IsOneWay)
+                    {
+                        SingleTicketPrice = ticketPriceData.Where(d => d.F_ItemCode == YiDaBusConst.杭州单程票价).FirstOrDefault().F_Description.ToDecimal();
+                    }
+                    //双程
+                    if (!IsOneWay)
+                    {
+                        MutilTicketPrice = ticketPriceData.Where(d => d.F_ItemCode == YiDaBusConst.杭州双程票价).FirstOrDefault().F_Description.ToDecimal();
+                    }
                 }
-                //修改座位
+
+
                 var ChooseSeatsArr = orders.SeatTexts.Replace("座", "").Split('、');
                 if (ChooseSeatsArr.Length == 0) { return Error("请先选择座位！"); }
                 string SeatIds = string.Empty;
                 string SeatTexts = string.Empty;
                 string areaCn = string.Empty;
-                var seatPrice = CommonBLL.GetGlobalConstVariable(MoneyConst).FirstOrDefault().F_Description.ToDecimal();
-                var seatCount = ChooseSeatsArr.Length;
+                var SeatCount = ChooseSeatsArr.Length;
                 var selectWeek = (int)Convert.ToDateTime(orders.DepartureTime).DayOfWeek;
                 if (selectWeek == 0) { selectWeek = 7; }
                 orders.Week = selectWeek;
@@ -223,9 +259,9 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
                 orders.SeatTexts = SeatTexts.TrimEnd('、');
                 orders.WeekTextCn = Enum.GetName(typeof(WeekCn), orders.Week.ToInt());
 
-                var shuttlePrice = orders.IsShuttle == 1 ? DeliveryFee : 0;
-                var way = orders.IsOneWay == 1 ? 1 : 2;
-                var totalMoney = (seatCount * (seatPrice + shuttlePrice) * way).ToDecimal(2);
+
+                SeatPrice = IsOneWay ? SingleTicketPrice : MutilTicketPrice;
+                var totalMoney = (SeatCount * (SeatPrice + ShuttlePrice)).ToDecimal(2);
                 orders.TotalAmount = totalMoney;
             }
             return SubmitForms(Db.MySqlContext, orders, keyValue);
@@ -306,7 +342,7 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
             try
             {
                 var ToPosition = HttpUtility.UrlDecode(Request["ToPosition"]);
-                string sql = GetGridOrderSql(null);
+                string sql = GetGridOrderSql(null, true);
                 var dataTable = Db.MySqlContext.FromSql(sql).ToDataTable();
                 NPOIExcel nPOIExcel = new NPOIExcel();
 
@@ -332,7 +368,8 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
                     {
                         DepartureTimeStr = _DepartureTimeStart;
                     }
-                    else {
+                    else
+                    {
                         DepartureTimeStr = $"{ _DepartureTimeStart}-{ _DepartureTimeEnd}";
                     }
                     row.CreateCell(0).SetCellValue($"目的地：{ToPosition}     车号：{CarNumber}      发车时间：{DepartureTimeStr}   合计:{TotalAmountSum}");

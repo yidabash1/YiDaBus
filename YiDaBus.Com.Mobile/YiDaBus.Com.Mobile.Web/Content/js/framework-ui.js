@@ -178,6 +178,7 @@ $.ar = function (options) {
     var loadIndex;
     var defaults = {
         url: "",
+        async: true,
         data: {},
         type: "post",
         loading: "",
@@ -191,6 +192,7 @@ $.ar = function (options) {
 
     $.ajax({
         url: options.url,
+        async: options.async,
         data: options.data,
         type: options.type,
         dataType: "json",

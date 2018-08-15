@@ -11,9 +11,11 @@ namespace YiDaBus.Com.Mobile.Model.Const
         public const string CommonDicItemId = "8e6fffbb-3273-4066-ae5d-aa15502ca7db";
         public const string 上海 = "shanghai";
         public const string 杭州 = "hangzhou";
-        public const string 上海票价不含接送 = "ShangHaiTicketPrice";
+        public const string 上海单程票价不含接送 = "ShangHaiTicketPrice";
+        public const string 上海双程票价不含接送 = "ShangHaiMutilTicketPrice";
         public const string 上海接送费 = "ShangHaiDeliveryFee";
-        public const string 杭州票价 = "HangZhouTicketPrice";
+        public const string 杭州单程票价 = "HangZhouTicketPrice";
+        public const string 杭州双程票价 = "HangZhouMutilTicketPrice";
         public const string 投诉热线 = "ComplaintsHotline";
         public const string 友情提醒 = "FriendlyReminder";
         public const string 是否开启苏F56789 = "IsOpenF56789";

@@ -75,7 +75,9 @@
             ],
             pager: "#gridPager",
             multiselect: true,//复选框
-            viewrecords: true
+            viewrecords: true,
+            rowNum: 80,
+            rowList : [ 80, 100,150 ],
         });
         $("#btn_search").click(function () {
             $gridList.jqGrid('setGridParam', {
@@ -377,10 +379,13 @@
                             </div>
                         </td>*@
                     <td>
-                        <div class="input-group">
-                            <span class="input-group-btn">
+                        <div class="btn-group">
+                            <a class="btn btn-primary" onclick="$.reload()"><span class="glyphicon glyphicon-refresh"></span></a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="btn-group">
                                 <button id="btn_search" type="button" class="btn  btn-primary" onclick="SearchHandler()"><i class="fa fa-search"></i></button>
-                            </span>
                         </div>
                     </td>
                     <td>

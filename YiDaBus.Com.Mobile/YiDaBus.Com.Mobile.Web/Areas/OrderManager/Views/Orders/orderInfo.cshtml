@@ -55,18 +55,18 @@
                 <input class="weui-input" type="tel" id="Mobile" name="Mobile" placeholder="请输入您的手机号码" lay-verify="required" lay-reqmsg="请输入您的手机号码">
             </div>
         </div>
-        <div class="weui-cell weui-cell_switch showOnlyShanghai">
+        <div class="weui-cell weui-cell_switch ">
             <div class="weui-cell__bd">是否单程</div>
             <div class="weui-cell__ft">
                 @*<input class="weui-switch" type="checkbox" id="elemSwitchOneway">*@
-                <input id="elemSwitchOneway" type="checkbox" name="IsOneWay" lay-skin="switch" lay-filter="SwitchOneway" lay-text="1|0">
+                <input id="elemSwitchOneway" type="checkbox" checked="" name="IsOneWay" lay-skin="switch" lay-filter="SwitchOneway" lay-text="1|0">
             </div>
         </div>
         <div class="weui-cell weui-cell_switch showOnlyShanghai">
             <div class="weui-cell__bd">是否接送</div>
             <div class="weui-cell__ft">
                 @*<input class="weui-switch" type="checkbox" checked="checked" id="elemSwitchShuttle">*@
-                <input id="elemSwitchShuttle" type="checkbox" checked="" name="IsShuttle" lay-skin="switch" lay-filter="SwitchShuttle" lay-text="1|0">
+                <input id="elemSwitchShuttle" type="checkbox" name="IsShuttle" lay-skin="switch" lay-filter="SwitchShuttle" lay-text="1|0">
             </div>
         </div>
         <div id="shuttleInfo" class="showOnlyShanghai">
@@ -105,9 +105,9 @@
     @*@Html.Hidden("isShuttle", 0)*@
 
     <!--接送单价-->
-    <input id="shuttlePrice" name="shuttlePrice" type="hidden" value="@ViewBag.DeliveryFee" />
+    @*<input id="shuttlePrice" name="shuttlePrice" type="hidden" value="@ViewBag.DeliveryFee" />*@
     <!--每座票价-->
-    <input id="seatPrice" name="seatPrice" type="hidden" value="@ViewBag.TicketPrice" />
+    @*<input id="seatPrice" name="seatPrice" type="hidden" value="@ViewBag.TicketPrice" />*@
 
     <!--票价总额-->
     @Html.Hidden("totalMoney", 0)
