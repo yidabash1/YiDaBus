@@ -25,3 +25,14 @@
 <div class="weui-footer weui-footer_fixed-bottom">
     <p class="weui-footer__text">Copyright &copy; 2018 易达快乐巴士</p>
 </div>
+@section footContainer
+{
+    <script>
+    $(function () {
+        $.modalMsg({
+            content: "长按二维码支付", success: function () {
+            }, shadeClose: true
+        });
+    });
+    </script>
+}

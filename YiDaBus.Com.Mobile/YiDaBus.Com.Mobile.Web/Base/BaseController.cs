@@ -174,6 +174,19 @@ namespace YiDaBus.Com.Mobile.Web.Base
             string weekstr = DateTime.DayOfWeek.ToString();
             return (int)((WeekEn)Enum.Parse(typeof(WeekEn), weekstr));//获取当前是星期几
         }
+
+        public void InsertAppLog(Wx_Users users, string actionType, string logsInfo)
+        {
+            Db.MySqlContext.Insert<Wx_APPLogs>(new Wx_APPLogs()
+            {
+                ActionType = actionType,
+                CreateTime = DateTime.Now,
+                Descriptions = logsInfo,
+                UserId = users.Id,
+                UserName = users.UserName,
+                UserNickName = users.UserNickName
+            });
+        }
         #endregion
         #region 分页
         protected PageResponse<T> getListByPaging<T>(DbSession ds, string sql, int pageSize, int pageIndex)

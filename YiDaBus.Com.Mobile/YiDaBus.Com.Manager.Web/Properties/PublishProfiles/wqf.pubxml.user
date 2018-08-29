@@ -532,7 +532,7 @@
       <publishTime>03/28/2017 15:13:13</publishTime>
     </File>
     <File Include="Areas/OrderManage/Views/Order/Form.cshtml">
-      <publishTime>08/09/2018 17:18:38</publishTime>
+      <publishTime>08/15/2018 19:34:39</publishTime>
     </File>
     <File Include="Areas/OrderManage/Views/Order/FormalList.cshtml">
       <publishTime>03/31/2017 18:22:28</publishTime>
@@ -789,6 +789,9 @@
     <File Include="Areas/SystemManage/Views/_ViewStart.cshtml">
       <publishTime>12/20/2016 17:07:06</publishTime>
     </File>
+    <File Include="Areas/SystemSecurity/Views/AppLog/Index.cshtml">
+      <publishTime>08/18/2018 11:05:30</publishTime>
+    </File>
     <File Include="Areas/SystemSecurity/Views/DbBackup/Form.cshtml">
       <publishTime>06/27/2018 11:04:58</publishTime>
     </File>
@@ -862,10 +865,10 @@
       <publishTime>02/22/2013 08:43:40</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>08/15/2018 13:33:18</publishTime>
+      <publishTime>08/29/2018 21:00:54</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>08/15/2018 13:33:18</publishTime>
+      <publishTime>08/29/2018 21:00:54</publishTime>
     </File>
     <File Include="bin/Common.Logging.Core.dll">
       <publishTime>01/18/2017 12:52:28</publishTime>
@@ -1027,16 +1030,16 @@
       <publishTime>07/17/2018 11:11:46</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Manager.Web.dll">
-      <publishTime>08/15/2018 13:33:06</publishTime>
+      <publishTime>08/29/2018 21:00:43</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Mobile.BLL.dll">
-      <publishTime>08/15/2018 13:32:23</publishTime>
+      <publishTime>08/18/2018 11:05:53</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Mobile.Common.dll">
       <publishTime>08/15/2018 13:32:20</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Mobile.Model.dll">
-      <publishTime>08/15/2018 13:32:20</publishTime>
+      <publishTime>08/18/2018 11:05:53</publishTime>
     </File>
     <File Include="bin/ZFX365.Com.Manager.BLL.dll">
       <publishTime>04/12/2017 15:21:07</publishTime>
@@ -2596,7 +2599,7 @@
       <publishTime>01/06/2017 18:09:43</publishTime>
     </File>
     <File Include="GenerateCode/orders.html">
-      <publishTime>08/06/2018 20:59:01</publishTime>
+      <publishTime>08/18/2018 10:53:41</publishTime>
     </File>
     <File Include="GenerateCode/ordertracklog.html">
       <publishTime>01/06/2017 18:09:43</publishTime>
@@ -2685,6 +2688,9 @@
     <File Include="GenerateCode/usersacn.html">
       <publishTime>04/11/2017 16:15:40</publishTime>
     </File>
+    <File Include="GenerateCode/Wx_APPLogs.html">
+      <publishTime>08/18/2018 10:53:41</publishTime>
+    </File>
     <File Include="GenerateCode/Wx_Users.html">
       <publishTime>08/06/2018 20:59:01</publishTime>
     </File>
@@ -2695,7 +2701,7 @@
       <publishTime>08/12/2018 11:55:46</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>08/15/2018 13:33:09</publishTime>
+      <publishTime>08/29/2018 21:00:45</publishTime>
     </File>
     <File Include="Utils/Entity/hp.ttinclude">
       <publishTime>06/27/2018 14:48:07</publishTime>

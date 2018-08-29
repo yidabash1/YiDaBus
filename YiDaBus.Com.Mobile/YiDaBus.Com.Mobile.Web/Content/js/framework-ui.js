@@ -222,6 +222,9 @@ $.ar = function (options) {
             }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
+            //alert(XMLHttpRequest.status);
+            //alert(XMLHttpRequest.readyState);
+            //alert(textStatus);
             if (options.load) mlayer.close(loadIndex);
             $.modalAlert("请求错误");
         },

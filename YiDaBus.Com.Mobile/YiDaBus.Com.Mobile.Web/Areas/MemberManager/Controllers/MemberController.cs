@@ -95,77 +95,90 @@ namespace YiDaBus.Com.Mobile.Web.Areas.MemberManager.Controllers
         [HttpPost]
         public ActionResult UpdateUserInfo(Wx_Users wx_Users)
         {
-            //验证用户登录
-            string openid = WebHelper.GetCookie("openid");
-            string nickname = WebHelper.GetCookie("nickname");
-            wx_Users.UserName = wx_Users.Mobile;
-            //去数据库中查询，如果有就更新，如果没有就新增
-            var currentUser = GetUserByOpenId(openid);
-            if (currentUser == null)//如果没有就新增
+            try
             {
-                wx_Users.WxNickName = nickname;
-                wx_Users.CreateTime = DateTime.Now;
-                wx_Users.UpdateTime = DateTime.Now;
-                wx_Users.IsDel = (int)IsDel.否;
-                wx_Users.OpenId = openid;
-                int r = Db.MySqlContext.Insert<Wx_Users>(wx_Users);
-                if (r <= 0)
+                //验证用户登录
+                string openid = WebHelper.GetCookie("openid");
+                string nickname = WebHelper.GetCookie("nickname");
+                wx_Users.UserName = wx_Users.Mobile;
+                //去数据库中查询，如果有就更新，如果没有就新增
+                var currentUser = GetUserByOpenId(openid);
+                if (currentUser == null)//如果没有就新增
                 {
-                    return Error("创建账号失败");
+                    wx_Users.WxNickName = nickname;
+                    wx_Users.CreateTime = DateTime.Now;
+                    wx_Users.UpdateTime = DateTime.Now;
+                    wx_Users.IsDel = (int)IsDel.否;
+                    wx_Users.OpenId = openid;
+                    int r = Db.MySqlContext.Insert<Wx_Users>(wx_Users);
+                    if (r <= 0)
+                    {
+                        return Error("创建账号失败");
+                    }
+                    currentUser = wx_Users;
+                    currentUser.Id = r;
                 }
-                currentUser = wx_Users;
-                currentUser.Id = r;
-            }
-            else//如果有就更新
-            {
-                wx_Users.OpenId = openid;
-                currentUser.WxNickName = nickname;
-                currentUser.UserName = wx_Users.UserName;
-                currentUser.UserNickName = wx_Users.UserNickName;
-                currentUser.Gender = wx_Users.Gender;
-                currentUser.UpdateTime = DateTime.Now;
-                int r = Db.MySqlContext.Update<Wx_Users>(currentUser);
-                if (r <= 0)
+                else//如果有就更新
                 {
-                    return Error("更新账号信息失败");
+                    wx_Users.OpenId = openid;
+                    currentUser.WxNickName = nickname;
+                    currentUser.UserName = wx_Users.UserName;
+                    currentUser.UserNickName = wx_Users.UserNickName;
+                    currentUser.Gender = wx_Users.Gender;
+                    currentUser.UpdateTime = DateTime.Now;
+                    int r = Db.MySqlContext.Update<Wx_Users>(currentUser);
+                    if (r <= 0)
+                    {
+                        return Error("更新账号信息失败");
+                    }
+                }
+
+
+                //登录成功
+                #region  创造票据（1年）、输出到客户端（加密票据）
+                //【用户id】
+                //创造票据
+                FormsAuthenticationTicket userid_ticket = new FormsAuthenticationTicket(2, currentUser.Id.ToString(), DateTime.Now, DateTime.Now.AddDays(CookieSaveDays), true, currentUser.ToJson());
+                //加密票据并输出到客户端
+                WebHelper.WriteCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(userid_ticket), CookieSaveDays * 24 * 60);
+
+                ////【用户手机号】
+                //FormsAuthenticationTicket logaccount_ticket = new FormsAuthenticationTicket(currentUser.UserName, true, 525600);
+                //WebHelper.WriteCookie("logaccount", FormsAuthentication.Encrypt(logaccount_ticket), 525600);
+
+                #endregion
+
+
+                //如果为空，则跳转到首页
+                if (Request["ReturnUrl"].IsEmpty())
+                {
+                    return Json(new
+                    {
+                        code = 200,
+                        msg = "保存成功",
+                        data = "",
+                        userId = DESEncrypt.Encrypt(currentUser.Id.ToString())
+                    }, JsonRequestBehavior.AllowGet);
+                }
+                else//否则跳转到登录前页面
+                {
+                    return Json(new
+                    {
+                        code = 200,
+                        msg = "保存成功",
+                        data = Request["ReturnUrl"] ?? "",
+                        userId = DESEncrypt.Encrypt(currentUser.Id.ToString())
+                    }, JsonRequestBehavior.AllowGet);
                 }
             }
-
-
-            //登录成功
-            #region  创造票据（1年）、输出到客户端（加密票据）
-            //【用户id】
-            //创造票据
-            FormsAuthenticationTicket userid_ticket = new FormsAuthenticationTicket(2, currentUser.Id.ToString(), DateTime.Now, DateTime.Now.AddDays(CookieSaveDays), true, currentUser.ToJson());
-            //加密票据并输出到客户端
-            WebHelper.WriteCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(userid_ticket), CookieSaveDays * 24 * 60);
-
-            ////【用户手机号】
-            //FormsAuthenticationTicket logaccount_ticket = new FormsAuthenticationTicket(currentUser.UserName, true, 525600);
-            //WebHelper.WriteCookie("logaccount", FormsAuthentication.Encrypt(logaccount_ticket), 525600);
-
-            #endregion
-
-
-            //如果为空，则跳转到首页
-            if (Request["ReturnUrl"].IsEmpty())
+            catch (Exception ex)
             {
+                InsertAppLog(wx_Users, "操作用户信息", ex.Message);
                 return Json(new
                 {
-                    code = 200,
-                    msg = "保存成功",
+                    code = 300,
+                    msg = "操作异常",
                     data = "",
-                    userId = DESEncrypt.Encrypt(currentUser.Id.ToString())
-                }, JsonRequestBehavior.AllowGet);
-            }
-            else//否则跳转到登录前页面
-            {
-                return Json(new
-                {
-                    code = 200,
-                    msg = "保存成功",
-                    data = Request["ReturnUrl"] ?? "",
-                    userId = DESEncrypt.Encrypt(currentUser.Id.ToString())
                 }, JsonRequestBehavior.AllowGet);
             }
 

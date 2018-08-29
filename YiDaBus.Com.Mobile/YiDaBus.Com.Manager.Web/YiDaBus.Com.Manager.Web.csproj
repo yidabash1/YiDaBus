@@ -234,6 +234,7 @@
     <Compile Include="Areas\SystemManage\Controllers\TimeEndConfigController.cs" />
     <Compile Include="Areas\SystemManage\Controllers\UserController.cs" />
     <Compile Include="Areas\SystemManage\SystemManageAreaRegistration.cs" />
+    <Compile Include="Areas\SystemSecurity\Controllers\AppLogController.cs" />
     <Compile Include="Areas\SystemSecurity\Controllers\DbBackupController.cs" />
     <Compile Include="Areas\SystemSecurity\Controllers\FilterIPController.cs" />
     <Compile Include="Areas\SystemSecurity\Controllers\LogController.cs" />
@@ -792,6 +793,9 @@
     <Content Include="GenerateCode\TimeEndConfig.html">
       <DependentUpon>GenerateHtml.tt</DependentUpon>
     </Content>
+    <Content Include="GenerateCode\Wx_APPLogs.html">
+      <DependentUpon>GenerateHtml.tt</DependentUpon>
+    </Content>
     <Content Include="GenerateCode\Wx_Users.html">
       <DependentUpon>GenerateHtml.tt</DependentUpon>
     </Content>
@@ -903,6 +907,7 @@
     <Content Include="Areas\SystemManage\Views\TimeEndConfig\Index.cshtml" />
     <Content Include="Areas\SystemManage\Views\TimeEndConfig\Form.cshtml" />
     <Content Include="Areas\OrderManage\Views\Order\GroupMsg.cshtml" />
+    <Content Include="Areas\SystemSecurity\Views\AppLog\Index.cshtml" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>

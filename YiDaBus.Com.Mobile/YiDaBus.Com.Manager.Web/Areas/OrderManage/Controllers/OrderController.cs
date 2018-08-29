@@ -341,6 +341,7 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
         {
             try
             {
+                //总人数，单程人数，双程人数
                 var ToPosition = HttpUtility.UrlDecode(Request["ToPosition"]);
                 string sql = GetGridOrderSql(null, true);
                 var dataTable = Db.MySqlContext.FromSql(sql).ToDataTable();
@@ -372,7 +373,12 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
                     {
                         DepartureTimeStr = $"{ _DepartureTimeStart}-{ _DepartureTimeEnd}";
                     }
-                    row.CreateCell(0).SetCellValue($"目的地：{ToPosition}     车号：{CarNumber}      发车时间：{DepartureTimeStr}   合计:{TotalAmountSum}");
+
+                    int totalCount = dataTable.Rows.Count;//总人数
+                    int singleCount = dataTable.Select("单程='是'").Count();//单程
+                    int doubleCount = totalCount - singleCount;//双程
+
+                    row.CreateCell(0).SetCellValue($"目的地：{ToPosition}     车号：{CarNumber}      发车时间：{DepartureTimeStr}   合计:{TotalAmountSum}   总人数:{totalCount}    单程:{singleCount}    双程:{doubleCount}  ");
                     sheet.AddMergedRegion(new CellRangeAddress(0, 0, 0, dataTable.Columns.Count - 1));
                     row.Height = 500;
                     ICellStyle cellStyle = workBook.CreateCellStyle();

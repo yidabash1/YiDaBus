@@ -109,6 +109,9 @@
     <Compile Include="TimeEndConfig.cs">
       <DependentUpon>GenerateEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Wx_APPLogs.cs">
+      <DependentUpon>GenerateEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Wx_Users.cs">
       <DependentUpon>GenerateEntity.tt</DependentUpon>
     </Compile>

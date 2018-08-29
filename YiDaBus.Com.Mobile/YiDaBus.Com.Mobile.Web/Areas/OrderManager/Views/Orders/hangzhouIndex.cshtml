@@ -11,7 +11,19 @@
 <header class="demos-header" style="height: 60px; padding: 0px; line-height: 60px;background-color: #333;position: fixed; width: 100%; z-index: 999;">
     <h1 class="demos-title" style="font-size: 24px; color: #fff;">杭州订票 | @address</h1>
 </header>
-<div class="weui-flex" style="padding-top: 70px;">
+
+<div style="border: 1px dotted #ccc; margin:0px 5px 10px 5px;padding-top: 70px;">
+    <div class="weui-cells__title">友情提醒</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@ViewBag.FriendlyReminder</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="weui-flex" style="">
     <div class="weui-flex__item" style="padding: 0px 5px 0px 0px;">
         <div class="bus" style="width: 286px;">
             <p class="bus-caption">苏F25921</p>
@@ -66,16 +78,7 @@
     </div>
 </div>
 
-<div style="border: 1px dotted #ccc; margin:10px 5px 10px 5px;">
-    <div class="weui-cells__title">友情提醒</div>
-    <div class="weui-cells">
-        <div class="weui-cell">
-            <div class="weui-cell__bd">
-                <p>@ViewBag.FriendlyReminder</p>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div class='demos-content-padded'>
     <a href="javascript:void(0);" class="weui-btn weui-btn_primary" onclick="NextHandler()">下一步</a>
     <a href="/Home/" class="weui-btn weui-btn_primary">返回</a>

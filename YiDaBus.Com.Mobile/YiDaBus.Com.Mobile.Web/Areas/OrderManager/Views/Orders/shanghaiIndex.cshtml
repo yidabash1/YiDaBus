@@ -20,7 +20,18 @@
     <h1 class="demos-title" style="font-size: 24px; color: #fff;">上海订票 | @weekstr</h1>
 </header>
 
-<div class="weui-flex" style="padding-top: 70px;">
+<div style="border: 1px dotted #ccc; margin:0px 5px 10px 5px;padding-top: 70px;" >
+    <div class="weui-cells__title">友情提醒</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <p>@ViewBag.FriendlyReminder</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="weui-flex" >
     <div class="weui-flex__item" style="padding: 0 5px;">
         <div class="bus" style="width: 178px;">
             <p class="bus-caption">苏F36199</p>
@@ -146,16 +157,7 @@
 </div>
 
 
-<div style="border: 1px dotted #ccc; margin:10px 5px 10px 5px;">
-    <div class="weui-cells__title">友情提醒</div>
-    <div class="weui-cells">
-        <div class="weui-cell">
-            <div class="weui-cell__bd">
-                <p>@ViewBag.FriendlyReminder</p>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 
 <div class='demos-content-padded'>
@@ -183,7 +185,7 @@
 @if (ViewBag.IsExipre == true)
 {
     <script>
-        $.modalMsg({
+        $.modalMsg({ 
             content: "请选择当前以及当前日期之后的车次!<br/><strong>注：周五 @ViewBag.ExipreEndTime 点之后，可选择下周的车次</strong>", success: function () {
                 window.location.href = "/Home/Index";
                 return;
