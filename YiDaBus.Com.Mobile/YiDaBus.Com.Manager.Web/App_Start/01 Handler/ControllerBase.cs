@@ -13,14 +13,13 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Linq.Expressions;
 using YiDaBus.Com.Mobile.Model.Const;
+using YiDaBus.Com.Mobile.Model.ResponseModel;
 
 namespace YiDaBus.Com.Manager.Web
 {
     [HandlerLogin]
     public abstract class ControllerBase : Controller
     {
-        public virtual string UserCode { get; set; } = YiDaBus.Com.Manager.Common.OperatorProvider.Provider.GetCurrent().UserCode;
-        public virtual string UserName { get; set; } = YiDaBus.Com.Manager.Common.OperatorProvider.Provider.GetCurrent().UserName;
         public virtual string tableName { get; set; } //表名
         public virtual string f_ModuleName { get; set; } //模块的中文名称
         /// <summary>
@@ -170,6 +169,44 @@ namespace YiDaBus.Com.Manager.Web
                 page = pagination.page,
                 records = totalCount
             }.ToJson());
+        }
+        /// <summary>
+        /// 使用linq查询（分页）
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <typeparam name="OutEntity"></typeparam>
+        /// <param name="linq"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="lambdaOrderBy"></param>
+        /// <returns></returns>
+        public PageResponse<OutEntity> getListByPaging<TEntity, OutEntity>(FromSection<TEntity> linq, int pageSize, int pageIndex, Expression<Func<TEntity, object>> lambdaOrderBy = null) where TEntity : Entity
+        {
+            if (pageIndex <= 0)
+                pageIndex = 1;
+            if (pageSize <= 0)
+                pageSize = 10;
+            PageResponse<OutEntity> result = new PageResponse<OutEntity>();
+            result.totalItems = linq.Count();
+            List<OutEntity> sqlList = new List<OutEntity>();
+            if (lambdaOrderBy != null)
+            {
+                sqlList = linq.OrderBy(lambdaOrderBy).Page(pageSize, pageIndex).ToList<OutEntity>();
+            }
+            else
+            {
+                sqlList = linq.Page(pageSize, pageIndex).ToList<OutEntity>();
+            }
+
+            if (sqlList == null || sqlList.Count == 0)
+                return null;
+            result.items = sqlList;
+            result.currentPage = pageIndex;
+            result.itemsPerPage = pageSize;
+            result.totalPages = result.totalItems / pageSize;
+            if ((result.totalItems % pageSize) != 0)
+                result.totalPages++;
+            return result;
         }
         #endregion
         /// <summary>

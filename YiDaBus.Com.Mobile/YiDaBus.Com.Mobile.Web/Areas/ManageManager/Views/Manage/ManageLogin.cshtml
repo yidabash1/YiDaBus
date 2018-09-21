@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "易达快乐巴士 - 管理中心";
+    Layout = "~/Views/Shared/master.cshtml";
+}
+
+<header class="demos-header">
+    <h1 class="demos-title">管理中心</h1>
+</header>
+<form class="layui-form">
+    <div class="weui-cells__title">仅限管理员登录</div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">管理账号</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input id="username" class="weui-input" type="text" name="username" placeholder="请输入管理账号" lay-verify="required"  lay-reqmsg="请输入管理账号">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">登录密码</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input id="password" class="weui-input" name="password" type="password" placeholder="请输入登录密码" lay-verify="required" lay-reqmsg="请输入登录密码">
+            </div>
+        </div>
+    </div>
+    <div class='demos-content-padded'>
+        <a href="javascript:void(0);" class="weui-btn weui-btn_primary" id="btnSave" lay-submit="" lay-filter="Submit">登录</a>
+        <a href="/" class="weui-btn weui-btn_primary">返回</a>
+    </div>
+</form>
+
+
+@section footContainer{
+    <script>
+        $(function () {
+            //$("#btnSave").on("click", function () {
+            //    var data = $("form").serialize();
+            //    $.alert(data, "提交的数据",function() {
+            //        location.href = "/Home/ManageList";
+            //    });
+
+            //});
+
+            InitForm();
+        });
+
+        //初始化表单
+        function InitForm() {
+            layui.use(['form'], function () {
+                var form = layui.form();
+                //监听提交
+                form.on('submit(Submit)', function (data) {
+                    $.ar({
+                        url: 'CheckLogin'
+                    , data: data.field
+                    , success: function (data) {
+                        $.SetUserId(data.userId);
+                        var ReturnUrl = $.requestWithOutDecode("ReturnUrl");
+                        if (ReturnUrl) {
+                            window.location.href = decodeURIComponent(ReturnUrl)
+                            return;
+                        } else {
+                            $.modalMsg({
+                                content: data.msg, success: function () {
+                                    window.location.href = "/Home/Index"
+                                    return;
+                                }
+                            });
+                        }
+                    }
+                    , error: function (data) {
+                        $.modalMsg({
+                            content: data.msg, success: function () {
+
+                            }
+                        });
+                    }
+                    });
+                    return false;
+                });
+            });
+        }
+    </script>
+}

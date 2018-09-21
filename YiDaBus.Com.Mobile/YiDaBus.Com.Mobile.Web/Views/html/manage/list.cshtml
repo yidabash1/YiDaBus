@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "易达快乐巴士 - 管理首页";
+    Layout = "~/Views/Shared/master.cshtml";
+}
+
+<div class="weui-cells__title">查询条件</div>
+<div class="weui-cells">
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label class="weui-label">预订单号</label>
+        </div>
+        <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="请输入订单号">
+        </div>
+    </div>
+    <div class="weui-cell weui-cell_select weui-cell_select-after">
+        <div class="weui-cell__hd">
+            <label class="weui-label">订票类型</label>
+        </div>
+        <div class="weui-cell__bd">
+            <select class="weui-select" name="select1">
+                <option selected="" value="">不限</option>
+                <option value="1">上海订票</option>
+                <option value="2">杭州订票</option>
+            </select>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__bd">
+            <a id="btnSearch" href="javascript:void(0)" class="weui-btn weui-btn_primary">查询</a>
+            <a id="btnExit" href="javascript:void(0)" class="weui-btn weui-btn_warn">退出</a>
+        </div>
+    </div>
+
+
+
+
+
+
+    @{
+        for (var i = 1; i <= 2; i++)
+        {
+            string linkUrl = "/Home/ManageTicket?ordercode=" + i;
+        <a class="weui-cell weui-cell_access" href="@linkUrl">
+            <div class="weui-cell__bd">
+                <p>
+                    【单号】2018000001<br />
+                    【班车】苏FM1234 | 南通-上海<br />
+                    【座位】13座、14座<br />
+                    【班次】2018年6月10日 星期一<br />
+                    【票价】¥100.00元<br />
+                </p>
+            </div>
+            <div class="weui-cell__ft">
+            </div>
+        </a>
+        }
+    }
+
+</div>
+
+@section footContainer{
+    <script>
+        $(function () {
+            $("#btnSearch").on("click", function () {
+                $.alert("查询...");
+            });
+
+            $("#btnExit").on("click", function() {
+                $.confirm("确认退出吗?", function () {
+                    location.href = "/Home/ManageLogin";
+                }, function () {
+                    return false;
+                });
+            });
+        });
+    </script>
+}

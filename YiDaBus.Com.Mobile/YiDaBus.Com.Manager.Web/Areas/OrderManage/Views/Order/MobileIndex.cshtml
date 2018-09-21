@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "易达快乐巴士 - 管理首页";
+    Layout = "~/Views/Shared/_Mobile.cshtml";
+}
+
+<div class="weui-cells__title">查询条件</div>
+<div class="weui-cells">
+    <div class="weui-cell">
+        <div class="weui-cell__hd">
+            <label class="weui-label">预订单号</label>
+        </div>
+        <div class="weui-cell__bd">
+            <input id="orderNo" class="weui-input" type="text" placeholder="请输入订单号">
+        </div>
+    </div>
+    <div class="weui-cell weui-cell_select weui-cell_select-after">
+        <div class="weui-cell__hd">
+            <label class="weui-label">订票类型</label>
+        </div>
+        <div class="weui-cell__bd">
+            <select id="area" class="weui-select" name="select1">
+                <option selected="" value="">不限</option>
+                <option value="shanghai">上海订票</option>
+                <option value="hangzhou">杭州订票</option>
+            </select>
+        </div>
+    </div>
+    <div class="weui-cell">
+        <div class="weui-cell__bd">
+            <a id="btnSearch" href="javascript:void(0)" class="weui-btn weui-btn_primary">查询</a>
+            <a id="btnExit" href="javascript:void(0)" class="weui-btn weui-btn_warn">退出</a>
+        </div>
+    </div>
+
+    <div id="ordersList">
+
+    </div>
+
+</div>
+
+@section footContainer{
+    <script src="~/Content/js/OrderMobileIndex.js"></script>
+    <script id="ordersTemplate" type="text/html">
+        {{# layui.each(d, function(index, item){}}
+        <a class="weui-cell weui-cell_access" href="/OrderManage/Order/MemberTicketDetail?orderId={{ item.Id }}">
+            <div class="weui-cell__bd">
+                <p>
+                    【单号】{{ item.OrderNo }}<br />
+                    【班车】{{ item.CarNumber }} | {{ item.FromPosition }}-{{ item.ToPosition }}<br />
+                    【座位】{{ item.SeatTexts }}<br />
+                    【班次】{{ item.DepartureTime }} {{ item.WeekTextCn }}<br />
+                    【票价】¥{{ item.TotalAmount }}元<br />
+                </p>
+            </div>
+            <div class="weui-cell__ft">
+            </div>
+        </a>
+        {{# }) }}
+    </script>
+}

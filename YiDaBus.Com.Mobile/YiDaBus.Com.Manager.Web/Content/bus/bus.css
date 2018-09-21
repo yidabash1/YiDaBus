@@ -1,0 +1,56 @@
+﻿.bus {
+    border: 1px solid #333;
+    width: 180px;
+    height: 508px;
+    margin: 0 auto;
+}
+
+.bus-caption {
+    text-align: center;
+    background-color: #fc0;
+    line-height: 40px;
+    font-size: 18px;
+}
+
+.bus-aisle {
+    background-color: #eee;
+    position: absolute;
+    color: blue;
+    text-align: center;
+}
+
+.seat-container {
+    position: relative;
+    z-index: 9;
+}
+
+.seat {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 0px solid #000;
+    background-color: #eee;
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    text-align: center;
+    line-height: 34px;
+    color: #000;
+}
+.seat38 {
+    width: 38px;
+}
+
+.seat-unsold {
+    background-color: green;
+    color: #fff;
+}
+
+.seat-sold {
+    background-color: red;
+    color: #fff;
+}
+
+.seat-select {
+    background-color: #e4c64d;
+}

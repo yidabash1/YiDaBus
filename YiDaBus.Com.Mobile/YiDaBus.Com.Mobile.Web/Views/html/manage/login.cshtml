@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "易达快乐巴士 - 管理中心";
+    Layout = "~/Views/Shared/master.cshtml";
+}
+
+<header class="demos-header">
+    <h1 class="demos-title">管理中心</h1>
+</header>
+<form>
+    <div class="weui-cells__title">仅限管理员登录</div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">管理账号</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" name="uid" placeholder="请输入管理账号">
+            </div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__hd">
+                <label class="weui-label">登录密码</label>
+            </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" name="pwd" type="password" placeholder="请输入登录密码">
+            </div>
+        </div>
+    </div>
+</form>
+<div class='demos-content-padded'>
+    <a href="javascript:void(0);" class="weui-btn weui-btn_primary" id="btnSave">登录</a>
+    <a href="/Home/" class="weui-btn weui-btn_primary">返回</a>
+</div>
+
+@section footContainer{
+    <script>
+        $(function () {
+
+            $("#btnSave").on("click", function () {
+                var data = $("form").serialize();
+                $.alert(data, "提交的数据",function() {
+                    location.href = "/Home/ManageList";
+                });
+                
+            });
+        });
+    </script>
+}

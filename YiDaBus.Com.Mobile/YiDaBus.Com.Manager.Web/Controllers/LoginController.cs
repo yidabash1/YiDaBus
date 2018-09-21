@@ -23,9 +23,14 @@ namespace YiDaBus.Com.Manager.Web.Controllers
         [HttpGet]
         public virtual ActionResult Index()
         {
-            var test = string.Format("{0:E2}", 1);
             return View();
         }
+        [HttpGet]
+        public virtual ActionResult MobileIndex()
+        {
+            return View();
+        }
+        
         [HttpGet]
         public ActionResult GetAuthCode()
         {
@@ -47,6 +52,23 @@ namespace YiDaBus.Com.Manager.Web.Controllers
             Session.Clear();
             OperatorProvider.Provider.RemoveCurrent();
             return RedirectToAction("Index", "Login");
+        }
+        [HttpGet]
+        public ActionResult OutLogin4Mobile()
+        {
+            new LogApp().WriteDbLog(new LogEntity
+            {
+                F_ModuleName = "系统登录",
+                F_Type = DbLogType.Exit.ToString(),
+                F_Account = OperatorProvider.Provider.GetCurrent().UserCode,
+                F_NickName = OperatorProvider.Provider.GetCurrent().UserName,
+                F_Result = true,
+                F_Description = "安全退出系统",
+            });
+            Session.Abandon();
+            Session.Clear();
+            OperatorProvider.Provider.RemoveCurrent();
+            return Content(new AjaxResult { status = 1, msg = "退出成功" }.ToJson());
         }
         [HttpPost]
         [HandlerAjaxOnly]
@@ -100,7 +122,7 @@ namespace YiDaBus.Com.Manager.Web.Controllers
                 logEntity.F_Account = username;
                 logEntity.F_NickName = username;
                 logEntity.F_Result = false;
-                logEntity.F_Description = "登录失败，" + ex.InnerException.Message;
+                logEntity.F_Description = "登录失败，" + ex.InnerException?.Message;
                 new LogApp().WriteDbLog(logEntity);
                 return Content(new AjaxResult { status = 0, msg = ex.Message }.ToJson());
             }

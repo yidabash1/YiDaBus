@@ -1,4 +1,5 @@
-﻿using NFine.Application;
+﻿using Dos.ORM;
+using NFine.Application;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using Senparc.Weixin.MP.AdvancedAPIs;
@@ -17,6 +18,7 @@ using YiDaBus.Com.Manager.Common.Excel;
 using YiDaBus.Com.Mobile.BLL;
 using YiDaBus.Com.Mobile.Model.Const;
 using YiDaBus.Com.Mobile.Model.Enum;
+using YiDaBus.Com.Mobile.Model.ResponseModel;
 using YiDaBus.Com.Model;
 
 namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
@@ -34,6 +36,48 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
 
             return View();
         }
+        [HttpGet]
+        [HandlerAuthorize]
+        public virtual ActionResult MobileIndex()
+        {
+            return View();
+        }
+        [HttpGet]
+        [HandlerAuthorize]
+        public ActionResult MemberTicketDetail()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult GetOrderDetailsById()
+        {
+            var orderId = (Request["orderId"] ?? "").ToInt();
+            if (orderId <= 0) { return Error("订单不存在！"); }
+            var orderDetails = Db.MySqlContext.From<Orders>().Where(d => d.Id == orderId).First();
+            //if (orderDetails == null) { return Error("订单不存在！"); }
+
+            return base.Success("获取成功",  orderDetails);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteOrderByOrderId()
+        {
+            var orderId = (Request["orderId"] ?? "").ToInt();
+            if (orderId <= 0) { return Error("订单不存在！"); }
+            var orderDetails = Db.MySqlContext.From<Orders>().Where(d => d.Id == orderId).First();
+            if (orderDetails == null) { return Error("订单不存在！"); }
+            orderDetails.IsDel = (int)IsDel.是;
+            int r = Db.MySqlContext.Update(orderDetails);
+            if (r > 0)
+            {
+                return Success("删除成功");
+            }
+            else
+            {
+                return Error("删除失败");
+            }
+        }
+
         #endregion
         #region 获取数据
         public async Task<ActionResult> GetGridJson(Pagination pagination)
@@ -163,6 +207,39 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
             string contents = dataTable.ToJsonByColName();
             return Content(contents);
         }
+
+        /// <summary>
+        /// 表单赋值
+        /// </summary>
+        /// <param name="keyValue"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [HandlerAjaxOnly]
+        public ActionResult GetOrderList4Mobile(int pageSize, int pageIndex)
+        {
+            string orderNo = Request["orderNo"];
+            string area = Request["area"];
+            WhereClipBuilder whereClipBuilder = new WhereClipBuilder();
+            whereClipBuilder.And(new WhereClip(Orders._.IsDel, (int)IsDel.否, QueryOperator.Equal));
+            if (!string.IsNullOrEmpty(orderNo))
+            {
+                whereClipBuilder.And(new WhereClip(Orders._.OrderNo, orderNo, QueryOperator.Equal));
+            }
+            if (!string.IsNullOrEmpty(area))
+            {
+                whereClipBuilder.And(new WhereClip(Orders._.Area, area, QueryOperator.Equal));
+            }
+            var linq = Db.MySqlContext.From<Orders>().Where(whereClipBuilder.ToWhereClip()).OrderByDescending(d => d.Id);
+
+            PageResponse<Orders> pageList = getListByPaging<Orders, Orders>(linq, pageSize, pageIndex);
+            if (pageList == null || pageList.totalItems == 0)
+                return Error(ErrCode.查询成功无数据.ToString());
+            else
+            {
+                return Success("获取成功", pageList);
+            }
+        }
+
         #endregion
 
         #region 操作数据

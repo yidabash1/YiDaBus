@@ -158,6 +158,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\HangZhouManager\Controllers\HangZhouController.cs" />
     <Compile Include="Areas\HangZhouManager\HangZhouManagerAreaRegistration.cs" />
+    <Compile Include="Areas\ManageManager\Controllers\ManageController.cs" />
+    <Compile Include="Areas\ManageManager\ManageManagerAreaRegistration.cs" />
     <Compile Include="Areas\MemberManager\Controllers\MemberController.cs" />
     <Compile Include="Areas\MemberManager\MemberManagerAreaRegistration.cs" />
     <Compile Include="Areas\OrderManager\Controllers\OrdersController.cs" />
@@ -403,6 +405,8 @@
     <Content Include="Areas\OrderManager\Views\Orders\success.cshtml" />
     <Content Include="Areas\OrderManager\Views\Orders\hangzhouIndex.cshtml" />
     <Content Include="Areas\MemberManager\Views\Member\ClearCache.cshtml" />
+    <Content Include="Areas\ManageManager\Views\web.config" />
+    <Content Include="Areas\ManageManager\Views\Manage\ManageLogin.cshtml" />
     <None Include="Properties\PublishProfiles\YiDaBus.Mobile.pubxml" />
     <None Include="Properties\PublishProfiles\YiDaBus.Mobile_gx.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -488,11 +492,16 @@
     <Content Include="Views\html\shanghai\orderInfo.cshtml" />
     <Content Include="Views\html\shanghai\success.cshtml" />
     <Content Include="Views\Shared\master.cshtml" />
+    <Content Include="Views\html\manage\list.cshtml" />
+    <Content Include="Views\html\manage\login.cshtml" />
+    <Content Include="Views\html\manage\ticket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\HangZhouManager\Models\" />
     <Folder Include="Areas\HangZhouManager\Views\Shared\" />
+    <Folder Include="Areas\ManageManager\Models\" />
+    <Folder Include="Areas\ManageManager\Views\Shared\" />
     <Folder Include="Areas\MemberManager\Models\" />
     <Folder Include="Areas\MemberManager\Views\Shared\" />
     <Folder Include="Areas\OrderManager\Models\" />
