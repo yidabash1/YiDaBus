@@ -20,6 +20,14 @@
 							{ label: '区域', name: 'Area', width: 150, align: 'left' },
 							{ label: '星期', name: 'Week', width: 150, align: 'left' },
 							{ label: '结束时间', name: 'EndTime', width: 150, align: 'left' },
+							{
+							    label: '是否关闭', name: 'IsClosed', width: 150, align: 'left',
+							    formatter: function (cellvalue) {
+							        if (cellvalue == 0) { return "<span class='label label-default'>不关闭</span>"; }
+							        else if (cellvalue == 1) { return "<span class='label label-success'>关闭</span>"; }
+							        else { return "未知"; }
+							    }
+							},
 			],
             pager: "#gridPager",
             viewrecords: true
@@ -152,6 +160,17 @@
                     <td>
                         <div class="input-group">
                             <input id="EndTime" name="EndTime" type="text" class="form-control" placeholder="结束时间" >
+                        </div>
+                    </td>
+								<!--是否关闭（0：不关闭；1：关闭；）-->
+					<td>
+                        <div class="input-group">
+                            <strong>是否关闭（0：不关闭；1：关闭；）：</strong>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="IsClosed" name="IsClosed" type="text" class="form-control" placeholder="是否关闭（0：不关闭；1：关闭；）" >
                         </div>
                     </td>
 									<td>
@@ -289,6 +308,12 @@
 				   					<input id="EndTime" name="EndTime" type="text" class="form-control required" placeholder="请输入结束时间" />
                            </td>
     </tr>
+                   <tr>
+					<th class="formTitle">是否关闭（0：不关闭；1：关闭；）</th>
+					<td class="formValue">
+				   					<input id="IsClosed" name="IsClosed" type="text" class="form-control required" placeholder="请输入是否关闭（0：不关闭；1：关闭；）" />
+                           </td>
+    </tr>
          </table>
     </div>
 </form>
@@ -362,6 +387,10 @@
 				  				                    <li>
 				   <label>结束时间</label>
 				   					<input id="EndTime" name="EndTime" type="text" class="form-control" placeholder="暂未填写" />
+          				 </li>
+				  				                    <li>
+				   <label>是否关闭（0：不关闭；1：关闭；）</label>
+				   					<input id="IsClosed" name="IsClosed" type="text" class="form-control" placeholder="暂未填写" />
           				 </li>
 				   <li>
  <div style="padding-left: 115px;">

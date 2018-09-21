@@ -73,6 +73,20 @@ namespace YiDaBus.Com.Model
                 
             }
         }
+        private int? _IsClosed = int.MinValue;
+	    /// <summary>
+        /// 是否关闭（0：不关闭；1：关闭；）
+        /// </summary>
+        public int? IsClosed
+        {
+            get { return _IsClosed; }
+            set
+            {
+                this.OnPropertyValueChange(_.IsClosed, _IsClosed, value);
+                this._IsClosed = value;
+                
+            }
+        }
 		#endregion
 
 		#region Method
@@ -95,7 +109,7 @@ namespace YiDaBus.Com.Model
         /// </summary>
         public override Field[] GetFields()
         {
-            return new Field[] {_.Id,_.Area,_.Week,_.EndTime };
+            return new Field[] {_.Id,_.Area,_.Week,_.EndTime,_.IsClosed };
         }
 
         /// <summary>
@@ -103,7 +117,7 @@ namespace YiDaBus.Com.Model
         /// </summary>
         public override object[] GetValues()
         {
-            return new object[] {this._Id,this._Area,this._Week,this._EndTime };
+            return new object[] {this._Id,this._Area,this._Week,this._EndTime,this._IsClosed };
         }
 		#endregion
 		
@@ -137,6 +151,11 @@ namespace YiDaBus.Com.Model
             /// 结束时间
             /// </summary>
             public readonly static Field EndTime = new Field("EndTime", "TimeEndConfig", "结束时间");
+
+			/// <summary>
+            /// 是否关闭（0：不关闭；1：关闭；）
+            /// </summary>
+            public readonly static Field IsClosed = new Field("IsClosed", "TimeEndConfig", "是否关闭（0：不关闭；1：关闭；）");
 
 			
         }

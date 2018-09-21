@@ -763,10 +763,10 @@
       <publishTime>04/06/2017 15:51:29</publishTime>
     </File>
     <File Include="Areas/SystemManage/Views/TimeEndConfig/Form.cshtml">
-      <publishTime>08/06/2018 21:19:22</publishTime>
+      <publishTime>08/31/2018 20:25:07</publishTime>
     </File>
     <File Include="Areas/SystemManage/Views/TimeEndConfig/Index.cshtml">
-      <publishTime>08/06/2018 21:15:39</publishTime>
+      <publishTime>08/31/2018 20:23:50</publishTime>
     </File>
     <File Include="Areas/SystemManage/Views/User/Details.cshtml">
       <publishTime>04/07/2017 19:29:42</publishTime>
@@ -865,10 +865,10 @@
       <publishTime>02/22/2013 08:43:40</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>08/29/2018 21:00:54</publishTime>
+      <publishTime>08/31/2018 20:42:06</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>08/29/2018 21:00:54</publishTime>
+      <publishTime>08/31/2018 20:42:06</publishTime>
     </File>
     <File Include="bin/Common.Logging.Core.dll">
       <publishTime>01/18/2017 12:52:28</publishTime>
@@ -1030,16 +1030,16 @@
       <publishTime>07/17/2018 11:11:46</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Manager.Web.dll">
-      <publishTime>08/29/2018 21:00:43</publishTime>
+      <publishTime>08/31/2018 20:41:56</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Mobile.BLL.dll">
-      <publishTime>08/18/2018 11:05:53</publishTime>
+      <publishTime>08/31/2018 20:41:10</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Mobile.Common.dll">
       <publishTime>08/15/2018 13:32:20</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Mobile.Model.dll">
-      <publishTime>08/18/2018 11:05:53</publishTime>
+      <publishTime>08/31/2018 20:41:10</publishTime>
     </File>
     <File Include="bin/ZFX365.Com.Manager.BLL.dll">
       <publishTime>04/12/2017 15:21:07</publishTime>
@@ -2662,7 +2662,7 @@
       <publishTime>07/03/2018 09:05:53</publishTime>
     </File>
     <File Include="GenerateCode/TimeEndConfig.html">
-      <publishTime>08/06/2018 20:59:01</publishTime>
+      <publishTime>08/31/2018 20:23:34</publishTime>
     </File>
     <File Include="GenerateCode/usercalllog.html">
       <publishTime>04/06/2017 18:04:57</publishTime>
@@ -2701,7 +2701,7 @@
       <publishTime>08/12/2018 11:55:46</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>08/29/2018 21:00:45</publishTime>
+      <publishTime>08/31/2018 20:41:58</publishTime>
     </File>
     <File Include="Utils/Entity/hp.ttinclude">
       <publishTime>06/27/2018 14:48:07</publishTime>

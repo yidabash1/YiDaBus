@@ -182,6 +182,18 @@
             Init();
         });
     </script>
+@if (ViewBag.IsClose == true)
+{
+    <script>
+        $.modalMsg({
+            content: "当日不开放", success: function () {
+                window.location.href = "/Home/Index";
+                return;
+            },shadeClose: false
+        });
+    </script>
+}
+}
 @if (ViewBag.IsExipre == true)
 {
     <script>
@@ -192,5 +204,4 @@
             },shadeClose: false
         });
     </script>
-}
 }

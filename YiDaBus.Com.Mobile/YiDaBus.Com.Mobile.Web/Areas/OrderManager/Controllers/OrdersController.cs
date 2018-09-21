@@ -44,38 +44,46 @@ namespace YiDaBus.Com.Mobile.Web.Areas.OrderManager.Controllers
             var curDateTime = DateTime.Now;
             int curWeek = (int)curDateTime.DayOfWeek;
             int selectWeek = week.ToInt();
+            var endConfigList = Db.MySqlContext.From<TimeEndConfig>().Where(d => d.Area == "上海").ToList<TimeEndConfigExt>();
+            foreach (var item in endConfigList)
+            {
+                switch (item.Week)
+                {
+                    case "星期一":
+                        item.IntWeek = 1;
+                        break;
+                    case "星期二":
+                        item.IntWeek = 2;
+                        break;
+                    case "星期三":
+                        item.IntWeek = 3;
+                        break;
+                    case "星期四":
+                        item.IntWeek = 4;
+                        break;
+                    case "星期五":
+                        item.IntWeek = 5;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            var curEndConfig = endConfigList.Where(d => d.IntWeek == curWeek).FirstOrDefault();
+            var selectEndConfig = endConfigList.Where(d => d.IntWeek == selectWeek).FirstOrDefault();
+            if (selectEndConfig.IsClosed == 1)
+            {
+                ViewBag.IsClose = true;
+                return View();
+            }
             //如果当前不是星期六并且不是星期天，则判断是否过期
             if (curWeek != 0 && curWeek != 6)
             {
                 string endTime = string.Empty;
-                var endConfigList = Db.MySqlContext.From<TimeEndConfig>().Where(d => d.Area == "上海").ToList<TimeEndConfigExt>();
                 ViewBag.ExipreEndTime = endConfigList.Where(d=>d.Week == "星期五").FirstOrDefault().EndTime;
-                foreach (var item in endConfigList)
-                {
-                    switch (item.Week)
-                    {
-                        case "星期一":
-                            item.IntWeek = 1;
-                            break;
-                        case "星期二":
-                            item.IntWeek = 2;
-                            break;
-                        case "星期三":
-                            item.IntWeek = 3;
-                            break;
-                        case "星期四":
-                            item.IntWeek = 4;
-                            break;
-                        case "星期五":
-                            item.IntWeek = 5;
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                
 
-                var endConfig = endConfigList.Where(d => d.IntWeek == curWeek).FirstOrDefault();
-                if (endConfig != null) { endTime = endConfig.EndTime; }
+              
+                if (curEndConfig != null) { endTime = curEndConfig.EndTime; }
                 DateTime endDateTime = string.Format("{0} {1}", curDateTime.ToString("yyyy-MM-dd"), endTime).ToDate();
                 var DepartureTime = GetDateTimeByWeek(selectWeek, ref day);
                 if (curWeek == 5)
