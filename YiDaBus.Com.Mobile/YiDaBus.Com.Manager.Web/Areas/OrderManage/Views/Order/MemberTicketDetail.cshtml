@@ -87,9 +87,9 @@
         </div>
 
         <div class="weui-form-preview__item">
-            <a id="btn1" href="javascript:;" class="weui-btn weui-btn_primary">确认收款</a>
-            <a id="btn2" href="javascript:;" class="weui-btn weui-btn_primary">迁票修改</a>
-            <a id="btn3" href="javascript:;" class="weui-btn weui-btn_warn">预订作废</a>
+            <a id="btn1" href="javascript:void(0);" class="weui-btn weui-btn_primary" onclick="AuditOrdersHandler()">确认收款</a>
+            <a id="btn2" href="javascript:;" class="weui-btn weui-btn_primary" onclick="ModifyOrderHandler()">迁票修改</a>
+            <a id="btn3" href="javascript:;" class="weui-btn weui-btn_warn" onclick="DeleteOrdersHandler()">预订作废</a>
         </div>
     </div>
 
@@ -107,7 +107,7 @@
     </div>
     {{#  } }}
 </script>
-<script src="~/Content/js/memberTicketDetail.js"></script>
+<script src="/Content/js/memberTicketDetail.js"></script>
 <script>
         $(function() {
             GetOrderDetails();

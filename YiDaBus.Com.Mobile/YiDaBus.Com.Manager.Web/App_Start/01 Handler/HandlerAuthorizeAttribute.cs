@@ -15,7 +15,8 @@ namespace YiDaBus.Com.Manager.Web
         }
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (OperatorProvider.Provider.GetCurrent().IsSystem)
+            var curUser = OperatorProvider.Provider.GetCurrent();
+            if (curUser != null && curUser.IsSystem)
             {
                 return;
             }
@@ -34,7 +35,7 @@ namespace YiDaBus.Com.Manager.Web
         private bool ActionAuthorize(ActionExecutingContext filterContext)
         {
             var operatorProvider = OperatorProvider.Provider.GetCurrent();
-            var roleId = operatorProvider.RoleId;
+            var roleId = operatorProvider == null ? "-1" : operatorProvider.RoleId;
             var moduleId = WebHelper.GetCookie("nfine_currentmoduleid");
             var action = HttpContext.Current.Request.ServerVariables["SCRIPT_NAME"].ToString();
             return new RoleAuthorizeApp().ActionValidate(roleId, moduleId, action);

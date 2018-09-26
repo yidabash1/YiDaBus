@@ -65,7 +65,7 @@
                 memberItems.Add("个人信息", "/MemberManager/Member/MemberInfo");
                 memberItems.Add("我的车票", "/MemberManager/Member/MemberTicket");
                 memberItems.Add("投诉热线", "/MemberManager/Member/MemberComplaint");
-                memberItems.Add("管理中心", System.Configuration.ConfigurationManager.AppSettings["manageDomain"].ToString() + "/Login/MobileIndex");
+                memberItems.Add("管理中心", System.Configuration.ConfigurationManager.AppSettings["manageDomain"].ToString() + "/OrderManage/Order/MobileIndex");
                 foreach (var item in memberItems)
                 {
                     <a class="weui-cell weui-cell_access" href="@item.Value">

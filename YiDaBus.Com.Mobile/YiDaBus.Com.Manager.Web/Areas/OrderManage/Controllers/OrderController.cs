@@ -38,7 +38,7 @@ namespace YiDaBus.Com.Manager.Web.Areas.OrderManage.Controllers
         }
         [HttpGet]
         [HandlerAuthorize]
-        public virtual ActionResult MobileIndex()
+        public ActionResult MobileIndex()
         {
             return View();
         }

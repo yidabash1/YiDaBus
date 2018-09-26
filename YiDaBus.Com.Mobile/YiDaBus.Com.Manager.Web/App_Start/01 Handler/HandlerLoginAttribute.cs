@@ -1,5 +1,6 @@
 ﻿using YiDaBus.Com.Manager.Common;
 using System.Web.Mvc;
+using System.Web;
 
 namespace YiDaBus.Com.Manager.Web
 {
@@ -22,7 +23,7 @@ namespace YiDaBus.Com.Manager.Web
                 string hrefUrl = string.Empty;
                 if (IsMobileDevice(filterContext))
                 {
-                    hrefUrl = "/Login/MobileIndex";
+                    hrefUrl = "/Login/MobileIndex?ReturnUrl=" + HttpUtility.UrlEncode(filterContext.HttpContext.Request.Url.AbsoluteUri, System.Text.Encoding.UTF8);
                 }
                 else
                 {

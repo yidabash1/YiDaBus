@@ -3,10 +3,14 @@
     ViewBag.Title = "Form";
     Layout = "~/Views/Shared/_Form.cshtml";
 }
+<link href="~/Content/js/layui/css/layui.css" rel="stylesheet" />
+<script src="~/Content/js/layui/layui.js"></script>
+<script src="~/Content/js/layer_mobile/layer.js"></script>
 <script>
     var modulelUrl = "/OrderManage/Order/";//区域的路径
     var keyValue = $.request("keyValue");
     var action = $.request("action");
+    var from = $.request("from")
     $(function () {
         initControl();
         if (!!keyValue) {
@@ -44,7 +48,7 @@
         }
     });
     function initControl() {
-
+        IsShowMobileBtn();
     }
     function submitForm() {
         if (!$('#form1').formValid()) {
@@ -53,8 +57,16 @@
         $.submitForm({
             url: modulelUrl + "SubmitForm?keyValue=" + keyValue,
             param: $("#form1").formSerialize(),
-            success: function () {
-                $.currentWindow().$("#gridList").trigger("reloadGrid");
+            success: function (data) {
+                if (from == "mobile") {
+                    $.modalMsg4Mobile({
+                        content: data.msg, success: function () {
+                            returnHandler();
+                        }
+                    });
+                } else {
+                    $.currentWindow().$("#gridList").trigger("reloadGrid");
+                }
             }
         })
     }
@@ -98,6 +110,20 @@
 
     function Close() {
         $.modalClose();
+    }
+
+    //判断来源是否是手机，如果是，则显示手机确认按钮
+    function IsShowMobileBtn() {
+        if (from == "mobile") {
+            $("#btnMobile").show();
+        } else {
+            $("#btnMobile").hide();
+        }
+    }
+
+    //返回
+    function returnHandler() {
+        window.location.href = "/OrderManage/Order/MemberTicketDetail?orderId=" + keyValue;
     }
 </script>
 <form id="form1">
@@ -282,6 +308,13 @@
             <a href="javascript:void(0);" class="layui-layer-btn0 btn btn-default" onclick="Close()">关闭</a>
             <a href="javascript:void(0);" class="layui-layer-btn0 btn btn-danger" onclick="AuditFailed()">支付失败</a>
             <a href="javascript:void(0);" class="layui-layer-btn0 btn btn-primary" onclick="AuditSuccess()">支付成功</a>
+        </div>
+        
+    </div>
+    <div id="btnMobile" style="margin-right:20px;display:none;">
+        <div class="form-button" id="wizard-actions" style="position:fixed;">
+            <a href="javascript:void(0);" class="layui-layer-btn0 btn btn-default" onclick="returnHandler()">返回</a>
+            <a href="javascript:void(0);" class="layui-layer-btn0 btn btn-primary" onclick="submitForm()">确定</a>
         </div>
     </div>
 </form>

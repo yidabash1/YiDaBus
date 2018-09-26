@@ -532,7 +532,7 @@
       <publishTime>03/28/2017 15:13:13</publishTime>
     </File>
     <File Include="Areas/OrderManage/Views/Order/Form.cshtml">
-      <publishTime>08/15/2018 19:34:39</publishTime>
+      <publishTime>09/25/2018 10:24:58</publishTime>
     </File>
     <File Include="Areas/OrderManage/Views/Order/FormalList.cshtml">
       <publishTime>03/31/2017 18:22:28</publishTime>
@@ -554,6 +554,12 @@
     </File>
     <File Include="Areas/OrderManage/Views/Order/LogForm.cshtml">
       <publishTime>04/11/2017 09:37:40</publishTime>
+    </File>
+    <File Include="Areas/OrderManage/Views/Order/MemberTicketDetail.cshtml">
+      <publishTime>09/25/2018 09:56:02</publishTime>
+    </File>
+    <File Include="Areas/OrderManage/Views/Order/MobileIndex.cshtml">
+      <publishTime>09/21/2018 10:50:56</publishTime>
     </File>
     <File Include="Areas/OrderManage/Views/Order/PriceForm.cshtml">
       <publishTime>01/17/2017 16:24:31</publishTime>
@@ -865,10 +871,10 @@
       <publishTime>02/22/2013 08:43:40</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>08/31/2018 20:42:06</publishTime>
+      <publishTime>09/25/2018 14:03:29</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>08/31/2018 20:42:06</publishTime>
+      <publishTime>09/25/2018 14:03:29</publishTime>
     </File>
     <File Include="bin/Common.Logging.Core.dll">
       <publishTime>01/18/2017 12:52:28</publishTime>
@@ -919,19 +925,19 @@
       <publishTime>01/12/2017 14:16:36</publishTime>
     </File>
     <File Include="bin/NFine.Application.dll">
-      <publishTime>08/15/2018 13:33:05</publishTime>
+      <publishTime>09/25/2018 10:29:21</publishTime>
     </File>
     <File Include="bin/NFine.Data.dll">
-      <publishTime>08/15/2018 13:33:04</publishTime>
+      <publishTime>09/25/2018 10:29:21</publishTime>
     </File>
     <File Include="bin/NFine.Domain.dll">
-      <publishTime>08/15/2018 13:33:05</publishTime>
+      <publishTime>09/25/2018 10:29:21</publishTime>
     </File>
     <File Include="bin/NFine.Mapping.dll">
-      <publishTime>08/15/2018 13:33:05</publishTime>
+      <publishTime>09/25/2018 10:29:21</publishTime>
     </File>
     <File Include="bin/NFine.Repository.dll">
-      <publishTime>08/15/2018 13:33:05</publishTime>
+      <publishTime>09/25/2018 10:29:21</publishTime>
     </File>
     <File Include="bin/NPOI.dll">
       <publishTime>12/26/2016 10:11:26</publishTime>
@@ -1030,13 +1036,13 @@
       <publishTime>07/17/2018 11:11:46</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Manager.Web.dll">
-      <publishTime>08/31/2018 20:41:56</publishTime>
+      <publishTime>09/25/2018 14:03:19</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Mobile.BLL.dll">
-      <publishTime>08/31/2018 20:41:10</publishTime>
+      <publishTime>09/25/2018 10:29:21</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Mobile.Common.dll">
-      <publishTime>08/15/2018 13:32:20</publishTime>
+      <publishTime>09/25/2018 10:29:21</publishTime>
     </File>
     <File Include="bin/YiDaBus.Com.Mobile.Model.dll">
       <publishTime>08/31/2018 20:41:10</publishTime>
@@ -1090,7 +1096,19 @@
       <publishTime>12/20/2016 17:08:48</publishTime>
     </File>
     <File Include="Configs/system.config">
-      <publishTime>08/06/2018 21:39:14</publishTime>
+      <publishTime>09/25/2018 13:38:23</publishTime>
+    </File>
+    <File Include="Content/bus/bus.css">
+      <publishTime>09/21/2018 09:31:04</publishTime>
+    </File>
+    <File Include="Content/bus/bus2.css">
+      <publishTime>09/21/2018 09:31:04</publishTime>
+    </File>
+    <File Include="Content/bus/demos.css">
+      <publishTime>09/21/2018 09:31:04</publishTime>
+    </File>
+    <File Include="Content/bus/fastclick.js">
+      <publishTime>09/21/2018 09:31:04</publishTime>
     </File>
     <File Include="Content/css/build.css">
       <publishTime>04/06/2017 18:04:58</publishTime>
@@ -1426,7 +1444,10 @@
       <publishTime>06/27/2018 15:42:24</publishTime>
     </File>
     <File Include="Content/js/framework-ui.js">
-      <publishTime>04/11/2017 14:52:56</publishTime>
+      <publishTime>09/25/2018 10:22:19</publishTime>
+    </File>
+    <File Include="Content/js/framework-ui4Mobile.js">
+      <publishTime>09/25/2018 10:17:41</publishTime>
     </File>
     <File Include="Content/js/highcharts/adapters/mootools-adapter.js">
       <publishTime>12/20/2016 17:14:20</publishTime>
@@ -2208,8 +2229,317 @@
     <File Include="Content/js/kindeditor/themes/simple/simple.css">
       <publishTime>03/21/2017 11:32:34</publishTime>
     </File>
+    <File Include="Content/js/layer_mobile/layer.js">
+      <publishTime>09/21/2018 09:31:55</publishTime>
+    </File>
+    <File Include="Content/js/layer_mobile/need/layer.css">
+      <publishTime>09/21/2018 09:31:55</publishTime>
+    </File>
     <File Include="Content/js/layout/jquery.layout.js">
       <publishTime>03/24/2017 17:47:28</publishTime>
+    </File>
+    <File Include="Content/js/layui/css/layui.css">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/css/modules/code.css">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/css/modules/laydate/icon.png">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/css/modules/laydate/laydate.css">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/css/modules/layer/default/icon-ext.png">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/css/modules/layer/default/icon.png">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/css/modules/layer/default/layer.css">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/css/modules/layer/default/loading-0.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/css/modules/layer/default/loading-1.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/css/modules/layer/default/loading-2.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/font/iconfont.eot">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/font/iconfont.svg">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/font/iconfont.ttf">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/font/iconfont.woff">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/0.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/1.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/10.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/11.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/12.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/13.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/14.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/15.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/16.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/17.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/18.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/19.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/2.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/20.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/21.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/22.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/23.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/24.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/25.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/26.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/27.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/28.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/29.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/3.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/30.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/31.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/32.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/33.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/34.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/35.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/36.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/37.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/38.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/39.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/4.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/40.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/41.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/42.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/43.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/44.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/45.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/46.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/47.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/48.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/49.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/5.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/50.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/51.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/52.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/53.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/54.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/55.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/56.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/57.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/58.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/59.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/6.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/60.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/61.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/62.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/63.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/64.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/65.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/66.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/67.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/68.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/69.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/7.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/70.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/71.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/8.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/images/face/9.gif">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/lay/dest/layui.all.js">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/lay/lib/jquery.js">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/lay/modules/code.js">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/lay/modules/element.js">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/lay/modules/flow.js">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/lay/modules/form.js">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/lay/modules/laydate.js">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/lay/modules/layedit.js">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/lay/modules/layer.js">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/lay/modules/laypage.js">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/lay/modules/laytpl.js">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/lay/modules/tree.js">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/lay/modules/upload.js">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/lay/modules/util.js">
+      <publishTime>09/21/2018 09:30:37</publishTime>
+    </File>
+    <File Include="Content/js/layui/layui.js">
+      <publishTime>09/21/2018 09:30:37</publishTime>
     </File>
     <File Include="Content/js/license.txt">
       <publishTime>03/21/2017 11:32:34</publishTime>
@@ -2220,8 +2550,14 @@
     <File Include="Content/js/md5/jquery.md5.js">
       <publishTime>12/20/2016 17:14:20</publishTime>
     </File>
+    <File Include="Content/js/memberTicketDetail.js">
+      <publishTime>09/25/2018 09:58:56</publishTime>
+    </File>
     <File Include="Content/js/Order.js">
       <publishTime>04/11/2017 11:35:04</publishTime>
+    </File>
+    <File Include="Content/js/OrderMobileIndex.js">
+      <publishTime>09/21/2018 11:05:32</publishTime>
     </File>
     <File Include="Content/js/qrcode/jquery.qrcode.js">
       <publishTime>12/20/2016 17:14:20</publishTime>
@@ -2701,7 +3037,7 @@
       <publishTime>08/12/2018 11:55:46</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>08/31/2018 20:41:58</publishTime>
+      <publishTime>09/25/2018 14:03:21</publishTime>
     </File>
     <File Include="Utils/Entity/hp.ttinclude">
       <publishTime>06/27/2018 14:48:07</publishTime>
@@ -2721,6 +3057,9 @@
     <File Include="Views/Login/Index.cshtml">
       <publishTime>08/09/2018 12:03:16</publishTime>
     </File>
+    <File Include="Views/Login/MobileIndex.cshtml">
+      <publishTime>09/25/2018 09:01:57</publishTime>
+    </File>
     <File Include="Views/Shared/_Form.cshtml">
       <publishTime>04/07/2017 17:02:52</publishTime>
     </File>
@@ -2733,11 +3072,14 @@
     <File Include="Views/Shared/_LayoutIndex.cshtml">
       <publishTime>03/28/2017 17:29:06</publishTime>
     </File>
+    <File Include="Views/Shared/_Mobile.cshtml">
+      <publishTime>09/25/2018 10:23:46</publishTime>
+    </File>
     <File Include="Views/Web.config">
       <publishTime>12/20/2016 17:08:26</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/15/2018 13:33:07</publishTime>
+      <publishTime>09/25/2018 14:03:20</publishTime>
     </File>
     <File Include="xmlconfig/distict.json">
       <publishTime>02/23/2017 17:45:24</publishTime>

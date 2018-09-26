@@ -56,7 +56,6 @@
                 form.on('submit(Submit)', function (data) {
                     $.ar({
                       url: 'CheckLogin'
-                    , data: data.field
                     , data: { username: $.trim(data.field.username), password: $.md5($.trim(data.field.password)), code: "" }
                     , success: function (data) {
                         var ReturnUrl = $.requestWithOutDecode("ReturnUrl");

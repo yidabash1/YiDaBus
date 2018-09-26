@@ -183,6 +183,28 @@ $.modalMsg = function (content, type) {
         top.layer.msg(content);
     }
 }
+//消息框
+$.modalMsg4Mobile = function (options) {
+    var defaults = {
+        title: '',
+        content: '',
+        btn: '确认',
+        success: null,
+        alwaysClose: true,
+        shadeClose: true
+    };
+    var options = $.extend(defaults, options);
+    var index = mlayer.open({
+        title: options.title == "" ? "" : [options.title, 'background-color: #eee;'],
+        content: options.content
+      , btn: options.btn
+      , yes: function () {
+          if (options.success != null) options.success();
+          if (options.alwaysClose) mlayer.close(index);
+      }
+      , shadeClose: options.shadeClose
+    });
+}
 $.modalClose = function () {
     var index = top.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
     var $IsdialogClose = top.$("#layui-layer" + index).find('.layui-layer-btn').find("#IsdialogClose");
